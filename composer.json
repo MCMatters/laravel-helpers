@@ -1,0 +1,20 @@
+{
+    "name": "mcmatters/laravel-helpers",
+    "description": "Laravel helper functions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Borzyonok",
+            "email": "dima.matters@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "illuminate/support": "^5.0"
+    },
+    "autoload": {
+        "files": [
+            "src/bootstrap.php"
+        ]
+    }
+}

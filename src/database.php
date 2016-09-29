@@ -67,9 +67,9 @@ if (!function_exists('search_entire_database')) {
             return $results;
         }
         foreach (get_all_tables() as $table => $columns) {
-            $query = \DB::table($table);
+            $query = DB::table($table);
             foreach ($columns as $column) {
-                $where = \DB::raw('CONVERT(`'.$column.'` USING utf8) LIKE \'%'.$find.'%\'');
+                $where = DB::raw('CONVERT(`'.$column.'` USING utf8) LIKE \'%'.$find.'%\'');
                 $query->orWhereRaw($where);
             }
             foreach ($query->get() as $result) {

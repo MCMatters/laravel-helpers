@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=7.0",
-        "illuminate/support": "^5.0"
+        "illuminate/support": "^5.0",
+        "symfony/debug": "2.8.*|3.0.*"
     },
     "autoload": {
         "files": [

@@ -7,3 +7,4 @@ require_once __DIR__.'/dev.php';
 require_once __DIR__.'/generic.php';
 require_once __DIR__.'/math.php';
 require_once __DIR__.'/strings.php';
+require_once __DIR__.'/array.php';

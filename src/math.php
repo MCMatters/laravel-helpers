@@ -26,3 +26,37 @@ if (!function_exists('float_has_remainder')) {
         return $number != (int) $number;
     }
 }
+
+if (!function_exists('convert_bytes')) {
+    /**
+     * @param $value
+     * @param string $returnType
+     * @return float|int
+     */
+    function convert_bytes($value, $returnType = 'b')
+    {
+        $str = new \Illuminate\Support\Str();
+        $sizeTypes = get_size_types();
+        $stringValue = (string) $value;
+        $value = (int) $value;
+        $type = trim(
+            $str::lower(
+                $str::substr($stringValue, $str::length($value))
+            )
+        );
+        if (!$type) {
+            $type = 'b';
+        }
+        $type = $type === 'b' ? $type : $type.'b';
+        if ($type === $returnType || !in_array($returnType, $sizeTypes, true)) {
+            return $value;
+        }
+        $returnTypeKey = array_search($returnType, $sizeTypes, true);
+        $typeKey = array_search($type, $sizeTypes, true);
+        if ($returnTypeKey > $typeKey) {
+            return $value / pow(1024, $returnTypeKey - $typeKey);
+        } else {
+            return $value * pow(1024, $typeKey - $returnTypeKey);
+        }
+    }
+}

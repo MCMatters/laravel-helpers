@@ -32,7 +32,7 @@ if (!function_exists('str_ucwords')) {
 
 if (!function_exists('strpos_array')) {
     /**
-     * Wrapper under "strpos".
+     * Wrapper over "strpos".
      *
      * @param string $haystack
      * @param array|string $needles

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 if (!function_exists('array_has_wildcard')) {
     /**
-     * Analogue for function "array_has" with ability to search with wildcard.
+     * Analogue of function "array_has" with ability to search with wildcard.
      *
      * @param array $array
      * @param string $keys
@@ -15,8 +15,7 @@ if (!function_exists('array_has_wildcard')) {
         array $array,
         string $keys,
         $searchWithSegment = false
-    ): bool
-    {
+    ): bool {
         if (null === $keys || !$array) {
             return false;
         }

@@ -32,6 +32,6 @@ if (!function_exists('get_size_types')) {
      */
     function get_size_types(): array
     {
-        return ['b', 'kb', 'mb', 'gb', 'tb', 'pb'];
+        return ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
     }
 }

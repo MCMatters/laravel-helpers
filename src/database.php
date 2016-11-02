@@ -13,7 +13,7 @@ if (!function_exists('compile_sql_query')) {
     function compile_sql_query(string $sql, array $bindings = []): string
     {
         foreach ($bindings as $binding) {
-            // TODO: need review all cases.
+            // TODO: need to review all cases.
             switch (gettype($binding)) {
                 case 'boolean':
                 case 'integer':

@@ -14,7 +14,11 @@
 
 #### `array_has_wildcard()`
 
-The `array_has_wildcard` is analogue of function "array_has" with ability to search with wildcard. Also it can search keys with dots (i.e. when you want to get some data from multiple field when validation is failed)
+The `array_has_wildcard` is analogue of function `array_has` with ability to search with wildcard. Also it can search keys with dots (i.e. when you want to get some data from multiple field when validation is failed)
+
+### `array_get_random()`
+
+The `array_get_random` function returns random value instead key, how it makes the `array_rand`.
 
 ## Database
 
@@ -112,10 +116,10 @@ The `strpos_array` is function wrapper over `strpos`. Added ability to pass `$ne
 
 ## Class
 
-### `get_class_get_class_constants`
+### `get_class_get_class_constants()`
 
 The `get_class_constants` function returns an array with all class constants.
 
-### `get_class_constants_start_with`
+### `get_class_constants_start_with()`
 
 The `get_class_constants_start_with` function returns an array with constants which start with passed string.

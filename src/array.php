@@ -85,3 +85,19 @@ if (!function_exists('array_has_wildcard')) {
         return true;
     }
 }
+
+if (!function_exists('array_get_random')) {
+    /**
+     * @param array $array
+     * @return mixed
+     */
+    function array_get_random(array $array)
+    {
+        $countArray = count($array);
+        if ($countArray === 1) {
+            return reset($array);
+        }
+        $key = array_rand($array);
+        return $array[$key];
+    }
+}

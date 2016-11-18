@@ -8,6 +8,7 @@
 - [Math](#math)
 - [Server](#server)
 - [Strings](#strings)
+- [Class](#class)
 
 ## Arrays
 
@@ -95,7 +96,7 @@ The `get_post_max_size` function returns the value of the `post_max_size` from `
 
 The `is_max_post_size_exceeded` function checks whether is the permissible size of the value `post_max_size` exceeded.
 
-## <a name="strings"></a>Strings
+## Strings
 
 #### `str_lower()`
 
@@ -108,3 +109,13 @@ The `str_ucwords` function converts a value to studly caps case with spaces.
 #### `strpos_array()`
 
 The `strpos_array` is function wrapper over `strpos`. Added ability to pass `$needle` as an array.
+
+## Class
+
+### `get_class_get_class_constants`
+
+The `get_class_constants` function returns an array with all class constants.
+
+### `get_class_constants_start_with`
+
+The `get_class_constants_start_with` function returns an array with constants which start with passed string.

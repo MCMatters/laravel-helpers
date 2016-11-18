@@ -10,3 +10,4 @@ require_once __DIR__.'/strings.php';
 require_once __DIR__.'/array.php';
 require_once __DIR__.'/forms.php';
 require_once __DIR__.'/server.php';
+require_once __DIR__.'/class.php';

@@ -65,3 +65,17 @@ if (!function_exists('is_max_post_size_exceeded')) {
         return $_SERVER['CONTENT_LENGTH'] > get_post_max_size();
     }
 }
+
+if (!function_exists('get_max_response_code')) {
+    /**
+     * @return int
+     */
+    function get_max_response_code(): int
+    {
+        $constants = get_class_constants_start_with(
+            Symfony\Component\HttpFoundation\Response::class,
+            'HTTP_'
+        );
+        return max($constants);
+    }
+}

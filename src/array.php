@@ -94,7 +94,9 @@ if (!function_exists('array_get_random')) {
     function array_get_random(array $array)
     {
         $countArray = count($array);
-        if ($countArray === 1) {
+        if ($countArray === 0) {
+            return null;
+        } elseif ($countArray === 1) {
             return reset($array);
         }
         $key = array_rand($array);

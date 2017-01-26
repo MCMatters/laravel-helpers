@@ -116,7 +116,7 @@ The `strpos_array` is function wrapper over `strpos`. Added ability to pass `$ne
 
 ## Class
 
-### `get_class_get_class_constants()`
+### `get_class_constants()`
 
 The `get_class_constants` function returns an array with all class constants.
 

@@ -12,7 +12,7 @@ if (!function_exists('is_request_method_update')) {
         /** @var Request $request */
         $request = $request ?: Request::instance();
         return in_array(
-            Illuminate\Support\Str::lower($request->method()),
+            str_lower($request->method()),
             ['put', 'patch'],
             true
         );

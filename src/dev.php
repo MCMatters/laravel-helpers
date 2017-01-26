@@ -11,7 +11,7 @@ if (!function_exists('ddq')) {
      *
      * @return mixed
      */
-    function ddq($query, bool $return = false)
+    function ddq($query, bool $return = true)
     {
         $string = compile_sql_query($query->toSql(), $query->getBindings());
         if ($return) {

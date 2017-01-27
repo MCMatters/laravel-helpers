@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types = 1);
+
+/**
+ * Storages.
+ * @see https://dev.mysql.com/doc/refman/5.7/en/storage-requirements.html
+ */
+define('MYSQL_STORAGE_TINYINT', 1);
+define('MYSQL_STORAGE_SMALLINT', 2);
+define('MYSQL_STORAGE_MEDIUMINT', 3);
+define('MYSQL_STORAGE_INT', 4);
+define('MYSQL_STORAGE_BIGINT', 8);
+define('MYSQL_STORAGE_FLOAT', 4);
+define('MYSQL_STORAGE_DOUBLE', 8);
+
+/**
+ * Sizes.
+ * @see https://dev.mysql.com/doc/refman/5.7/en/integer-types.html
+ */
+// Tiny integer.
+define('MYSQL_SIZE_TINYINT_SIGNED_MIN', -128);
+define('MYSQL_SIZE_TINYINT_SIGNED_MAX', 127);
+define('MYSQL_SIZE_TINYINT_UNSIGNED_MIN', 0);
+define('MYSQL_SIZE_TINYINT_UNSIGNED_MAX', 255);
+
+// Small integer.
+define('MYSQL_SIZE_SMALLINT_SIGNED_MIN', -32768);
+define('MYSQL_SIZE_SMALLINT_SIGNED_MAX', 32767);
+define('MYSQL_SIZE_SMALLINT_UNSIGNED_MIN', 0);
+define('MYSQL_SIZE_SMALLINT_UNSIGNED_MAX', 65535);
+
+// Medium integer.
+define('MYSQL_SIZE_MEDIUMINT_SIGNED_MIN', -8388608);
+define('MYSQL_SIZE_MEDIUMINT_SIGNED_MAX', 8388607);
+define('MYSQL_SIZE_MEDIUMINT_UNSIGNED_MIN', 0);
+define('MYSQL_SIZE_MEDIUMINT_UNSIGNED_MAX', 16777215);
+
+// Integer.
+define('MYSQL_SIZE_INT_SIGNED_MIN', -2147483648);
+define('MYSQL_SIZE_INT_SIGNED_MAX', 2147483647);
+define('MYSQL_SIZE_INT_UNSIGNED_MIN', 0);
+define('MYSQL_SIZE_INT_UNSIGNED_MAX', 4294967295);
+
+// Big integer.
+define('MYSQL_SIZE_BIGINT_SIGNED_MIN', -9223372036854775808);
+define('MYSQL_SIZE_BIGINT_SIGNED_MAX', 9223372036854775807);
+define('MYSQL_SIZE_BIGINT_UNSIGNED_MIN', 0);
+define('MYSQL_SIZE_BIGINT_UNSIGNED_MAX', 18446744073709551615);
+

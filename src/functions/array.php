@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-if (!function_exists('array_has_wildcard')) {
+if (!function_exists('array_has_with_wildcard')) {
     /**
      * Analogue of function "array_has" with ability to search with wildcard.
      *
@@ -11,7 +11,7 @@ if (!function_exists('array_has_wildcard')) {
      * @param bool $searchWithSegment
      * @return bool
      */
-    function array_has_wildcard(
+    function array_has_with_wildcard(
         array $array,
         string $keys,
         $searchWithSegment = false
@@ -45,7 +45,7 @@ if (!function_exists('array_has_wildcard')) {
                 );
                 if ($grepKeys) {
                     foreach ($grepKeys as $grepKey) {
-                        $flag = array_has_wildcard(
+                        $flag = array_has_with_wildcard(
                             $array[$grepKey],
                             implode('.', array_slice($segments, $i + 2)),
                             $searchWithSegment
@@ -63,7 +63,7 @@ if (!function_exists('array_has_wildcard')) {
                         return !empty($array);
                     }
                     foreach ($array as $item) {
-                        $flag = array_has_wildcard(
+                        $flag = array_has_with_wildcard(
                             $item,
                             implode('.', array_slice($segments, $i + 1)),
                             $searchWithSegment

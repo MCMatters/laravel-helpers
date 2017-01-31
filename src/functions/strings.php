@@ -16,6 +16,20 @@ if (!function_exists('str_lower')) {
     }
 }
 
+if (!function_exists('str_upper')) {
+    /**
+     * Wrapper over Str::upper.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    function str_upper(string $string): string
+    {
+        return \Illuminate\Support\Str::upper($string);
+    }
+}
+
 if (!function_exists('str_ucwords')) {
     /**
      * Convert a value to studly caps case with spaces.

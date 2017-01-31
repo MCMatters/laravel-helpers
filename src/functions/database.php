@@ -12,6 +12,10 @@ if (!function_exists('compile_sql_query')) {
      */
     function compile_sql_query(string $sql, array $bindings = []): string
     {
+        $string = function ($string) {
+            return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
+        };
+
         foreach ($bindings as $binding) {
             // TODO: need to review all cases.
             switch (gettype($binding)) {
@@ -19,9 +23,21 @@ if (!function_exists('compile_sql_query')) {
                 case 'integer':
                     $binding = (int) $binding;
                     break;
+                case 'float':
+                case 'double':
+                    $binding = (double) $binding;
+                    break;
+                case 'array':
+                    foreach ($binding as $key => $value) {
+                        $binding[$key] = $string($value);
+                    }
+                    $binding = implode(',', $binding);
+                    break;
+                case 'NULL':
+                    break;
                 case 'string':
                 default:
-                    $binding = '"'.addslashes((string) $binding).'"';
+                    $binding = $string($binding);
                     break;
             }
             $sql = preg_replace('/\?/', $binding, $sql, 1);

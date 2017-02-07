@@ -35,3 +35,13 @@ if (!function_exists('get_size_types')) {
         return ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
     }
 }
+
+if (!function_exists('random_bool')) {
+    /**
+     * @return bool
+     */
+    function random_bool(): bool
+    {
+        return (bool) random_int(0, 1);
+    }
+}

@@ -103,3 +103,22 @@ if (!function_exists('array_get_random')) {
         return $array[$key];
     }
 }
+
+if (!function_exists('array_key_by')) {
+    /**
+     * @param array $array
+     * @param string $key
+     *
+     * @return array
+     */
+    function array_key_by(array $array, string $key): array
+    {
+        $items = [];
+
+        foreach ($array as $item) {
+            $items[data_get($item, $key)] = $item;
+        }
+
+        return $items;
+    }
+}

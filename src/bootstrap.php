@@ -12,6 +12,7 @@ $functions = [
     'forms',
     'server',
     'class',
+    'url',
 ];
 
 foreach ($functions as $file) {

@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+// todo: Move to class
+
 /**
  * Storages.
  * @see https://dev.mysql.com/doc/refman/5.7/en/storage-requirements.html

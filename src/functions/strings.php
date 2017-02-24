@@ -65,6 +65,7 @@ if (!function_exists('strpos_array')) {
                     : min($strpos, $position);
             }
         }
+
         return $position;
     }
 }

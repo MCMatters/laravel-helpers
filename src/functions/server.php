@@ -9,8 +9,8 @@ if (!function_exists('is_request_method_update')) {
      */
     function is_request_method_update($request = null): bool
     {
-        /** @var Request $request */
         $request = $request ?: Request::instance();
+
         return in_array(
             str_lower($request->method()),
             ['put', 'patch'],
@@ -76,6 +76,7 @@ if (!function_exists('get_max_response_code')) {
             Symfony\Component\HttpFoundation\Response::class,
             'HTTP_'
         );
+
         return max($constants);
     }
 }

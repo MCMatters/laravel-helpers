@@ -42,6 +42,7 @@ if (!function_exists('compile_sql_query')) {
             }
             $sql = preg_replace('/\?/', $binding, $sql, 1);
         }
+
         return $sql;
     }
 }
@@ -62,6 +63,7 @@ if (!function_exists('get_all_tables')) {
                 }
             }
         }
+
         return $tables;
     }
 }
@@ -92,6 +94,7 @@ if (!function_exists('search_entire_database')) {
                 $results[$table][] = $result;
             }
         }
+
         return $results;
     }
 }

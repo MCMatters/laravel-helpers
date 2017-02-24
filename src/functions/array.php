@@ -54,6 +54,7 @@ if (!function_exists('array_has_with_wildcard')) {
                             return true;
                         }
                     }
+
                     return false;
                 }
             }
@@ -72,6 +73,7 @@ if (!function_exists('array_has_with_wildcard')) {
                             return true;
                         }
                     }
+
                     return false;
                 } elseif (array_key_exists($segment, $array)) {
                     $flag = true;
@@ -82,6 +84,7 @@ if (!function_exists('array_has_with_wildcard')) {
                 return false;
             }
         }
+
         return true;
     }
 }
@@ -100,6 +103,7 @@ if (!function_exists('array_get_random')) {
             return reset($array);
         }
         $key = array_rand($array);
+
         return $array[$key];
     }
 }

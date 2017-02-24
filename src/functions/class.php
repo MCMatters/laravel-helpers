@@ -20,6 +20,7 @@ if (!function_exists('get_class_constants')) {
             throw new Exception('Passed wrong object class or class name');
         }
         $reflection = new ReflectionClass($className);
+
         return $reflection->getConstants();
     }
 }
@@ -41,6 +42,7 @@ if (!function_exists('get_class_constants_start_with')) {
                 $constants[$key] = $constant;
             }
         }
+
         return $constants;
     }
 }

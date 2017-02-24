@@ -4,15 +4,40 @@ declare(strict_types = 1);
 
 if (!function_exists('calculate_percentage')) {
     /**
-     * @param int $count
-     * @param int $total
+     * @param int|float $count
+     * @param int|float $total
      * @param int $decimals
-     * @return string
+     * @return float
      */
-    function calculate_percentage(int $count, int $total, int $decimals = 1): string
+    function calculate_percentage($count, $total, int $decimals = 1): float
     {
+        if (!is_numeric($count) || !is_numeric($total)) {
+            throw new LogicException('$count or $total must be numeric');
+        }
+
         $count *= 100;
-        return $count > 0 ? number_format($count / $total, $decimals) : '0';
+
+        return $count > 0
+            ? (float) number_format($count / $total, $decimals, '.', '')
+            : 0.0;
+    }
+}
+
+if (!function_exists('calculate_discount')) {
+    function calculate_discount($discount, $total, int $decimals): float
+    {
+        $number = ($total / 100) * $discount;
+
+        return (float) number_format($number, $decimals, '.'. '');
+    }
+}
+
+if (!function_exists('calculate_with_discount')) {
+    function calculate_with_discount($discount, $total, int $decimals = 1): float
+    {
+        $number = $total - calculate_discount($discount, $total, $decimals);
+
+        return (float) number_format($number, $decimals, '.', '');
     }
 }
 
@@ -54,9 +79,9 @@ if (!function_exists('convert_bytes')) {
         $returnTypeKey = array_search($returnType, $sizeTypes, true);
         $typeKey = array_search($type, $sizeTypes, true);
         if ($returnTypeKey > $typeKey) {
-            return $value / pow(1024, $returnTypeKey - $typeKey);
+            return $value / (1024 ** $returnTypeKey - $typeKey);
         } else {
-            return $value * pow(1024, $typeKey - $returnTypeKey);
+            return $value * (1024 ** $typeKey - $returnTypeKey);
         }
     }
 }

@@ -15,6 +15,9 @@
         "symfony/http-foundation": "3.*"
     },
     "autoload": {
+        "psr-4": {
+            "McMatters\\Helpers\\": "src/Classes"
+        },
         "files": [
             "src/bootstrap.php"
         ]

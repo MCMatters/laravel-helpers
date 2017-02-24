@@ -24,6 +24,13 @@ if (!function_exists('calculate_percentage')) {
 }
 
 if (!function_exists('calculate_discount')) {
+    /**
+     * @param $discount
+     * @param $total
+     * @param int $decimals
+     *
+     * @return float
+     */
     function calculate_discount($discount, $total, int $decimals): float
     {
         $number = ($total / 100) * $discount;
@@ -33,6 +40,13 @@ if (!function_exists('calculate_discount')) {
 }
 
 if (!function_exists('calculate_with_discount')) {
+    /**
+     * @param $discount
+     * @param $total
+     * @param int $decimals
+     *
+     * @return float
+     */
     function calculate_with_discount($discount, $total, int $decimals = 1): float
     {
         $number = $total - calculate_discount($discount, $total, $decimals);

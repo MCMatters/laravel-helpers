@@ -54,14 +54,16 @@ if (!function_exists('casting_bool')) {
      */
     function casting_bool($param): bool
     {
+        if (is_bool($param)) {
+            return $param;
+        }
+
         switch (str_lower($param)) {
-            case 1:
-            case true:
+            case '1':
             case 'true':
             case 't':
                 return true;
-            case 0:
-            case false:
+            case '0':
             case 'false':
             case 'f':
             default:

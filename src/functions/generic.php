@@ -45,3 +45,27 @@ if (!function_exists('random_bool')) {
         return (bool) random_int(0, 1);
     }
 }
+
+if (!function_exists('casting_bool')) {
+    /**
+     * @param mixed $param
+     *
+     * @return bool
+     */
+    function casting_bool($param): bool
+    {
+        switch (str_lower($param)) {
+            case 1:
+            case true:
+            case 'true':
+            case 't':
+                return true;
+            case 0:
+            case false:
+            case 'false':
+            case 'f':
+            default:
+                return false;
+        }
+    }
+}

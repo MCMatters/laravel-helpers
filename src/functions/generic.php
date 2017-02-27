@@ -49,10 +49,11 @@ if (!function_exists('random_bool')) {
 if (!function_exists('casting_bool')) {
     /**
      * @param mixed $param
+     * @param bool $default
      *
      * @return bool
      */
-    function casting_bool($param): bool
+    function casting_bool($param, bool $default = false): bool
     {
         if (is_bool($param)) {
             return $param;
@@ -66,8 +67,9 @@ if (!function_exists('casting_bool')) {
             case '0':
             case 'false':
             case 'f':
-            default:
                 return false;
+            default:
+                return $default;
         }
     }
 }

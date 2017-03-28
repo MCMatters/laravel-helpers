@@ -35,7 +35,7 @@ if (!function_exists('calculate_discount')) {
     {
         $number = ($total / 100) * $discount;
 
-        return (float) number_format($number, $decimals, '.'. '');
+        return (float) number_format($number, $decimals, '.', '');
     }
 }
 

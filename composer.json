@@ -21,5 +21,8 @@
         "files": [
             "src/bootstrap.php"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
     }
 }

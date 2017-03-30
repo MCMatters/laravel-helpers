@@ -6,6 +6,7 @@ require_once __DIR__.'/functions/array.php';
 require_once __DIR__.'/functions/class.php';
 require_once __DIR__.'/functions/database.php';
 require_once __DIR__.'/functions/dev.php';
+require_once __DIR__.'/functions/eloquent.php';
 require_once __DIR__.'/functions/forms.php';
 require_once __DIR__.'/functions/generic.php';
 require_once __DIR__.'/functions/math.php';

@@ -2,5 +2,10 @@ language: php
 php:
   - '7.0'
   - '7.1'
+
+addons:
+  code_climate:
+    repo_token: 6f59d6e824df45a69d962c9dd3f0e68f946ffb8830f9d8040af5f91723fa97fb
+
 install: composer install --no-interaction --prefer-dist --no-suggest
 script: vendor/bin/phpunit

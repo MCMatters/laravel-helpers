@@ -1,5 +1,9 @@
 # Laravel Helpers
 
+[![Build Status](https://travis-ci.org/MCMatters/laravel-helpers.svg?branch=master)](https://travis-ci.org/MCMatters/laravel-helpers)
+[![Code Climate](https://codeclimate.com/github/MCMatters/laravel-helpers/badges/gpa.svg)](https://codeclimate.com/github/MCMatters/laravel-helpers)
+[![Test Coverage](https://codeclimate.com/github/MCMatters/laravel-helpers/badges/coverage.svg)](https://codeclimate.com/github/MCMatters/laravel-helpers/coverage)
+
 - [Arrays](#arrays)
 - [Database](#database)
 - [Dev](#dev)

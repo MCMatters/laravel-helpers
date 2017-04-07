@@ -11,6 +11,10 @@ if (!function_exists('get_base_url')) {
     {
         $parsedUrl = parse_url($url);
 
+        if (empty($parsedUrl['host'])) {
+            return '';
+        }
+
         $scheme = $parsedUrl['scheme'] ?? 'http';
 
         return $scheme.'://'.$parsedUrl['host'];

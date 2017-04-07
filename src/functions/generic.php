@@ -59,7 +59,7 @@ if (!function_exists('casting_bool')) {
             return $param;
         }
 
-        switch (str_lower($param)) {
+        switch (str_lower((string) $param)) {
             case '1':
             case 'true':
             case 't':
@@ -67,6 +67,7 @@ if (!function_exists('casting_bool')) {
             case '0':
             case 'false':
             case 'f':
+            case '':
                 return false;
             default:
                 return $default;

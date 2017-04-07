@@ -22,6 +22,11 @@
             "src/bootstrap.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "McMatters\\Helpers\\Tests\\": "tests/mocks/Classes"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
     }

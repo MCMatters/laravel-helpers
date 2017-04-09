@@ -29,8 +29,8 @@ class ClassTest extends TestCase
      */
     public function testGetClassConstantsWithException()
     {
-        get_class_constants(null);
         $this->expectException(InvalidArgumentException::class);
+        get_class_constants(null);
     }
 
     /**

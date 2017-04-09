@@ -13,7 +13,6 @@ class ClassTest extends TestCase
     public function testGetClassConstants()
     {
         $class = new \McMatters\Helpers\Tests\Tester();
-        $constants = get_class_constants($class);
         $expected = [
             'STATUS_DISABLED' => 0,
             'STATUS_ENABLED'  => 1,
@@ -21,7 +20,17 @@ class ClassTest extends TestCase
             'TYPE_COMPANY'    => 2,
         ];
 
-        $this->assertEquals($expected, $constants);
+        $this->assertEquals($expected, get_class_constants($class));
+        $this->assertEquals($expected, get_class_constants(get_class($class)));
+    }
+
+    /**
+     * Test function "get_class_constants" with exception.
+     */
+    public function testGetClassConstantsWithException()
+    {
+        get_class_constants(null);
+        $this->expectException(InvalidArgumentException::class);
     }
 
     /**

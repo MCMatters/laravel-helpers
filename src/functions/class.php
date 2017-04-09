@@ -17,7 +17,7 @@ if (!function_exists('get_class_constants')) {
             $className = get_class($class);
         }
         if (null === $className) {
-            throw new Exception('Passed wrong object class or class name');
+            throw new InvalidArgumentException('Passed wrong object class or class name');
         }
         $reflection = new ReflectionClass($className);
 

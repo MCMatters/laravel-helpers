@@ -1,8 +1,10 @@
 # Laravel Helpers
 
+[![Latest Stable Version](https://poser.pugx.org/mcmatters/laravel-helpers/v/stable)](https://packagist.org/packages/mcmatters/laravel-helpers)
 [![Build Status](https://travis-ci.org/MCMatters/laravel-helpers.svg?branch=master)](https://travis-ci.org/MCMatters/laravel-helpers)
 [![Code Climate](https://codeclimate.com/github/MCMatters/laravel-helpers/badges/gpa.svg)](https://codeclimate.com/github/MCMatters/laravel-helpers)
 [![Test Coverage](https://codeclimate.com/github/MCMatters/laravel-helpers/badges/coverage.svg)](https://codeclimate.com/github/MCMatters/laravel-helpers/coverage)
+[![Total Downloads](https://poser.pugx.org/mcmatters/laravel-helpers/downloads)](https://packagist.org/packages/mcmatters/laravel-helpers)
 
 - [Arrays](#arrays)
 - [Database](#database)

@@ -74,3 +74,26 @@ if (!function_exists('casting_bool')) {
         }
     }
 }
+
+if (!function_exists('is_json')) {
+    /**
+     * @param string|mixed $json
+     * @param bool $returnDecoded
+     *
+     * @return bool|mixed
+     */
+    function is_json($json, $returnDecoded = false)
+    {
+        if (!is_string($json)) {
+            return false;
+        }
+
+        $decoded = json_decode($json);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $returnDecoded ? $decoded : true;
+        }
+
+        return false;
+    }
+}

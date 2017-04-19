@@ -38,4 +38,19 @@ class GenericTest extends TestCase
         $this->assertTrue(casting_bool(1));
         $this->assertTrue(casting_bool(true));
     }
+
+    /**
+     * Test function "is_json".
+     */
+    public function testIsJson()
+    {
+        $array = ['test'];
+        $encoded = json_encode($array);
+
+        $this->assertTrue(is_json($encoded));
+        $this->assertFalse(is_json(false));
+        $this->assertFalse(is_json(''));
+        $this->assertFalse(is_json([]));
+        $this->assertEquals($array, is_json($encoded, true));
+    }
 }

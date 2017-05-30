@@ -30,8 +30,8 @@ if (!function_exists('routes_path')) {
      */
     function routes_path(string $path = ''): string
     {
-        $routesPath = App::basePath('routes');
+        $basePath = App::basePath();
 
-        return $path ? "{$routesPath}/{$path}" : $routesPath;
+        return $path ? "{$basePath}/routes/{$path}" : "{$basePath}/routes";
     }
 }

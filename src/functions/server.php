@@ -2,9 +2,12 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Facades\Request;
+
 if (!function_exists('is_request_method_update')) {
     /**
-     * @param null|Request $request
+     * @param Request|null $request
+     *
      * @return bool
      */
     function is_request_method_update($request = null): bool
@@ -35,6 +38,7 @@ if (!function_exists('get_upload_max_filesize')) {
      * Get "upload_max_filesize" value from php.ini
      *
      * @param string $returnType
+     *
      * @return float|int
      */
     function get_upload_max_filesize(string $returnType = 'mb')
@@ -48,6 +52,7 @@ if (!function_exists('get_post_max_size')) {
      * Get "post_max_size" value from php.ini
      *
      * @param string $returnType
+     *
      * @return float|int
      */
     function get_post_max_size(string $returnType = 'b')

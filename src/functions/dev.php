@@ -14,9 +14,11 @@ if (!function_exists('ddq')) {
     function ddq($query, bool $return = true)
     {
         $string = compile_sql_query($query->toSql(), $query->getBindings());
+
         if ($return) {
             return $string;
         }
+
         dd($string);
     }
 }

@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Str;
+
 if (!function_exists('str_lower')) {
     /**
      * Wrapper over Str::lower.
@@ -12,7 +14,7 @@ if (!function_exists('str_lower')) {
      */
     function str_lower(string $string): string
     {
-        return \Illuminate\Support\Str::lower($string);
+        return Str::lower($string);
     }
 }
 
@@ -26,7 +28,7 @@ if (!function_exists('str_upper')) {
      */
     function str_upper(string $string): string
     {
-        return \Illuminate\Support\Str::upper($string);
+        return Str::upper($string);
     }
 }
 
@@ -57,8 +59,10 @@ if (!function_exists('strpos_array')) {
     function strpos_array(string $haystack, $needles, int $offset = 0)
     {
         $position = false;
+
         foreach ((array) $needles as $needle) {
             $strpos = strpos($haystack, $needle, $offset);
+
             if ($strpos !== false) {
                 $position = $position === false
                     ? $strpos

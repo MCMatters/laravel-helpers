@@ -11,6 +11,7 @@
     "require": {
         "php": ">=7.0",
         "illuminate/support": "5.*",
+        "illuminate/database": "5.*",
         "symfony/debug": "3.*",
         "symfony/http-foundation": "3.*"
     },

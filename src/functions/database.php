@@ -2,12 +2,16 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
 if (!function_exists('compile_sql_query')) {
     /**
      * Compile SQL query to string.
      *
      * @param string $sql
      * @param array $bindings
+     *
      * @return string
      */
     function compile_sql_query(string $sql, array $bindings = []): string
@@ -17,7 +21,6 @@ if (!function_exists('compile_sql_query')) {
         };
 
         foreach ($bindings as $binding) {
-            // TODO: need to review all cases.
             switch (gettype($binding)) {
                 case 'boolean':
                 case 'integer':
@@ -34,6 +37,8 @@ if (!function_exists('compile_sql_query')) {
                     $binding = implode(',', $binding);
                     break;
                 case 'NULL':
+                case 'unknown type':
+                case 'resource':
                     break;
                 case 'string':
                 default:
@@ -56,6 +61,7 @@ if (!function_exists('get_all_tables')) {
     function get_all_tables(): array
     {
         $tables = [];
+
         foreach (DB::select('SHOW TABLES') as $tableInfo) {
             foreach ($tableInfo as $table) {
                 foreach (Schema::getColumnListing($table) as $column) {
@@ -81,20 +87,48 @@ if (!function_exists('search_entire_database')) {
         long_processes();
         $results = [];
         $find = trim($find);
+
         if ($find === '') {
             return $results;
         }
+
         foreach (get_all_tables() as $table => $columns) {
             $query = DB::table($table);
+
             foreach ($columns as $column) {
-                $where = DB::raw('CONVERT(`'.$column.'` USING utf8) LIKE \'%'.$find.'%\'');
-                $query->orWhereRaw($where);
+                $query->orWhereRaw(
+                    DB::raw('CONVERT(`'.$column.'` USING utf8) LIKE \'%'.$find.'%\'')
+                );
             }
+
             foreach ($query->get() as $result) {
                 $results[$table][] = $result;
             }
         }
 
         return $results;
+    }
+}
+
+if (!function_exists('query_has_join')) {
+    /**
+     * @param $query
+     * @param string $table
+     *
+     * @return bool
+     */
+    function query_has_join($query, string $table): bool
+    {
+        if (!is_object($query) || !property_exists($query, 'joins')) {
+            return false;
+        }
+
+        foreach ($query->joins as $join) {
+            if ($join->table === $table) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

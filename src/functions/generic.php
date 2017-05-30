@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Facades\App;
+
 if (!function_exists('is_production_environment')) {
     /**
      * Check if current environment is production.
@@ -10,7 +12,7 @@ if (!function_exists('is_production_environment')) {
      */
     function is_production_environment(): bool
     {
-        return app()->environment('production', 'live');
+        return (bool) App::environment('production', 'live');
     }
 }
 
@@ -22,7 +24,7 @@ if (!function_exists('is_local_environment')) {
      */
     function is_local_environment(): bool
     {
-        return app()->environment('local');
+        return (bool) App::environment('local');
     }
 }
 

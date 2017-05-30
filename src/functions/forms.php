@@ -10,6 +10,7 @@ if (!function_exists('transform_form_element_key')) {
      * from the multiple field, for example from multiple phones.
      *
      * @param string $key
+     *
      * @return string
      */
     function transform_form_element_key(string $key): string

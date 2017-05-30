@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Facades\App;
+
 if (!function_exists('get_base_url')) {
     /**
      * @param string $url
@@ -28,8 +30,8 @@ if (!function_exists('routes_path')) {
      */
     function routes_path(string $path = ''): string
     {
-        $routesPath = base_path('routes');
+        $routesPath = App::basePath('routes');
 
-        return $path ? $routesPath.'/'.$path : $routesPath;
+        return $path ? "{$routesPath}/{$path}" : $routesPath;
     }
 }

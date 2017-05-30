@@ -2,10 +2,12 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Database\Eloquent\Model;
+
 if (!function_exists('is_morphed_belongs_parent')) {
     /**
-     * @param $morphed
-     * @param $parent
+     * @param Model $morphed
+     * @param Model $parent
      * @param string $name
      * @param string|null $type
      * @param string|null $id
@@ -13,8 +15,8 @@ if (!function_exists('is_morphed_belongs_parent')) {
      * @return bool
      */
     function is_morphed_belongs_parent(
-        $morphed,
-        $parent,
+        Model $morphed,
+        Model $parent,
         string $name,
         string $type = null,
         string $id = null

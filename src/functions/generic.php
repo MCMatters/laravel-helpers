@@ -99,3 +99,22 @@ if (!function_exists('is_json')) {
         return false;
     }
 }
+
+if (!function_exists('is_uuid')) {
+    /**
+     * @param string|mixed $string
+     *
+     * @return bool
+     */
+    function is_uuid($string): bool
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+
+        return (bool) preg_match(
+            '/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/',
+            $string
+        );
+    }
+}

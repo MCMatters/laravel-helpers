@@ -53,4 +53,20 @@ class GenericTest extends TestCase
         $this->assertFalse(is_json([]));
         $this->assertEquals($array, is_json($encoded, true));
     }
+
+    /**
+     * Test "is_uuid".
+     */
+    public function testIsUuid()
+    {
+        $valid = '5b6de545-3d60-48f1-ad30-0e6fa786ffb0';
+        $notValid = '5g6de545-3d60-48f1-ad30-0e6fa786ffb0';
+
+        $this->assertTrue(is_uuid($valid));
+        $this->assertFalse(is_uuid($notValid));
+        $this->assertFalse(is_uuid(null));
+        $this->assertFalse(is_uuid('null'));
+        $this->assertFalse(is_uuid(''));
+        $this->assertFalse(is_uuid(base64_encode(random_bytes(16))));
+    }
 }

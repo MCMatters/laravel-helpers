@@ -144,3 +144,24 @@ if (!function_exists('array_key_by')) {
         return $items;
     }
 }
+
+if (!function_exists('shuffle_assoc')) {
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    function shuffle_assoc(array $array = []): array
+    {
+        $shuffled = [];
+
+        $keys = array_keys($array);
+        shuffle($keys);
+
+        foreach ($keys as $key) {
+            $shuffled[$key] = $array[$key];
+        }
+
+        return $shuffled;
+    }
+}

@@ -50,18 +50,18 @@ if (!function_exists('random_bool')) {
 
 if (!function_exists('casting_bool')) {
     /**
-     * @param mixed $param
+     * @param mixed $value
      * @param bool $default
      *
      * @return bool
      */
-    function casting_bool($param, bool $default = false): bool
+    function casting_bool($value, bool $default = false): bool
     {
-        if (is_bool($param)) {
-            return $param;
+        if (is_bool($value)) {
+            return $value;
         }
 
-        switch (str_lower((string) $param)) {
+        switch (str_lower((string) $value)) {
             case '1':
             case 'true':
             case 't':
@@ -84,7 +84,7 @@ if (!function_exists('is_json')) {
      *
      * @return bool|mixed
      */
-    function is_json($json, $returnDecoded = false)
+    function is_json($json, bool $returnDecoded = false)
     {
         if (!is_string($json)) {
             return false;

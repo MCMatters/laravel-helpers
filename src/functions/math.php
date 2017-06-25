@@ -27,8 +27,8 @@ if (!function_exists('calculate_percentage')) {
 
 if (!function_exists('calculate_discount')) {
     /**
-     * @param $discount
-     * @param $total
+     * @param int|float $discount
+     * @param int|float $total
      * @param int $decimals
      *
      * @return float
@@ -43,8 +43,8 @@ if (!function_exists('calculate_discount')) {
 
 if (!function_exists('calculate_with_discount')) {
     /**
-     * @param $discount
-     * @param $total
+     * @param int|float $discount
+     * @param int|float $total
      * @param int $decimals
      *
      * @return float
@@ -60,6 +60,7 @@ if (!function_exists('calculate_with_discount')) {
 if (!function_exists('float_has_remainder')) {
     /**
      * @param float $number
+     *
      * @return bool
      */
     function float_has_remainder(float $number): bool
@@ -72,9 +73,10 @@ if (!function_exists('convert_bytes')) {
     /**
      * @param $value
      * @param string $returnType
+     *
      * @return float|int
      */
-    function convert_bytes($value, $returnType = 'b')
+    function convert_bytes($value, string $returnType = 'b')
     {
         $sizeTypes = get_size_types();
         $stringValue = (string) $value;

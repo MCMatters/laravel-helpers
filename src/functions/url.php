@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 if (!function_exists('get_base_url')) {
     /**
      * @param string $url
+     *
      * @return string
      */
     function get_base_url(string $url): string

@@ -17,7 +17,7 @@ if (!function_exists('array_has_with_wildcard')) {
     function array_has_with_wildcard(
         array $array,
         string $keys,
-        $searchWithSegment = false
+        bool $searchWithSegment = false
     ): bool {
         if (null === $keys || !$array) {
             return false;
@@ -87,7 +87,9 @@ if (!function_exists('array_has_with_wildcard')) {
                     }
 
                     return false;
-                } elseif (array_key_exists($segment, $array)) {
+                }
+
+                if (array_key_exists($segment, $array)) {
                     $flag = true;
                     $array = $array[$segment];
                 }
@@ -151,7 +153,7 @@ if (!function_exists('shuffle_assoc')) {
      *
      * @return array
      */
-    function shuffle_assoc(array $array = []): array
+    function shuffle_assoc(array $array): array
     {
         $shuffled = [];
 

@@ -78,17 +78,17 @@ if (!function_exists('search_entire_database')) {
     /**
      * Search the entire database.
      *
-     * @param string $find
+     * @param string $keyword
      *
      * @return array
      */
-    function search_entire_database(string $find = ''): array
+    function search_entire_database(string $keyword): array
     {
         long_processes();
         $results = [];
-        $find = trim($find);
+        $keyword = trim($keyword);
 
-        if ($find === '') {
+        if ($keyword === '') {
             return $results;
         }
 
@@ -97,7 +97,7 @@ if (!function_exists('search_entire_database')) {
 
             foreach ($columns as $column) {
                 $query->orWhereRaw(
-                    DB::raw('CONVERT(`'.$column.'` USING utf8) LIKE \'%'.$find.'%\'')
+                    "CONVERT(`{$column}` USING utf8) LIKE '%{$keyword}%'"
                 );
             }
 

@@ -119,11 +119,21 @@ if (!function_exists('query_has_join')) {
      */
     function query_has_join($query, string $table): bool
     {
-        if (!is_object($query) || !property_exists($query, 'joins')) {
+        if (!is_object($query)) {
             return false;
         }
 
-        foreach ($query->joins as $join) {
+        if (is_callable([$query, 'getBaseQuery'])) {
+            $baseQuery = $query->getBaseQuery();
+        } else {
+            $baseQuery = clone $query;
+        }
+
+        if (!property_exists($baseQuery, 'joins')) {
+            return false;
+        }
+
+        foreach ($baseQuery->joins as $join) {
             if ($join->table === $table) {
                 return true;
             }

@@ -68,6 +68,10 @@ if (!function_exists('strpos_array')) {
                     ? $strpos
                     : min($strpos, $position);
             }
+
+            if ($position === 0) {
+                return 0;
+            }
         }
 
         return $position;

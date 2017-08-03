@@ -48,11 +48,11 @@ The `get_class_constants_start_with` function returns an array with constants wh
 
 ## Database
 
-#### `compile_sql_query(string $sql, array $bindings)`
+#### `compile_sql_query($sql, array|null $bindings)`
 
 The `compile_sql_query` function replaces all placeholders given bindings.
 
-#### `get_all_tables()`
+#### `get_all_tables(bool $withColumns)`
 
 The `get_all_tables` function returns the list all tables with their columns.
 

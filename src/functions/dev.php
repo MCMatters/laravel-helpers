@@ -32,9 +32,9 @@ if (!function_exists('dump')) {
      *
      * @throws Exception
      */
-    function dump($value, $output = false)
+    function dump($value, bool $output = false)
     {
-        if (class_exists(Symfony\Component\VarDumper\Dumper\CliDumper::class)) {
+        if (class_exists('Symfony\Component\VarDumper\Dumper\CliDumper')) {
             $dumper = 'cli' === PHP_SAPI
                 ? new Symfony\Component\VarDumper\Dumper\CliDumper
                 : new Illuminate\Support\Debug\HtmlDumper;

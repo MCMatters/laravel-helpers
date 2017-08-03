@@ -81,16 +81,24 @@ if (!function_exists('is_json')) {
     /**
      * @param string|mixed $json
      * @param bool $returnDecoded
+     * @param bool $assoc
+     * @param int $depth
+     * @param int $options
      *
      * @return bool|mixed
      */
-    function is_json($json, bool $returnDecoded = false)
-    {
+    function is_json(
+        $json,
+        bool $returnDecoded = false,
+        bool $assoc = false,
+        int $depth = 512,
+        int $options = 0
+    ) {
         if (!is_string($json)) {
             return false;
         }
 
-        $decoded = json_decode($json);
+        $decoded = json_decode($json, $assoc, $depth, $options);
 
         if (json_last_error() === JSON_ERROR_NONE) {
             return $returnDecoded ? $decoded : true;

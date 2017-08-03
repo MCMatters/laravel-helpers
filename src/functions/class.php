@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Str;
+
 if (!function_exists('get_class_constants')) {
     /**
      * @param mixed $class
@@ -21,7 +23,7 @@ if (!function_exists('get_class_constants')) {
         }
 
         if (null === $className) {
-            throw new InvalidArgumentException('Passed wrong object class or class name');
+            throw new InvalidArgumentException('Passed wrong class object or class name');
         }
 
         $reflection = new ReflectionClass($className);
@@ -44,7 +46,7 @@ if (!function_exists('get_class_constants_start_with')) {
         $constants = [];
 
         foreach (get_class_constants($class) as $key => $constant) {
-            if (starts_with($key, $string)) {
+            if (Str::startsWith($key, $string)) {
                 $constants[$key] = $constant;
             }
         }

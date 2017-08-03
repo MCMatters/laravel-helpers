@@ -9,14 +9,26 @@ if (!function_exists('compile_sql_query')) {
     /**
      * Compile SQL query to string.
      *
-     * @param string $sql
-     * @param array $bindings
+     * @param string|mixed $sql
+     * @param array|null $bindings
      *
      * @return string
      */
-    function compile_sql_query(string $sql, array $bindings = []): string
+    function compile_sql_query($sql, array $bindings = null): string
     {
-        $string = function ($string) {
+        if (!is_string($sql)) {
+            if (!is_callable([$sql, 'toSql'])) {
+                throw new InvalidArgumentException('"$sql" must be string or Query object.');
+            }
+
+            if (null === $bindings) {
+                $bindings = $sql->getBindings();
+            }
+
+            $sql = $sql->toSql();
+        }
+
+        $toString = function ($string) {
             return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
         };
 
@@ -28,12 +40,13 @@ if (!function_exists('compile_sql_query')) {
                     break;
                 case 'float':
                 case 'double':
-                    $binding = (double) $binding;
+                    $binding = (float) $binding;
                     break;
                 case 'array':
                     foreach ($binding as $key => $value) {
-                        $binding[$key] = $string($value);
+                        $binding[$key] = $toString($value);
                     }
+
                     $binding = implode(',', $binding);
                     break;
                 case 'NULL':
@@ -42,7 +55,7 @@ if (!function_exists('compile_sql_query')) {
                     break;
                 case 'string':
                 default:
-                    $binding = $string($binding);
+                    $binding = $toString($binding);
                     break;
             }
             $sql = preg_replace('/\?/', $binding, $sql, 1);
@@ -56,16 +69,22 @@ if (!function_exists('get_all_tables')) {
     /**
      * Get all tables.
      *
+     * @param bool $withColumns
+     *
      * @return array
      */
-    function get_all_tables(): array
+    function get_all_tables(bool $withColumns = true): array
     {
         $tables = [];
 
         foreach (DB::select('SHOW TABLES') as $tableInfo) {
             foreach ($tableInfo as $table) {
-                foreach (Schema::getColumnListing($table) as $column) {
-                    $tables[$table][] = $column;
+                if (!$withColumns) {
+                    $tables[] = $table;
+                } else {
+                    foreach (Schema::getColumnListing($table) as $column) {
+                        $tables[$table][] = $column;
+                    }
                 }
             }
         }
@@ -112,7 +131,7 @@ if (!function_exists('search_entire_database')) {
 
 if (!function_exists('query_has_join')) {
     /**
-     * @param $query
+     * @param mixed $query
      * @param string $table
      *
      * @return bool

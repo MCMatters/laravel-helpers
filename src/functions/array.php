@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 if (!function_exists('array_has_with_wildcard')) {
@@ -24,7 +25,7 @@ if (!function_exists('array_has_with_wildcard')) {
         }
 
         if (!Str::contains($keys, '*')) {
-            return array_has($array, $keys);
+            return Arr::has($array, $keys);
         }
 
         $segments = explode('.', $keys);

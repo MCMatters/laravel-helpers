@@ -107,3 +107,33 @@ if (!function_exists('convert_bytes')) {
         return $value * (1024 ** ($typeKey - $returnTypeKey));
     }
 }
+
+if (!function_exists('is_number_even')) {
+    /**
+     * @param $number
+     *
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    function is_number_even($number): bool
+    {
+        if (!is_numeric($number)) {
+            throw new InvalidArgumentException('$number should be numeric');
+        }
+
+        return $number % 2 === 0;
+    }
+}
+
+if (!function_exists('is_number_odd')) {
+    /**
+     * @param $number
+     *
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    function is_number_odd($number): bool
+    {
+        return !is_number_even($number);
+    }
+}

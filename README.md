@@ -138,6 +138,14 @@ The `float_has_remainder` function checks whether the remainder of the float is 
 
 The `convert_bytes` function converts bytes between any sizes.
 
+#### `is_number_even($number)`
+
+The `is_number_even` function checks whether the number is even.
+
+#### `is_number_odd($even)`
+
+The `is_number_odd` function checks whether the number is odd.
+
 ## Server
 
 #### `is_request_method_update($request)`

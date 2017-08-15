@@ -74,4 +74,36 @@ class MathTest extends TestCase
 
         $this->assertEquals(1024, convert_bytes('1K', 'b'));
     }
+
+    /**
+     * Test function "is_number_even".
+     */
+    public function testIsNumberEven()
+    {
+        $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
+
+        foreach ($numbers['even'] as $number) {
+            $this->assertTrue(is_number_even($number));
+        }
+
+        foreach ($numbers['odd'] as $number) {
+            $this->assertFalse(is_number_even($number));
+        }
+    }
+
+    /**
+     * Test function "is_number_odd".
+     */
+    public function testIsNumberOdd()
+    {
+        $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
+
+        foreach ($numbers['odd'] as $number) {
+            $this->assertTrue(is_number_odd($number));
+        }
+
+        foreach ($numbers['even'] as $number) {
+            $this->assertFalse(is_number_odd($number));
+        }
+    }
 }

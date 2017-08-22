@@ -32,6 +32,10 @@ The `array_get_random` function returns random value instead key, how it makes t
 
 The `array_key_by` function returns a new associative array grouped by `$key`.
 
+#### `array_contains(array $array, string $needle, bool $byKey = false)`
+
+The `array_contains` function returns true if array contains given `$needle`. You can also search by array keys. This function searches only in first level of array.
+
 #### `shuffle_assoc(array $array)`
 
 The `shuffle_assoc` function works like basic `shuffle` but with key preserving.

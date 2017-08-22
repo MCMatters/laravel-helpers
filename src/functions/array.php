@@ -148,6 +148,36 @@ if (!function_exists('array_key_by')) {
     }
 }
 
+if (!function_exists('array_contains')) {
+    /**
+     * @param array $array
+     * @param string $needle
+     * @param bool $byKey
+     *
+     * @return bool
+     * @todo: add depth
+     */
+    function array_contains(
+        array $array,
+        string $needle,
+        bool $byKey = false
+    ): bool {
+        foreach ($array as $key => $value) {
+            if ($byKey) {
+                if (strpos($key, $needle) !== false) {
+                    return true;
+                }
+            } else {
+                if (is_string($value) && strpos($value, $needle) !== false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
+
 if (!function_exists('shuffle_assoc')) {
     /**
      * @param array $array

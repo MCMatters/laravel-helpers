@@ -178,6 +178,24 @@ if (!function_exists('array_contains')) {
     }
 }
 
+if (!function_exists('array_has_int_keys')) {
+    /**
+     * @param array $array
+     *
+     * @return bool
+     */
+    function array_has_int_keys(array $array): bool
+    {
+        foreach ($array as $key => $value) {
+            if (!is_numeric($key) || (int) $key != $key) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 if (!function_exists('shuffle_assoc')) {
     /**
      * @param array $array

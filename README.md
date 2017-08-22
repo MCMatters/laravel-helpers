@@ -36,6 +36,10 @@ The `array_key_by` function returns a new associative array grouped by `$key`.
 
 The `array_contains` function returns true if array contains given `$needle`. You can also search by array keys. This function searches only in first level of array.
 
+#### `array_has_int_keys(array $array)`
+
+The `array_has_int_keys` function checks whether keys of given array as integer or not.
+
 #### `shuffle_assoc(array $array)`
 
 The `shuffle_assoc` function works like basic `shuffle` but with key preserving.

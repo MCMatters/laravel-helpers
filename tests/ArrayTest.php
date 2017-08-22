@@ -55,4 +55,18 @@ class ArrayTest extends TestCase
         $this->assertFalse(array_contains($array, 'array'));
         $this->assertFalse(array_contains($array, 'magic,'));
     }
+
+    /**
+     * Test function "array_has_int_keys".
+     */
+    public function testArrayHasIntKeys()
+    {
+        $array = require __DIR__.'/mocks/arrays/hasIntKeys.php';
+
+        $this->assertTrue(array_has_int_keys($array['int']));
+        $this->assertTrue(array_has_int_keys($array['int2']));
+
+        $this->assertFalse(array_has_int_keys($array['float']));
+        $this->assertFalse(array_has_int_keys($array['string']));
+    }
 }

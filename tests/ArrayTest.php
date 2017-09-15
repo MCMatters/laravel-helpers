@@ -2,71 +2,49 @@
 
 declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
+namespace McMatters\Helpers\Tests;
 
-/**
- * Class ArrayTest
- */
+use Illuminate\Support\Arr;
+
 class ArrayTest extends TestCase
 {
-    /**
-     * Test function "array_key_by".
-     */
     public function testArrayKeyBy()
     {
         $array = require __DIR__.'/mocks/arrays/keyBy.php';
 
-        $newArray = array_key_by($array, 'id');
+        $newArray = Arr::keyBy($array, 'id');
 
         $this->assertEquals([3, 5, 7], array_keys($newArray));
         $this->assertNotEquals([3, 7, 5], array_keys($newArray));
     }
 
-    /**
-     * Test function "array_get_random".
-     */
-    public function testArrayGetRandom()
-    {
-        $array = require __DIR__.'/mocks/arrays/getRandom.php';
-
-        for ($i = 0; $i <= 100; $i++) {
-            $this->assertTrue(in_array(array_get_random($array), $array, true));
-        }
-    }
-
-    /**
-     * Test function "array_contains".
-     */
     public function testArrayContains()
     {
         $array = require __DIR__.'/mocks/arrays/contains.php';
 
-        $this->assertTrue(array_contains($array, 'foo'));
-        $this->assertTrue(array_contains($array, 'bar'));
-        $this->assertTrue(array_contains($array, 'some'));
-        $this->assertTrue(array_contains($array, 'magic'));
-        $this->assertTrue(array_contains($array, 'Some magic'));
-        $this->assertTrue(array_contains($array, ' magic '));
-        $this->assertTrue(array_contains($array, 'test', true));
-        $this->assertTrue(array_contains($array, 'baz', true));
+        $this->assertTrue(Arr::contains($array, 'foo'));
+        $this->assertTrue(Arr::contains($array, 'bar'));
+        $this->assertTrue(Arr::contains($array, 'some'));
+        $this->assertTrue(Arr::contains($array, 'magic'));
+        $this->assertTrue(Arr::contains($array, 'Some magic'));
+        $this->assertTrue(Arr::contains($array, ' magic '));
+        $this->assertTrue(Arr::contains($array, 'test', true));
+        $this->assertTrue(Arr::contains($array, 'baz', true));
 
-        $this->assertFalse(array_contains($array, 'test'));
-        $this->assertFalse(array_contains($array, 'nested'));
-        $this->assertFalse(array_contains($array, 'array'));
-        $this->assertFalse(array_contains($array, 'magic,'));
+        $this->assertFalse(Arr::contains($array, 'test'));
+        $this->assertFalse(Arr::contains($array, 'nested'));
+        $this->assertFalse(Arr::contains($array, 'array'));
+        $this->assertFalse(Arr::contains($array, 'magic,'));
     }
 
-    /**
-     * Test function "array_has_int_keys".
-     */
     public function testArrayHasIntKeys()
     {
         $array = require __DIR__.'/mocks/arrays/hasIntKeys.php';
 
-        $this->assertTrue(array_has_int_keys($array['int']));
-        $this->assertTrue(array_has_int_keys($array['int2']));
+        $this->assertTrue(Arr::hasOnlyIntKeys($array['int']));
+        $this->assertTrue(Arr::hasOnlyIntKeys($array['int2']));
 
-        $this->assertFalse(array_has_int_keys($array['float']));
-        $this->assertFalse(array_has_int_keys($array['string']));
+        $this->assertFalse(Arr::hasOnlyIntKeys($array['float']));
+        $this->assertFalse(Arr::hasOnlyIntKeys($array['string']));
     }
 }

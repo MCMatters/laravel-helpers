@@ -2,108 +2,87 @@
 
 declare(strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
+namespace McMatters\Helpers\Tests;
 
-/**
- * Class MathTest
- */
+use InvalidArgumentException;
+use McMatters\Helpers\Helpers\MathHelper;
+
 class MathTest extends TestCase
 {
-    /**
-     * Test function "calculate_percentage".
-     */
     public function testCalculatePercentage()
     {
-        $this->assertEquals(50.0, calculate_percentage(50, 100));
-        $this->assertEquals(23.8095, calculate_percentage(5, 21, 4));
+        $this->assertEquals(50.0, MathHelper::getPercentage(50, 100));
+        $this->assertEquals(23.8095, MathHelper::getPercentage(5, 21, 4));
     }
 
-    /**
-     * Test function "calculate_percentage" with exception.
-     */
     public function testCalculatePercentageWithException()
     {
         $this->expectException(InvalidArgumentException::class);
-        calculate_percentage('SomeNumber', 21, 4);
+        MathHelper::getPercentage('SomeNumber', 21, 4);
     }
 
-    /**
-     * Test function "calculate_discount".
-     */
     public function TestCalculateDiscount()
     {
-        $this->assertEquals(25, calculate_discount(25, 100));
-        $this->assertEquals(33, calculate_discount(33, 100));
+        $this->assertEquals(25, MathHelper::getDiscount(25, 100));
+        $this->assertEquals(33, MathHelper::getDiscount(33, 100));
     }
 
-    /**
-     * Test function "float_has_remainder".
-     */
     public function testFloatHasRemainder()
     {
-        $this->assertTrue(float_has_remainder(23.6));
-        $this->assertFalse(float_has_remainder(23.0));
-        $this->assertFalse(float_has_remainder(12));
+        $this->assertTrue(MathHelper::hasFloatRemainder(23.6));
+        $this->assertFalse(MathHelper::hasFloatRemainder(23.0));
+        $this->assertFalse(MathHelper::hasFloatRemainder(12));
     }
 
-    /**
-     * Test function "convert_bytes".
-     */
     public function testConvertBytes()
     {
-        $this->assertEquals(1024, convert_bytes('1T', 'gb'));
-        $this->assertEquals(1048576, convert_bytes('1T', 'mb'));
-        $this->assertEquals(1073741824, convert_bytes('1T', 'kb'));
-        $this->assertEquals(1099511627776, convert_bytes('1T', 'b'));
-        $this->assertEquals(1, convert_bytes('1024G', 'tb'));
-        $this->assertEquals(1, convert_bytes('1048576M', 'tb'));
-        $this->assertEquals(1, convert_bytes('1073741824K', 'tb'));
-        $this->assertEquals(1, convert_bytes('1099511627776B', 'tb'));
+        $this->assertEquals(1024, MathHelper::convertBytes('1T', 'gb'));
+        $this->assertEquals(1048576, MathHelper::convertBytes('1T', 'mb'));
+        $this->assertEquals(1073741824, MathHelper::convertBytes('1T', 'kb'));
+        $this->assertEquals(1099511627776, MathHelper::convertBytes('1T', 'b'));
+        $this->assertEquals(1, MathHelper::convertBytes('1024G', 'tb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1048576M', 'tb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1073741824K', 'tb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1099511627776B', 'tb'));
 
-        $this->assertEquals(1024, convert_bytes('1G', 'mb'));
-        $this->assertEquals(1048576, convert_bytes('1G', 'kb'));
-        $this->assertEquals(1073741824, convert_bytes('1G', 'b'));
-        $this->assertEquals(1, convert_bytes('1024M', 'gb'));
-        $this->assertEquals(1, convert_bytes('1048576K', 'gb'));
-        $this->assertEquals(1, convert_bytes('1073741824B', 'gb'));
+        $this->assertEquals(1024, MathHelper::convertBytes('1G', 'mb'));
+        $this->assertEquals(1048576, MathHelper::convertBytes('1G', 'kb'));
+        $this->assertEquals(1073741824, MathHelper::convertBytes('1G', 'b'));
+        $this->assertEquals(1, MathHelper::convertBytes('1024M', 'gb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1048576K', 'gb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1073741824B', 'gb'));
 
-        $this->assertEquals(1024, convert_bytes('1M', 'kb'));
-        $this->assertEquals(1048576, convert_bytes('1M', 'b'));
-        $this->assertEquals(1, convert_bytes('1024K', 'mb'));
-        $this->assertEquals(1, convert_bytes('1048576B', 'mb'));
+        $this->assertEquals(1024, MathHelper::convertBytes('1M', 'kb'));
+        $this->assertEquals(1048576, MathHelper::convertBytes('1M', 'b'));
+        $this->assertEquals(1, MathHelper::convertBytes('1024K', 'mb'));
+        $this->assertEquals(1, MathHelper::convertBytes('1048576B', 'mb'));
 
-        $this->assertEquals(1024, convert_bytes('1K', 'b'));
+        $this->assertEquals(1024, MathHelper::convertBytes('1K', 'b'));
     }
 
-    /**
-     * Test function "is_number_even".
-     */
     public function testIsNumberEven()
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
 
         foreach ($numbers['even'] as $number) {
-            $this->assertTrue(is_number_even($number));
+            $this->assertTrue(MathHelper::isNumberEven($number));
         }
 
         foreach ($numbers['odd'] as $number) {
-            $this->assertFalse(is_number_even($number));
+            $this->assertFalse(MathHelper::isNumberEven($number));
         }
     }
 
-    /**
-     * Test function "is_number_odd".
-     */
     public function testIsNumberOdd()
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
 
         foreach ($numbers['odd'] as $number) {
-            $this->assertTrue(is_number_odd($number));
+            $this->assertTrue(MathHelper::isNumberOdd($number));
         }
 
         foreach ($numbers['even'] as $number) {
-            $this->assertFalse(is_number_odd($number));
+            $this->assertFalse(MathHelper::isNumberOdd($number));
         }
     }
 }

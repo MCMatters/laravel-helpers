@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\Helpers;
+namespace McMatters\Helpers\Helpers;
 
 /**
- * Class Mysql
+ * Class MysqlHelper
  *
  * @package McMatters\Helpers
  */
-class Mysql
+class MysqlHelper
 {
     /**
      * Storages.

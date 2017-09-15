@@ -2,66 +2,65 @@
 
 declare(strict_types = 1);
 
-use Illuminate\Support\Facades\App;
+namespace McMatters\Helpers\Helpers;
 
-if (!function_exists('is_production_environment')) {
+use Illuminate\Container\Container;
+use Illuminate\Support\Str;
+use const false, true;
+use function is_bool, is_string, json_decode, json_last_error, preg_match, random_int;
+
+/**
+ * Class GenericHelper
+ *
+ * @package McMatters\Helpers\Helpers
+ */
+class GenericHelper
+{
     /**
-     * Check if current environment is production.
-     *
      * @return bool
      */
-    function is_production_environment(): bool
+    public static function isProduction(): bool
     {
-        return (bool) App::environment('production', 'live');
+        return Container::getInstance()->environment('production', 'live');
     }
-}
 
-if (!function_exists('is_local_environment')) {
     /**
-     * Check if current environment is local.
-     *
      * @return bool
      */
-    function is_local_environment(): bool
+    public static function isLocal(): bool
     {
-        return (bool) App::environment('local');
+        return Container::getInstance()->environment('local');
     }
-}
 
-if (!function_exists('get_size_types')) {
     /**
      * @return array
      */
-    function get_size_types(): array
+    public static function getSizeTypes(): array
     {
         return ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
     }
-}
 
-if (!function_exists('random_bool')) {
     /**
      * @return bool
      */
-    function random_bool(): bool
+    public static function randomBool(): bool
     {
         return (bool) random_int(0, 1);
     }
-}
 
-if (!function_exists('casting_bool')) {
     /**
-     * @param mixed $value
+     * @param $value
      * @param bool $default
      *
      * @return bool
      */
-    function casting_bool($value, bool $default = false): bool
+    public static function castingBool($value, bool $default = false): bool
     {
         if (is_bool($value)) {
             return $value;
         }
 
-        switch (str_lower((string) $value)) {
+        switch (Str::lower((string) $value)) {
             case '1':
             case 'true':
             case 't':
@@ -75,21 +74,19 @@ if (!function_exists('casting_bool')) {
                 return $default;
         }
     }
-}
 
-if (!function_exists('is_json')) {
     /**
-     * @param string|mixed $json
-     * @param bool $returnDecoded
+     * @param $json
+     * @param bool $return
      * @param bool $assoc
      * @param int $depth
      * @param int $options
      *
-     * @return bool|mixed
+     * @return mixed
      */
-    function is_json(
+    public static function isJson(
         $json,
-        bool $returnDecoded = false,
+        bool $return = false,
         bool $assoc = false,
         int $depth = 512,
         int $options = 0
@@ -101,20 +98,18 @@ if (!function_exists('is_json')) {
         $decoded = json_decode($json, $assoc, $depth, $options);
 
         if (json_last_error() === JSON_ERROR_NONE) {
-            return $returnDecoded ? $decoded : true;
+            return $return ? $decoded : true;
         }
 
         return false;
     }
-}
 
-if (!function_exists('is_uuid')) {
     /**
-     * @param string|mixed $string
+     * @param mixed $string
      *
      * @return bool
      */
-    function is_uuid($string): bool
+    public static function isUuid($string): bool
     {
         if (!is_string($string)) {
             return false;

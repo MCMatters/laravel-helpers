@@ -2,19 +2,29 @@
 
 declare(strict_types = 1);
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+namespace McMatters\Helpers\Helpers;
 
-if (!function_exists('compile_sql_query')) {
+use Illuminate\Container\Container;
+use InvalidArgumentException;
+use const false, null, true;
+use function gettype, implode, is_callable, is_object, is_string, preg_replace,
+    property_exists, str_replace, trim;
+
+/**
+ * Class DBHelper
+ *
+ * @package McMatters\Helpers\Helpers
+ */
+class DBHelper
+{
     /**
-     * Compile SQL query to string.
-     *
-     * @param string|mixed $sql
+     * @param mixed $sql
      * @param array|null $bindings
      *
      * @return string
+     * @throws \InvalidArgumentException
      */
-    function compile_sql_query($sql, array $bindings = null): string
+    public static function compileSqlQuery($sql, array $bindings = null): string
     {
         if (!is_string($sql)) {
             if (!is_callable([$sql, 'toSql'])) {
@@ -28,10 +38,6 @@ if (!function_exists('compile_sql_query')) {
             $sql = $sql->toSql();
         }
 
-        $toString = function ($string) {
-            return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
-        };
-
         foreach ($bindings as $binding) {
             switch (gettype($binding)) {
                 case 'boolean':
@@ -44,7 +50,7 @@ if (!function_exists('compile_sql_query')) {
                     break;
                 case 'array':
                     foreach ($binding as $key => $value) {
-                        $binding[$key] = $toString($value);
+                        $binding[$key] = self::escapeString($value);
                     }
 
                     $binding = implode(',', $binding);
@@ -55,7 +61,7 @@ if (!function_exists('compile_sql_query')) {
                     break;
                 case 'string':
                 default:
-                    $binding = $toString($binding);
+                    $binding = self::escapeString($binding);
                     break;
             }
             $sql = preg_replace('/\?/', $binding, $sql, 1);
@@ -63,26 +69,25 @@ if (!function_exists('compile_sql_query')) {
 
         return $sql;
     }
-}
 
-if (!function_exists('get_all_tables')) {
     /**
-     * Get all tables.
-     *
      * @param bool $withColumns
      *
      * @return array
      */
-    function get_all_tables(bool $withColumns = true): array
+    public static function getAllTables(bool $withColumns = true): array
     {
         $tables = [];
 
-        foreach (DB::select('SHOW TABLES') as $tableInfo) {
+        $db = self::getDb();
+        $schema = self::getSchema();
+
+        foreach ($db->select('SHOW TABLES') as $tableInfo) {
             foreach ($tableInfo as $table) {
                 if (!$withColumns) {
                     $tables[] = $table;
                 } else {
-                    foreach (Schema::getColumnListing($table) as $column) {
+                    foreach ($schema->getColumnListing($table) as $column) {
                         $tables[$table][] = $column;
                     }
                 }
@@ -91,28 +96,25 @@ if (!function_exists('get_all_tables')) {
 
         return $tables;
     }
-}
 
-if (!function_exists('search_entire_database')) {
     /**
-     * Search the entire database.
-     *
      * @param string $keyword
      *
      * @return array
      */
-    function search_entire_database(string $keyword): array
+    public static function searchEntireDatabase(string $keyword): array
     {
-        long_processes();
         $results = [];
         $keyword = trim($keyword);
 
-        if ($keyword === '') {
+        if ('' === $keyword) {
             return $results;
         }
 
-        foreach (get_all_tables() as $table => $columns) {
-            $query = DB::table($table);
+        $db = self::getDb();
+
+        foreach (self::getAllTables() as $table => $columns) {
+            $query = $db->table($table);
 
             foreach ($columns as $column) {
                 $query->orWhereRaw(
@@ -127,16 +129,14 @@ if (!function_exists('search_entire_database')) {
 
         return $results;
     }
-}
 
-if (!function_exists('query_has_join')) {
     /**
      * @param mixed $query
-     * @param string $table
+     * @param string $with
      *
      * @return bool
      */
-    function query_has_join($query, string $table): bool
+    public static function hasQueryJoinWith($query, string $with): bool
     {
         if (!is_object($query)) {
             return false;
@@ -153,11 +153,49 @@ if (!function_exists('query_has_join')) {
         }
 
         foreach ($baseQuery->joins as $join) {
-            if ($join->table === $table) {
+            if ($join->table === $with) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param string|int|float $string
+     *
+     * @return string
+     */
+    protected static function escapeString($string): string
+    {
+        return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
+    }
+
+    /**
+     * @return mixed
+     */
+    protected static function getDb()
+    {
+        static $db;
+
+        if (null === $db) {
+            $db = Container::getInstance()->make('db');
+        }
+
+        return $db;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected static function getSchema()
+    {
+        static $schema;
+
+        if (null === $schema) {
+            $schema = self::getDb()->connection()->getSchemaBuilder();
+        }
+
+        return $schema;
     }
 }

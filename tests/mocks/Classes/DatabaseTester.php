@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\Helpers\Tests;
+namespace McMatters\Helpers\Tests\Mocks;
 
 /**
  * Class DatabaseTester

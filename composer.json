@@ -13,7 +13,8 @@
         "illuminate/support": "5.*",
         "illuminate/database": "5.*",
         "symfony/debug": "3.*",
-        "symfony/http-foundation": "3.*"
+        "symfony/http-foundation": "3.*",
+        "symfony/process": "3.*"
     },
     "autoload": {
         "psr-4": {

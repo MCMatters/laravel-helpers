@@ -20,9 +20,9 @@
 
 ## Arrays
 
-#### `array_has_wildcard(array $array, string $keys, bool $searchWithSegment)`
+#### `array_has_with_wildcard(array $array, string $keys, bool $searchWithSegment)`
 
-The `array_has_wildcard` is analogue of function `array_has` with ability to search with wildcard. Also it can search keys with dots (i.e. when you want to get some data from multiple field when validation is failed).
+The `array_has_with_wildcard` is analogue of function `array_has` with ability to search with wildcard. Also it can search keys with dots (i.e. when you want to get some data from multiple field when validation is failed).
 
 #### `array_get_random(array $array)`
 

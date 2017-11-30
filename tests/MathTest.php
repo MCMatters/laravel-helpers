@@ -106,4 +106,16 @@ class MathTest extends TestCase
             $this->assertFalse(is_number_odd($number));
         }
     }
+
+    /**
+     * Test function "in_range".
+     */
+    public function testInRange()
+    {
+        $this->assertTrue(in_range(5, 4, 6));
+        $this->assertTrue(in_range(5, 3, 6));
+        $this->assertTrue(in_range(5.5, 5, 6));
+
+        $this->assertFalse(in_range(2, 5, 6));
+    }
 }

@@ -44,6 +44,10 @@ The `array_has_int_keys` function checks whether keys of given array as integer 
 
 The `shuffle_assoc` function works like basic `shuffle` but with key preserving.
 
+#### `array_change_key_case_recursive(array $array, int $case = CASE_LOWER)`
+
+The `array_change_key_case_recursive` function changes the case of all keys in an array recursively.
+
 ## Class
 
 #### `get_class_constants($class)`
@@ -153,6 +157,10 @@ The `is_number_even` function checks whether the number is even.
 #### `is_number_odd($even)`
 
 The `is_number_odd` function checks whether the number is odd.
+
+#### `in_range($number, $from, $to)`
+
+The `in_range` function checks whether the number is between `$from` and `$to`.
 
 ## Server
 

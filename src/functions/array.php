@@ -216,3 +216,24 @@ if (!function_exists('shuffle_assoc')) {
         return $shuffled;
     }
 }
+
+if (!function_exists('array_change_key_case_recursive')) {
+    /**
+     * @param array $array
+     * @param int $case
+     *
+     * @return array
+     */
+    function array_change_key_case_recursive(
+        array $array,
+        int $case = CASE_LOWER
+    ): array {
+        foreach ($array as &$item) {
+            if (is_array($item)) {
+                $item = array_change_key_case_recursive($item, $case);
+            }
+        }
+
+        return array_change_key_case($array, $case);
+    }
+}

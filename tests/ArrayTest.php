@@ -69,4 +69,35 @@ class ArrayTest extends TestCase
         $this->assertFalse(array_has_int_keys($array['float']));
         $this->assertFalse(array_has_int_keys($array['string']));
     }
+
+    /**
+     * Test function "array_change_key_case_recursive".
+     */
+    public function testArrayChangeKeyCaseRecursive()
+    {
+        $array = require __DIR__.'/mocks/arrays/changeKeyCase.php';
+
+        $lowerCased = array_change_key_case_recursive($array, CASE_LOWER);
+        $upperCased = array_change_key_case_recursive($array, CASE_UPPER);
+
+        $this->checkArrayKeysCase($lowerCased, 'strtolower');
+        $this->checkArrayKeysCase($upperCased, 'strtoupper');
+    }
+
+    /**
+     * @param array $array
+     * @param string $method
+     *
+     * @return void
+     */
+    protected function checkArrayKeysCase(array $array, string $method)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $this->checkArrayKeysCase($value, $method);
+            }
+
+            $this->assertSame($method($key), $key);
+        }
+    }
 }

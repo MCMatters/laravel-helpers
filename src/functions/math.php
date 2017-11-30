@@ -137,3 +137,22 @@ if (!function_exists('is_number_odd')) {
         return !is_number_even($number);
     }
 }
+
+if (!function_exists('in_range')) {
+    /**
+     * @param int|float $number
+     * @param int|float $from
+     * @param int|float $to
+     *
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    function in_range($number, $from, $to): bool
+    {
+        if (!is_numeric($number) || !is_numeric($from) || !is_numeric($to)) {
+            throw new InvalidArgumentException('Arguments must be numeric');
+        }
+
+        return $from <= $number && $to >= $number;
+    }
+}

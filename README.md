@@ -92,6 +92,14 @@ The `dump` is analogue of function `dd`, but without stopping php executing scri
 
 The `is_morphed_belongs_parent` function determines whether morphed model is belongs to parent.
 
+#### `get_model_from_query($query)`
+
+The `get_model_from_query` function returns model from given `$query`. Supports only Builder and Relation queries.
+
+#### `destroy_models_from_query($query)`
+
+The `destroy_models_from_query` function destroys models from given `$query`. It is very useful for calling model observers when you delete your models.
+
 ## Forms
 
 #### `transform_form_element_key(string $key)`

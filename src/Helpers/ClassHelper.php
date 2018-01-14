@@ -19,7 +19,7 @@ use function get_class, is_object, is_string;
 class ClassHelper
 {
     /**
-     * @param $class
+     * @param mixed $class
      *
      * @return array
      * @throws ReflectionException

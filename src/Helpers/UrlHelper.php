@@ -5,7 +5,8 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
-use function parse_url;
+use const false, true, DIRECTORY_SEPARATOR, PHP_URL_HOST;
+use function parse_url, preg_replace, trim;
 
 /**
  * Class UrlHelper
@@ -29,7 +30,26 @@ class UrlHelper
 
         $scheme = $parsedUrl['scheme'] ?? 'http';
 
-        return $scheme.'://'.$parsedUrl['host'];
+        return "{$scheme}://{$parsedUrl['host']}";
+    }
+
+    /**
+     * @param string $url
+     * @param bool $stripWww
+     *
+     * @return string
+     */
+    public static function getHost(string $url, bool $stripWww = true): string
+    {
+        if (($url = parse_url(trim($url), PHP_URL_HOST)) === false) {
+            return '';
+        }
+
+        if ($stripWww) {
+            return preg_replace('/^www\./', '', $url) ?? '';
+        }
+
+        return $url;
     }
 
     /**

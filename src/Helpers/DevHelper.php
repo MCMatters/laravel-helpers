@@ -5,7 +5,10 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use InvalidArgumentException;
-use const false, null;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Illuminate\Support\Debug\HtmlDumper;
+use const false, null, PHP_SAPI;
 use function class_exists, var_dump;
 
 /**
@@ -43,24 +46,18 @@ class DevHelper
      */
     public static function dump($value, bool $output = false)
     {
-        if (class_exists('Symfony\Component\VarDumper\Dumper\CliDumper') ||
-            class_exists('Illuminate\Support\Debug\HtmlDumper')
-        ) {
-            $dumper = null;
+        $dumper = null;
 
-            if ('cli' === PHP_SAPI) {
-                $dumper = new Symfony\Component\VarDumper\Dumper\CliDumper();
-            } else {
-                $dumper = new Illuminate\Support\Debug\HtmlDumper();
-            }
+        if ('cli' === PHP_SAPI && class_exists(CliDumper::class)) {
+            $dumper = new CliDumper();
+        } elseif (class_exists(HtmlDumper::class)) {
+            $dumper = new HtmlDumper();
+        }
 
-            if (null === $dumper) {
-                var_dump($value);
-            } else {
-                $varCloner = new Symfony\Component\VarDumper\Cloner\VarCloner;
+        if (null !== $dumper) {
+            $varCloner = new VarCloner;
 
-                $dumper->dump($varCloner->cloneVar($value), $output);
-            }
+            $dumper->dump($varCloner->cloneVar($value), $output);
         } else {
             var_dump($value);
         }

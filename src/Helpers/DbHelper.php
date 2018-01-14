@@ -11,18 +11,18 @@ use function gettype, implode, is_callable, is_object, is_string, preg_replace,
     property_exists, str_replace, trim;
 
 /**
- * Class DBHelper
+ * Class DbHelper
  *
  * @package McMatters\Helpers\Helpers
  */
-class DBHelper
+class DbHelper
 {
     /**
      * @param mixed $sql
      * @param array|null $bindings
      *
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function compileSqlQuery($sql, array $bindings = null): string
     {
@@ -44,10 +44,12 @@ class DBHelper
                 case 'integer':
                     $binding = (int) $binding;
                     break;
+
                 case 'float':
                 case 'double':
                     $binding = (float) $binding;
                     break;
+
                 case 'array':
                     foreach ($binding as $key => $value) {
                         $binding[$key] = self::escapeString($value);
@@ -55,15 +57,18 @@ class DBHelper
 
                     $binding = implode(',', $binding);
                     break;
+
                 case 'NULL':
                 case 'unknown type':
                 case 'resource':
                     break;
+
                 case 'string':
                 default:
                     $binding = self::escapeString($binding);
                     break;
             }
+
             $sql = preg_replace('/\?/', $binding, $sql, 1);
         }
 
@@ -72,15 +77,18 @@ class DBHelper
 
     /**
      * @param bool $withColumns
+     * @param string|null $connection
      *
      * @return array
      */
-    public static function getAllTables(bool $withColumns = true): array
-    {
+    public static function getAllTables(
+        bool $withColumns = true,
+        string $connection = null
+    ): array {
         $tables = [];
 
-        $db = self::getDb();
-        $schema = self::getSchema();
+        $db = self::getDb($connection);
+        $schema = self::getSchema($connection);
 
         foreach ($db->select('SHOW TABLES') as $tableInfo) {
             foreach ($tableInfo as $table) {
@@ -99,11 +107,14 @@ class DBHelper
 
     /**
      * @param string $keyword
+     * @param string|null $connection
      *
      * @return array
      */
-    public static function searchEntireDatabase(string $keyword): array
-    {
+    public static function searchEntireDatabase(
+        string $keyword,
+        string $connection = null
+    ): array {
         $results = [];
         $keyword = trim($keyword);
 
@@ -111,7 +122,7 @@ class DBHelper
             return $results;
         }
 
-        $db = self::getDb();
+        $db = self::getDb($connection);
 
         foreach (self::getAllTables() as $table => $columns) {
             $query = $db->table($table);
@@ -172,9 +183,11 @@ class DBHelper
     }
 
     /**
+     * @param string|null $connection
+     *
      * @return mixed
      */
-    protected static function getDb()
+    protected static function getDb(string $connection = null)
     {
         static $db;
 
@@ -182,20 +195,16 @@ class DBHelper
             $db = Container::getInstance()->make('db');
         }
 
-        return $db;
+        return $db->connection($connection);
     }
 
     /**
+     * @param string|null $connection
+     *
      * @return mixed
      */
-    protected static function getSchema()
+    protected static function getSchema(string $connection = null)
     {
-        static $schema;
-
-        if (null === $schema) {
-            $schema = self::getDb()->connection()->getSchemaBuilder();
-        }
-
-        return $schema;
+        return self::getDb($connection)->getSchemaBuilder();
     }
 }

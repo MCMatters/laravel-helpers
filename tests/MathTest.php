@@ -7,26 +7,48 @@ namespace McMatters\Helpers\Tests;
 use InvalidArgumentException;
 use McMatters\Helpers\Helpers\MathHelper;
 
+/**
+ * Class MathTest
+ *
+ * @package McMatters\Helpers\Tests
+ */
 class MathTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     */
     public function testCalculatePercentage()
     {
         $this->assertEquals(50.0, MathHelper::getPercentage(50, 100));
         $this->assertEquals(23.8095, MathHelper::getPercentage(5, 21, 4));
     }
 
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws \PHPUnit\Framework\Exception
+     */
     public function testCalculatePercentageWithException()
     {
         $this->expectException(InvalidArgumentException::class);
         MathHelper::getPercentage('SomeNumber', 21, 4);
     }
 
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     */
     public function TestCalculateDiscount()
     {
         $this->assertEquals(25, MathHelper::getDiscount(25, 100));
         $this->assertEquals(33, MathHelper::getDiscount(33, 100));
     }
 
+    /**
+     * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     */
     public function testFloatHasRemainder()
     {
         $this->assertTrue(MathHelper::hasFloatRemainder(23.6));
@@ -34,6 +56,9 @@ class MathTest extends TestCase
         $this->assertFalse(MathHelper::hasFloatRemainder(12));
     }
 
+    /**
+     * @return void
+     */
     public function testConvertBytes()
     {
         $this->assertEquals(1024, MathHelper::convertBytes('1T', 'gb'));
@@ -60,6 +85,11 @@ class MathTest extends TestCase
         $this->assertEquals(1024, MathHelper::convertBytes('1K', 'b'));
     }
 
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     */
     public function testIsNumberEven()
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
@@ -73,6 +103,11 @@ class MathTest extends TestCase
         }
     }
 
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     */
     public function testIsNumberOdd()
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
@@ -84,5 +119,19 @@ class MathTest extends TestCase
         foreach ($numbers['even'] as $number) {
             $this->assertFalse(MathHelper::isNumberOdd($number));
         }
+    }
+
+    /**
+     * @return void
+     * @throws InvalidArgumentException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     */
+    public function testInRange()
+    {
+        $this->assertTrue(MathHelper::inRange(5, 4, 6));
+        $this->assertTrue(MathHelper::inRange(5, 3, 6));
+        $this->assertTrue(MathHelper::inRange(5.5, 5, 6));
+
+        $this->assertFalse(MathHelper::inRange(2, 5, 6));
     }
 }

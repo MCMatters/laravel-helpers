@@ -4,42 +4,18 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers\Helpers;
 
-use Illuminate\Container\Container;
 use Illuminate\Support\Str;
-use const false, true;
-use function is_bool, is_string, json_decode, json_last_error, preg_match, random_int;
+use stdClass;
+use const false, true, JSON_ERROR_NONE;
+use function is_bool, is_string, json_decode, json_last_error, preg_match;
 
 /**
- * Class GenericHelper
+ * Class TypeHelper
  *
  * @package McMatters\Helpers\Helpers
  */
-class GenericHelper
+class TypeHelper
 {
-    /**
-     * @return bool
-     */
-    public static function isProduction(): bool
-    {
-        return Container::getInstance()->environment('production', 'live');
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isLocal(): bool
-    {
-        return Container::getInstance()->environment('local');
-    }
-
-    /**
-     * @return array
-     */
-    public static function getSizeTypes(): array
-    {
-        return ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
-    }
-
     /**
      * @return bool
      */
@@ -49,7 +25,7 @@ class GenericHelper
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param bool $default
      *
      * @return bool
@@ -65,24 +41,26 @@ class GenericHelper
             case 'true':
             case 't':
                 return true;
+
             case '0':
             case 'false':
             case 'f':
             case '':
                 return false;
+
             default:
                 return $default;
         }
     }
 
     /**
-     * @param $json
+     * @param mixed $json
      * @param bool $return
      * @param bool $assoc
      * @param int $depth
      * @param int $options
      *
-     * @return mixed
+     * @return bool|array|stdClass
      */
     public static function isJson(
         $json,

@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types = 1);
+
+use McMatters\Helpers\Helpers\EnvHelper;
+
+if (!function_exists('is_production_environment')) {
+    /**
+     * @return bool
+     */
+    function is_production_environment(): bool
+    {
+        return EnvHelper::isProduction();
+    }
+}
+
+if (!function_exists('is_local_environment')) {
+    /**
+     * @return bool
+     */
+    function is_local_environment(): bool
+    {
+        return EnvHelper::isLocal();
+    }
+}

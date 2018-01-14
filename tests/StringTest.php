@@ -6,8 +6,16 @@ namespace McMatters\Helpers\Tests;
 
 use Illuminate\Support\Str;
 
+/**
+ * Class StringTest
+ *
+ * @package McMatters\Helpers\Tests
+ */
 class StringTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testStrUcwords()
     {
         $this->assertEquals('Foo Bar', Str::ucwords('foo-bar'));

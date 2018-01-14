@@ -7,8 +7,17 @@ namespace McMatters\Helpers\Tests;
 use McMatters\Helpers\Helpers\DBHelper;
 use McMatters\Helpers\Tests\Mocks\DatabaseTester;
 
+/**
+ * Class DatabaseTest
+ *
+ * @package McMatters\Helpers\Tests
+ */
 class DatabaseTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \InvalidArgumentException
+     */
     public function testCompileSqlQuery()
     {
         $mocks = require __DIR__.'/mocks/arrays/compileSql.php';

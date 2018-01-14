@@ -15,12 +15,20 @@ use function str_replace, ucwords;
 class StrMacros extends AbstractMacroable
 {
     /**
-     * @return void
+     * @return string
      */
-    protected function registerUcwords()
+    public static function getClass(): string
     {
-        Str::macro('ucwords', function (string $string): string {
-            return ucwords(str_replace(['-', '_'], ' ', $string));
-        });
+        return Str::class;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public function registerUcwords(string $string): string
+    {
+        return ucwords(str_replace(['-', '_'], ' ', $string));
     }
 }

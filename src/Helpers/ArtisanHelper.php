@@ -41,6 +41,7 @@ class ArtisanHelper
     /**
      * @param string $command
      *
+     * @return void
      * @throws RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException

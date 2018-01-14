@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use McMatters\Helpers\Macros\ArrMacros;
-use McMatters\Helpers\Macros\StrMacros;
+use McMatters\Helpers\Macros\{
+    ArrMacros, CollectionMacros, RequestMacros, StrMacros
+};
 use ReflectionException;
 
 /**
@@ -17,12 +19,56 @@ use ReflectionException;
 class ServiceProvider extends BaseServiceProvider
 {
     /**
+     * @var array
+     */
+    protected $macros = [
+        ArrMacros::class,
+        CollectionMacros::class,
+        RequestMacros::class,
+        StrMacros::class,
+    ];
+
+    /**
      * @return void
      * @throws ReflectionException
      */
     public function boot()
     {
-        (new ArrMacros())->register();
-        (new StrMacros())->register();
+        $this->publishes([
+            __DIR__.'/../config/laravel-helpers.php' => $this->app->configPath('laravel-helpers.php'),
+        ], 'config');
+
+        $this->registerMacros();
+        $this->registerHelperFunctions();
+    }
+
+    /**
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/laravel-helpers.php', 'laravel-helpers');
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerMacros()
+    {
+        foreach ($this->macros as $macro) {
+            (new $macro)->register();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerHelperFunctions()
+    {
+        $files = Config::get('laravel-helpers.enabled_helper_functions');
+
+        foreach ((array) $files as $file) {
+            require __DIR__."/functions/{$file}.php";
+        }
     }
 }

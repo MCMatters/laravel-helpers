@@ -4,13 +4,10 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers\Helpers;
 
-use Illuminate\Container\Container;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Response;
-use const null, true;
-use function in_array, ini_get, ini_set, max, set_time_limit;
+use function array_filter, ini_get, ini_set, max, set_time_limit;
 
 /**
  * Class ServerHelper
@@ -19,18 +16,6 @@ use function in_array, ini_get, ini_set, max, set_time_limit;
  */
 class ServerHelper
 {
-    /**
-     * @param mixed $request
-     *
-     * @return bool
-     */
-    public static function isMethodUpdate($request = null): bool
-    {
-        $request = $request ?: Container::getInstance()->make('request');
-
-        return in_array(Str::lower($request->method()), ['put', 'patch'], true);
-    }
-
     /**
      * @return void
      */
@@ -80,6 +65,6 @@ class ServerHelper
             'HTTP_'
         );
 
-        return max($constants);
+        return (int) max(array_filter($constants, 'is_numeric'));
     }
 }

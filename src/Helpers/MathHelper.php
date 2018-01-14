@@ -89,14 +89,22 @@ class MathHelper
     }
 
     /**
-     * @param int|string $value
+     * @return array
+     */
+    public static function getSizeTypes(): array
+    {
+        return ['b', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
+    }
+
+    /**
+     * @param int|float|string $value
      * @param string $getType
      *
      * @return float|int
      */
     public static function convertBytes($value, string $getType = 'b')
     {
-        $sizeTypes = GenericHelper::getSizeTypes();
+        $sizeTypes = self::getSizeTypes();
         $stringValue = (string) $value;
         $value = (int) $value;
         $type = trim(
@@ -108,6 +116,10 @@ class MathHelper
         }
 
         $type = $type === 'b' ? $type : "{$type}b";
+
+        if (!in_array($type, $sizeTypes, true)) {
+            $type = 'b';
+        }
 
         if ($type === $getType || !in_array($getType, $sizeTypes, true)) {
             return $value;
@@ -145,6 +157,23 @@ class MathHelper
     public static function isNumberOdd($number): bool
     {
         return !self::isNumberEven($number);
+    }
+
+    /**
+     * @param int|float $number
+     * @param int|float $from
+     * @param int|float $to
+     *
+     * @return bool
+     * @throws InvalidArgumentException
+     */
+    public static function inRange($number, $from, $to): bool
+    {
+        if (!is_numeric($number) || !is_numeric($from) || !is_numeric($to)) {
+            throw new InvalidArgumentException('Arguments must be numeric');
+        }
+
+        return $from <= $number && $to >= $number;
     }
 
     /**

@@ -27,7 +27,7 @@ class DevHelper
      */
     public static function ddq($query, bool $die = false): string
     {
-        $sql = DBHelper::compileSqlQuery($query);
+        $sql = DbHelper::compileSqlQuery($query);
 
         if ($die) {
             self::dump($sql);

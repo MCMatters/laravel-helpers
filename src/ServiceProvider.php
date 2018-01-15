@@ -10,6 +10,7 @@ use McMatters\Helpers\Macros\{
     ArrMacros, CollectionMacros, RequestMacros, StrMacros
 };
 use ReflectionException;
+use function is_callable;
 
 /**
  * Class ServiceProvider
@@ -35,7 +36,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/laravel-helpers.php' => $this->app->configPath('laravel-helpers.php'),
+            __DIR__.'/../config/laravel-helpers.php' => $this->getConfigPath(),
         ], 'config');
 
         $this->registerMacros();
@@ -70,5 +71,17 @@ class ServiceProvider extends BaseServiceProvider
         foreach ((array) $files as $file) {
             require __DIR__."/functions/{$file}.php";
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getConfigPath(): string
+    {
+        if (is_callable([$this->app, 'configPath'])) {
+            return $this->app->configPath('laravel-helpers.php');
+        }
+
+        return $this->app->basePath().'/config/laravel-helpers.php';
     }
 }

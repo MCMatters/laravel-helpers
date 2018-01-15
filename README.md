@@ -30,6 +30,8 @@ Otherwise it will be autodiscovered.
 
 Since `v2.0`, you can disable all helper functions and use helper classes, if you prefer to use helper functions, you can choose what exactly section do you want to use (`array`, `dev`, `string`, etc)
 
+## Functions
+
 - [Arrays](#arrays)
 - [Artisan](#artisan)
 - [Class](#class)

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 use McMatters\Helpers\Helpers\MathHelper;
 
-if (!function_exists('get_percentage')) {
+if (!function_exists('calculate_percentage')) {
     /**
      * @param mixed $count
      * @param mixed $total
@@ -13,13 +13,13 @@ if (!function_exists('get_percentage')) {
      * @return float
      * @throws InvalidArgumentException
      */
-    function get_percentage($count, $total, int $decimals = 1): float
+    function calculate_percentage($count, $total, int $decimals = 1): float
     {
         return MathHelper::getPercentage($count, $total, $decimals);
     }
 }
 
-if (!function_exists('get_discount')) {
+if (!function_exists('calculate_discount')) {
     /**
      * @param mixed $discount
      * @param mixed $total
@@ -28,13 +28,13 @@ if (!function_exists('get_discount')) {
      * @return float
      * @throws InvalidArgumentException
      */
-    function get_discount($discount, $total, int $decimals = 1): float
+    function calculate_discount($discount, $total, int $decimals = 1): float
     {
         return MathHelper::getDiscount($discount, $total, $decimals);
     }
 }
 
-if (!function_exists('get_with_discount')) {
+if (!function_exists('calculate_with_discount')) {
     /**
      * @param mixed $discount
      * @param mixed $total
@@ -43,7 +43,7 @@ if (!function_exists('get_with_discount')) {
      * @return float
      * @throws InvalidArgumentException
      */
-    function get_with_discount($discount, $total, int $decimals = 1): float
+    function calculate_with_discount($discount, $total, int $decimals = 1): float
     {
         return MathHelper::getWithDiscount($discount, $total, $decimals);
     }

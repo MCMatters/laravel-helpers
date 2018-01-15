@@ -51,7 +51,7 @@ class ModelHelper
 
         $model = self::getModelFromQuery($query);
 
-        $query->get([$model->getQualifiedKeyName()])->each(
+        $query->select([$model->getQualifiedKeyName()])->each(
             function (Model $model) use (&$count) {
                 $count = (int) $model->delete();
             }

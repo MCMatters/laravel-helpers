@@ -26,7 +26,7 @@ class HelperFunctionsTest extends TestCase
             'compile_sql_query',
             'ddq',
             'is_production_environment',
-            'get_percentage',
+            'calculate_percentage',
             'get_model_from_query',
             'is_request_method_update',
             'long_processes',

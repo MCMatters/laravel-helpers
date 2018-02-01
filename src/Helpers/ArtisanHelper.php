@@ -4,11 +4,12 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers\Helpers;
 
-use RuntimeException;
-use Symfony\Component\Process\PhpExecutableFinder;
+use Illuminate\Console\Application;
+use Illuminate\Container\Container;
+use Illuminate\Support\ProcessUtils;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
-use const ARTISAN_BINARY;
-use function defined, stripos;
+use function implode, is_array, is_numeric, preg_match, stripos;
 
 /**
  * Class ArtisanHelper
@@ -19,15 +20,10 @@ class ArtisanHelper
 {
     /**
      * @return string
-     * @throws RuntimeException
      */
     public static function getPhpPath(): string
     {
-        if (!$path = (new PhpExecutableFinder())->find()) {
-            throw new RuntimeException('Cannot find "php" binary file.');
-        }
-
-        return $path;
+        return Application::phpBinary();
     }
 
     /**
@@ -35,22 +31,37 @@ class ArtisanHelper
      */
     public static function getArtisan(): string
     {
-        return defined('ARTISAN_BINARY') ? ARTISAN_BINARY : 'artisan';
+        $artisan = Application::artisanBinary();
+
+        if ($artisan === 'artisan') {
+            $fullPath = (new ExecutableFinder())->find(
+                'artisan',
+                'artisan',
+                [Container::getInstance()->basePath()]
+            );
+
+            $artisan = $fullPath
+                ? ProcessUtils::escapeArgument($fullPath)
+                : $artisan;
+        }
+
+        return $artisan;
     }
 
     /**
      * @param string $command
+     * @param array $parameters
      *
      * @return void
-     * @throws RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public static function runCommandInBackground(string $command)
+    public static function runCommandInBackground(string $command, array $parameters = [])
     {
         $php = self::getPhpPath();
         $artisan = self::getArtisan();
-        $command = self::getBackgroundCommand("{$php} {$artisan} {$command}");
+        $args = self::compileParameters($parameters);
+        $command = self::getBackgroundCommand("{$php} {$artisan} {$command} {$args}");
 
         (new Process($command))->run();
     }
@@ -67,5 +78,33 @@ class ArtisanHelper
         }
 
         return "{$command} > /dev/null 2>&1 &";
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string
+     */
+    protected static function compileParameters(array $parameters): string
+    {
+        $compiled = [];
+
+        foreach ($parameters as $key => $value) {
+            if (is_array($value)) {
+                $values = [];
+
+                foreach ($value as $item) {
+                    $values[] = ProcessUtils::escapeArgument($item);
+                }
+
+                $value = implode(' ', $values);
+            } elseif (!is_numeric($value) && !preg_match('/^(-.$|--.*)/', $value)) {
+                $value = ProcessUtils::escapeArgument($value);
+            }
+
+            $compiled[] = is_numeric($key) ? $value : "{$key}={$value}";
+        }
+
+        return implode(' ', $compiled);
     }
 }

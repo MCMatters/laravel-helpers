@@ -86,7 +86,7 @@ The `get_php_path` function returns path to executable `php`.
 
 The `get_artisan` function return path to executable `artisan`.
 
-#### `run_background_command(string $command)`
+#### `run_background_command(string $command, array $parameters = [])`
 
 The `run_background_command` function runs the given command in background.
 

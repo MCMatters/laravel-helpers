@@ -29,6 +29,6 @@ class ArtisanTest extends TestCase
      */
     public function testGetArtisan()
     {
-        $this->assertStringEndsWith('artisan', ArtisanHelper::getArtisan());
+        $this->assertStringEndsWith("artisan'", ArtisanHelper::getArtisan());
     }
 }

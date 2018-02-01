@@ -7,7 +7,6 @@ use McMatters\Helpers\Helpers\ArtisanHelper;
 if (!function_exists('get_php_path')) {
     /**
      * @return string
-     * @throws RuntimeException
      */
     function get_php_path(): string
     {
@@ -28,14 +27,14 @@ if (!function_exists('get_artisan')) {
 if (!function_exists('run_background_command')) {
     /**
      * @param string $command
+     * @param array $parameters
      *
      * @return void
-     * @throws RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    function run_background_command(string $command)
+    function run_background_command(string $command, array $parameters = [])
     {
-        ArtisanHelper::runCommandInBackground($command);
+        ArtisanHelper::runCommandInBackground($command, $parameters);
     }
 }

@@ -217,6 +217,12 @@ class ArrMacros extends AbstractMacroable
         return $shuffled;
     }
 
+    /**
+     * @param array $array
+     * @param int $case
+     *
+     * @return array
+     */
     public function registerChangeKeyCaseRecursive(
         array $array,
         int $case = CASE_LOWER

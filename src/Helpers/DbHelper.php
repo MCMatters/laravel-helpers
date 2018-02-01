@@ -5,10 +5,12 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use const false, null, true;
-use function gettype, implode, is_callable, is_object, is_string, preg_replace,
-    property_exists, str_replace, trim;
+use function array_shift, gettype, implode, is_callable, is_object, is_string,
+    property_exists, strlen, str_replace, trim;
+use Throwable;
 
 /**
  * Class DbHelper
@@ -38,41 +40,7 @@ class DbHelper
             $sql = $sql->toSql();
         }
 
-        foreach ($bindings as $binding) {
-            switch (gettype($binding)) {
-                case 'boolean':
-                case 'integer':
-                    $binding = (int) $binding;
-                    break;
-
-                case 'float':
-                case 'double':
-                    $binding = (float) $binding;
-                    break;
-
-                case 'array':
-                    foreach ($binding as $key => $value) {
-                        $binding[$key] = self::escapeString($value);
-                    }
-
-                    $binding = implode(',', $binding);
-                    break;
-
-                case 'NULL':
-                case 'unknown type':
-                case 'resource':
-                    break;
-
-                case 'string':
-                default:
-                    $binding = self::escapeString($binding);
-                    break;
-            }
-
-            $sql = preg_replace('/\?/', $binding, $sql, 1);
-        }
-
-        return $sql;
+       return self::replaceBindings($sql, $bindings);
     }
 
     /**
@@ -90,7 +58,13 @@ class DbHelper
         $db = self::getDb($connection);
         $schema = self::getSchema($connection);
 
-        foreach ($db->select('SHOW TABLES') as $tableInfo) {
+        try {
+            $schemas = (array) $db->select('SHOW TABLES');
+        } catch (Throwable $e) {
+            return [];
+        }
+
+        foreach ($schemas as $tableInfo) {
             foreach ($tableInfo as $table) {
                 if (!$withColumns) {
                     $tables[] = $table;
@@ -170,6 +144,69 @@ class DbHelper
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $binding
+     *
+     * @return float|int|string
+     */
+    protected static function transformSqlBinding($binding)
+    {
+        switch (gettype($binding)) {
+            case 'boolean':
+            case 'integer':
+                return (int) $binding;
+
+            case 'float':
+            case 'double':
+                return (float) $binding;
+
+            case 'array':
+                foreach ($binding as $key => $value) {
+                    $binding[$key] = self::transformSqlBinding($value);
+                }
+
+                return implode(',', $binding);
+
+            case 'NULL':
+            case 'unknown type':
+            case 'resource':
+                return '';
+                break;
+
+            case 'string':
+            default:
+                return self::escapeString($binding);
+        }
+    }
+
+    /**
+     * @param string $sql
+     * @param array $bindings
+     *
+     * @return string
+     */
+    protected static function replaceBindings(
+        string $sql,
+        array $bindings = []
+    ): string {
+        $previousPosition = 0;
+        $offset = 0;
+        $bindingPositions = Str::occurrences($sql, '?');
+
+        foreach ($bindings as $binding) {
+            $binding = self::transformSqlBinding($binding);
+
+            $position = array_shift($bindingPositions);
+            $start = $offset + ($position - $previousPosition);
+            $offset += ($position - $previousPosition) + strlen((string) $binding) - 1;
+            $previousPosition = $position;
+
+            $sql = substr_replace($sql, $binding, $start, 1);
+        }
+
+        return $sql;
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Macros;
 
 use Illuminate\Support\Str;
+use const false;
 use function str_replace, ucwords;
 
 /**
@@ -30,5 +31,30 @@ class StrMacros extends AbstractMacroable
     public function registerUcwords(string $string): string
     {
         return ucwords(str_replace(['-', '_'], ' ', $string));
+    }
+
+    /**
+     * @param string $haystack
+     * @param string $needle
+     * @param bool $caseInsensitive
+     *
+     * @return array
+     */
+    public function registerOccurrences(
+        string $haystack,
+        string $needle,
+        bool $caseInsensitive = false
+    ): array {
+        $occurrences = [];
+        $offset = 0;
+
+        $function = $caseInsensitive ? 'strpos' : 'stripos';
+
+        while (($position = $function($haystack, $needle, $offset)) !== false) {
+            $occurrences[] = $position;
+            $offset = ++$position;
+        }
+
+        return $occurrences;
     }
 }

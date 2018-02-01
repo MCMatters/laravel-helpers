@@ -28,4 +28,12 @@ class EnvHelper
     {
         return Container::getInstance()->environment('local');
     }
+
+    /**
+     * @return bool
+     */
+    public static function isTesting(): bool
+    {
+        return Container::getInstance()->environment('testing');
+    }
 }

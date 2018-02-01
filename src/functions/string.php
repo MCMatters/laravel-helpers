@@ -39,3 +39,20 @@ if (!function_exists('str_upper')) {
         return Str::upper($string);
     }
 }
+
+if (!function_exists('strpos_all')) {
+    /**
+     * @param string $haystack
+     * @param string $needle
+     * @param bool $caseInsensitive
+     *
+     * @return array
+     */
+    function strpos_all(
+        string $haystack,
+        string $needle,
+        bool $caseInsensitive = false
+    ): array {
+        return Str::occurrences($haystack, $needle, $caseInsensitive);
+    }
+}

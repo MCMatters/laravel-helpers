@@ -28,6 +28,15 @@ class EnvTest extends TestCase
      */
     public function testIsLocal()
     {
-        $this->assertFalse(EnvHelper::isProduction());
+        $this->assertFalse(EnvHelper::isLocal());
+    }
+
+    /**
+     * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     */
+    public function testIsTesting()
+    {
+        $this->assertTrue(EnvHelper::isTesting());
     }
 }

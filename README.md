@@ -126,7 +126,7 @@ The `ddq` is analogue of function `dd`, but uses only for database queries.
 
 #### `dump($value, bool $output = false)`
 
-The `dump` is analogue of function `dd`, but without stopping php executing script.
+The `dump` is analogue of function `dd`, but without stopping the php script execution.
 
 ### Env
 
@@ -136,7 +136,11 @@ The `is_production_environment` function checks whether the production environme
 
 #### `is_local_environment()`
 
-The `is_local_environment` function checks whether the production local is using.
+The `is_local_environment` function checks whether the local environment is using.
+
+#### `is_testing_environment()`
+
+The `is_testing_environment` function checks whether the testing environment is using.
 
 ### Math
 
@@ -231,6 +235,10 @@ The `str_upper` is function wrapper over `Str::upper`.
 #### `str_ucwords(string $string)`
 
 The `str_ucwords` function converts a value to studly caps case with spaces.
+
+#### `strpos_all(string $haystack, string $needle, bool $caseInsensitive = false)`
+
+The `strpos_all` function returns all occurrences of `$needle` in a `$haystack`
 
 ### Type
 

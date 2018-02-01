@@ -23,3 +23,13 @@ if (!function_exists('is_local_environment')) {
         return EnvHelper::isLocal();
     }
 }
+
+if (!function_exists('is_testing_environment')) {
+    /**
+     * @return bool
+     */
+    function is_testing_environment(): bool
+    {
+        return EnvHelper::isTesting();
+    }
+}

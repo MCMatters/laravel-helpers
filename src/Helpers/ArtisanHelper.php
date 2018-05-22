@@ -9,7 +9,8 @@ use Illuminate\Container\Container;
 use Illuminate\Support\ProcessUtils;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
-use function implode, is_array, is_numeric, preg_match, stripos;
+use const false, true;
+use function implode, is_array, is_numeric, preg_match;
 
 /**
  * Class ArtisanHelper
@@ -58,12 +59,64 @@ class ArtisanHelper
      */
     public static function runCommandInBackground(string $command, array $parameters = [])
     {
+        (new Process(self::getCompiledCommand($command, $parameters, true)))->start();
+    }
+
+    /**
+     * @param string $command
+     *
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     */
+    public static function runRawCommand(string $command)
+    {
+        (new Process($command))->start();
+    }
+
+    /**
+     * @param string $command
+     * @param array $parameters
+     * @param bool $background
+     *
+     * @return string
+     */
+    public static function getCompiledCommand(
+        string $command,
+        array $parameters = [],
+        bool $background = false
+    ): string {
         $php = self::getPhpPath();
         $artisan = self::getArtisan();
         $args = self::compileParameters($parameters);
-        $command = self::getBackgroundCommand("{$php} {$artisan} {$command} {$args}");
 
-        (new Process($command))->run();
+        return $background
+            ? self::getBackgroundCommand("{$php} {$artisan} {$command} {$args}")
+            : self::getForegroundCommand("{$php} {$artisan} {$command} {$args}");
+    }
+
+    /**
+     * @param array $commands
+     * @param bool $background
+     *
+     * @return string
+     */
+    public static function getCompiledCommands(
+        array $commands,
+        bool $background = false
+    ): string {
+        $compiled = [];
+
+        foreach ($commands as $commandData) {
+            $compiled[] = self::getCompiledCommand(
+                $commandData['command'],
+                $commandData['parameters'] ?? [],
+                false
+            );
+        }
+
+        return $background
+            ? '('.implode(' ; ', $compiled).') &'
+            : implode(' && ', $compiled);
     }
 
     /**
@@ -73,11 +126,25 @@ class ArtisanHelper
      */
     protected static function getBackgroundCommand(string $command): string
     {
-        if (0 === stripos(PHP_OS, 'win')) {
+        if (ServerHelper::isWindowsOs()) {
             return "start /B {$command} > NUL";
         }
 
         return "{$command} > /dev/null 2>&1 &";
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return string
+     */
+    protected static function getForegroundCommand(string $command): string
+    {
+        if (ServerHelper::isWindowsOs()) {
+            return "start {$command} > NUL";
+        }
+
+        return "{$command} > /dev/null 2>&1";
     }
 
     /**

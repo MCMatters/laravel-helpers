@@ -7,7 +7,8 @@ namespace McMatters\Helpers\Helpers;
 use InvalidArgumentException;
 use ReflectionException;
 use Symfony\Component\HttpFoundation\Response;
-use function array_filter, ini_get, ini_set, max, set_time_limit;
+use const PHP_OS;
+use function array_filter, ini_get, ini_set, max, set_time_limit, stripos;
 
 /**
  * Class ServerHelper
@@ -66,5 +67,13 @@ class ServerHelper
         );
 
         return (int) max(array_filter($constants, 'is_numeric'));
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isWindowsOs(): bool
+    {
+        return 0 === stripos(PHP_OS, 'win');
     }
 }

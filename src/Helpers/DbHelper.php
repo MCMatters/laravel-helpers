@@ -7,10 +7,10 @@ namespace McMatters\Helpers\Helpers;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Throwable;
 use const false, null, true;
 use function array_shift, gettype, implode, is_callable, is_object, is_string,
     property_exists, strlen, str_replace, trim;
-use Throwable;
 
 /**
  * Class DbHelper
@@ -175,6 +175,7 @@ class DbHelper
                 return '';
                 break;
 
+            case 'object':
             case 'string':
             default:
                 return self::escapeString($binding);

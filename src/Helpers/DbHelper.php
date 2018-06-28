@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Throwable;
 use const false, null, true;

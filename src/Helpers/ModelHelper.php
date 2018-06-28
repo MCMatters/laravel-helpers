@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers\Helpers;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -22,8 +21,8 @@ class ModelHelper
     /**
      * @param mixed $query
      *
-     * @return Model
-     * @throws InvalidArgumentException
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \InvalidArgumentException
      */
     public static function getModelFromQuery($query): Model
     {
@@ -42,8 +41,8 @@ class ModelHelper
      * @param mixed $query
      *
      * @return int
-     * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     public static function destroyFromQuery($query): int
     {
@@ -53,7 +52,7 @@ class ModelHelper
 
         $query->select([$model->getQualifiedKeyName()])->each(
             function (Model $model) use (&$count) {
-                $count = (int) $model->delete();
+                $count += (int) $model->delete();
             }
         );
 
@@ -61,8 +60,8 @@ class ModelHelper
     }
 
     /**
-     * @param Model $morphed
-     * @param Model $parent
+     * @param \Illuminate\Database\Eloquent\Model $morphed
+     * @param \Illuminate\Database\Eloquent\Model $parent
      * @param string $name
      * @param string|null $type
      * @param string|null $id

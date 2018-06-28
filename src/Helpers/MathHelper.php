@@ -17,12 +17,12 @@ use function array_search, in_array, is_numeric, number_format, trim;
 class MathHelper
 {
     /**
-     * @param mixed $count
-     * @param mixed $total
+     * @param int|float $count
+     * @param int|float $total
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function getPercentage(
         $count,
@@ -40,12 +40,12 @@ class MathHelper
     }
 
     /**
-     * @param mixed $discount
-     * @param mixed $total
+     * @param int|float $discount
+     * @param int|float $total
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function getDiscount(
         $discount,
@@ -61,8 +61,8 @@ class MathHelper
     }
 
     /**
-     * @param mixed $discount
-     * @param mixed $total
+     * @param int|float $discount
+     * @param int|float $total
      * @param int $decimals
      *
      * @return float
@@ -136,10 +136,10 @@ class MathHelper
     }
 
     /**
-     * @param mixed $number
+     * @param int|float $number
      *
      * @return bool
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function isNumberEven($number): bool
     {
@@ -149,10 +149,10 @@ class MathHelper
     }
 
     /**
-     * @param mixed $number
+     * @param int|float $number
      *
      * @return bool
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function isNumberOdd($number): bool
     {
@@ -165,7 +165,7 @@ class MathHelper
      * @param int|float $to
      *
      * @return bool
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function inRange($number, $from, $to): bool
     {
@@ -177,10 +177,10 @@ class MathHelper
     }
 
     /**
-     * @param mixed $number
+     * @param int|float $number
      * @param string $name
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected static function checkIsNumeric($number, string $name)
     {

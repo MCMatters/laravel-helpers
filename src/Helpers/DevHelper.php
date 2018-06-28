@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace McMatters\Helpers\Helpers;
 
-use InvalidArgumentException;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Illuminate\Support\Debug\HtmlDumper;
@@ -23,7 +22,7 @@ class DevHelper
      * @param bool $die
      *
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function ddq($query, bool $die = false): string
     {

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Throwable;
 use const false, null, true;
@@ -24,7 +23,7 @@ class DbHelper
      * @param array|null $bindings
      *
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function compileSqlQuery($sql, array $bindings = null): string
     {

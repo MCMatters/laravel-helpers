@@ -34,7 +34,7 @@ if (!function_exists('casting_nullable_bool')) {
      *
      * @return bool|null
      */
-    function casting_bool($value, bool $default = false): bool
+    function casting_nullable_bool($value, bool $default = false): bool
     {
         return TypeHelper::castingNullableBool($value, $default);
     }

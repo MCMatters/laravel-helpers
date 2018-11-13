@@ -7,7 +7,7 @@ namespace McMatters\Helpers\Helpers;
 use Illuminate\Support\Str;
 use stdClass;
 use const false, true, JSON_ERROR_NONE;
-use function is_bool, is_string, json_decode, json_last_error, preg_match;
+use function in_array, is_bool, is_string, json_decode, json_last_error, preg_match;
 
 /**
  * Class TypeHelper
@@ -51,6 +51,23 @@ class TypeHelper
             default:
                 return $default;
         }
+    }
+
+    /**
+     * @param mixed $value
+     * @param bool $default
+     *
+     * @return bool|null
+     */
+    public static function castingNullableBool($value, bool $default = false)
+    {
+        if (is_string($value) &&
+            in_array(Str::lower($value), ['null', "'null'", '"null"'])
+        ) {
+            return null;
+        }
+
+        return static::castingBool($value, $default);
     }
 
     /**

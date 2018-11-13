@@ -27,6 +27,19 @@ if (!function_exists('casting_bool')) {
     }
 }
 
+if (!function_exists('casting_nullable_bool')) {
+    /**
+     * @param mixed $value
+     * @param bool $default
+     *
+     * @return bool|null
+     */
+    function casting_bool($value, bool $default = false): bool
+    {
+        return TypeHelper::castingNullableBool($value, $default);
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * @param mixed $json

@@ -20,7 +20,7 @@ class HelperFunctionsTest extends TestCase
     public function testFunctionsEnabled()
     {
         $functions = [
-            'array_first_key',
+            'array_key_first',
             'get_php_path',
             'get_class_constants',
             'compile_sql_query',

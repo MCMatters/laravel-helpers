@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 use Illuminate\Support\Arr;
 
-if (!function_exists('array_first_key') && Arr::hasMacro('firstKey')) {
+if (!function_exists('array_key_first') && Arr::hasMacro('firstKey')) {
     /**
      * @param array $array
      *
      * @return int|string|null
      */
-    function array_first_key(array $array)
+    function array_key_first(array $array)
     {
         return Arr::firstKey($array);
     }

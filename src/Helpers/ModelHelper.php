@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
 use const null;
-use function get_class;
+use function get_class, is_array, is_string;
 
 /**
  * Class ModelHelper
@@ -39,24 +39,58 @@ class ModelHelper
 
     /**
      * @param mixed $query
+     * @param array|string|null $columns
+     * @param bool $force
      *
      * @return int
      * @throws \Exception
      * @throws \InvalidArgumentException
      */
-    public static function destroyFromQuery($query): int
-    {
+    public static function destroyFromQuery(
+        $query,
+        $columns = null,
+        bool $force = false
+    ): int {
         $count = 0;
 
-        $model = self::getModelFromQuery($query);
+        if (null === $columns) {
+            $model = self::getModelFromQuery($query);
+            $columns = [$model->getQualifiedKeyName()];
+        } elseif (is_string($columns)) {
+            $columns = [$columns];
+        } elseif (!is_array($columns)) {
+            throw new InvalidArgumentException('Columns must be as string, array or null');
+        }
 
-        $query->select([$model->getQualifiedKeyName()])->each(
-            function (Model $model) use (&$count) {
-                $count += (int) $model->delete();
+        $deleteMethod = $force ? 'forceDelete' : 'delete';
+
+        $query->select($columns)->each(
+            function (Model $model) use (&$count, $deleteMethod) {
+                $count += (int) $model->{$deleteMethod}();
             }
         );
 
         return $count;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $child
+     * @param \Illuminate\Database\Eloquent\Model $parent
+     * @param string|null $foreignKey
+     * @param string|null $ownerKey
+     *
+     * @return bool
+     */
+    public static function doesBelongTo(
+        Model $child,
+        Model $parent,
+        string $foreignKey = null,
+        string $ownerKey = null
+    ): bool {
+        $foreignKey = $foreignKey ?? $parent->getForeignKey();
+        $ownerKey = $ownerKey ?? $parent->getKeyName();
+
+        return $child->getAttribute($foreignKey) === $parent->getAttribute($ownerKey);
     }
 
     /**
@@ -68,7 +102,7 @@ class ModelHelper
      *
      * @return bool
      */
-    public static function isMorphedBelongsParent(
+    public static function doesMorphedBelongToParent(
         Model $morphed,
         Model $parent,
         string $name,

@@ -32,7 +32,26 @@ if (!function_exists('destroy_models_from_query')) {
     }
 }
 
-if (!function_exists('is_morphed_belongs_parent')) {
+if (!function_exists('does_model_belong_to')) {
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $child
+     * @param \Illuminate\Database\Eloquent\Model $parent
+     * @param string|null $foreignKey
+     * @param string|null $ownerKey
+     *
+     * @return bool
+     */
+    function does_model_belong_to(
+        Model $child,
+        Model $parent,
+        string $foreignKey = null,
+        string $ownerKey = null
+    ): bool {
+        return ModelHelper::doesBelongTo($child, $parent, $foreignKey, $ownerKey);
+    }
+}
+
+if (!function_exists('does_morphed_model_belong_to_parent')) {
     /**
      * @param Model $morphed
      * @param Model $parent
@@ -42,14 +61,14 @@ if (!function_exists('is_morphed_belongs_parent')) {
      *
      * @return bool
      */
-    function is_morphed_belongs_parent(
+    function does_morphed_model_belong_to_parent(
         Model $morphed,
         Model $parent,
         string $name,
         string $type = null,
         string $id = null
     ): bool {
-        return ModelHelper::isMorphedBelongsParent(
+        return ModelHelper::doesMorphedBelongToParent(
             $morphed,
             $parent,
             $name,

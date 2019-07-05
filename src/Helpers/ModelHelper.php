@@ -41,6 +41,7 @@ class ModelHelper
      * @param mixed $query
      * @param array|string|null $columns
      * @param bool $force
+     * @param int $limit
      *
      * @return int
      * @throws \Exception
@@ -49,7 +50,8 @@ class ModelHelper
     public static function destroyFromQuery(
         $query,
         $columns = null,
-        bool $force = false
+        bool $force = false,
+        int $limit = 1000
     ): int {
         $count = 0;
 
@@ -64,11 +66,15 @@ class ModelHelper
 
         $deleteMethod = $force ? 'forceDelete' : 'delete';
 
-        $query->select($columns)->each(
-            function (Model $model) use (&$count, $deleteMethod) {
+        $query->select($columns)->limit($limit);
+
+        do {
+            $models = (clone $query)->get();
+
+            foreach ($models as $model) {
                 $count += (int) $model->{$deleteMethod}();
             }
-        );
+        } while ($models->count() === $limit);
 
         return $count;
     }

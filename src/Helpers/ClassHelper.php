@@ -58,9 +58,11 @@ class ClassHelper
 
         foreach (self::getConstants($class) as $key => $constant) {
             if (Str::startsWith($key, $keyword)) {
-                $constants[$key] = $substrKeyword
-                    ? Str::substr($constant)
-                    : $constant;
+                $key = $substrKeyword
+                    ? Str::substr($key, Str::length($keyword))
+                    : $key;
+
+                $constants[$key] = $constant;
             }
         }
 

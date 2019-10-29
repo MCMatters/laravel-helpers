@@ -6,8 +6,10 @@ namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
-use const true;
+
 use function array_search, in_array, is_numeric, number_format, trim;
+
+use const true;
 
 /**
  * Class MathHelper
@@ -22,6 +24,7 @@ class MathHelper
      * @param int $decimals
      *
      * @return float
+     *
      * @throws \InvalidArgumentException
      */
     public static function getPercentage(
@@ -45,6 +48,7 @@ class MathHelper
      * @param int $decimals
      *
      * @return float
+     *
      * @throws \InvalidArgumentException
      */
     public static function getDiscount(
@@ -66,7 +70,8 @@ class MathHelper
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     public static function getWithDiscount(
         $discount,
@@ -139,6 +144,7 @@ class MathHelper
      * @param int|float $number
      *
      * @return bool
+     *
      * @throws \InvalidArgumentException
      */
     public static function isNumberEven($number): bool
@@ -152,6 +158,7 @@ class MathHelper
      * @param int|float $number
      *
      * @return bool
+     *
      * @throws \InvalidArgumentException
      */
     public static function isNumberOdd($number): bool
@@ -165,6 +172,7 @@ class MathHelper
      * @param int|float $to
      *
      * @return bool
+     *
      * @throws \InvalidArgumentException
      */
     public static function inRange($number, $from, $to): bool

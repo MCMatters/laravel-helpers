@@ -6,8 +6,10 @@ namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Support\Str;
 use stdClass;
-use const false, true, JSON_ERROR_NONE;
+
 use function in_array, is_bool, is_string, json_decode, json_last_error, preg_match;
+
+use const false, true, JSON_ERROR_NONE;
 
 /**
  * Class TypeHelper
@@ -18,6 +20,8 @@ class TypeHelper
 {
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     public static function randomBool(): bool
     {

@@ -16,7 +16,8 @@ class MathTest extends TestCase
 {
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     public function testCalculatePercentage()
     {
@@ -26,7 +27,8 @@ class MathTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      * @throws \PHPUnit\Framework\Exception
      */
     public function testCalculatePercentageWithException()
@@ -37,7 +39,8 @@ class MathTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     public function TestCalculateDiscount()
     {
@@ -47,6 +50,7 @@ class MathTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testFloatHasRemainder()
@@ -87,7 +91,8 @@ class MathTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsNumberEven()
@@ -105,7 +110,8 @@ class MathTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsNumberOdd()
@@ -123,7 +129,8 @@ class MathTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testInRange()

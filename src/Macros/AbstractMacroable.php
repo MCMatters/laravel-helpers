@@ -7,7 +7,7 @@ namespace McMatters\Helpers\Macros;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use ReflectionClass;
-use ReflectionException;
+
 use function array_unshift;
 
 /**
@@ -20,13 +20,15 @@ abstract class AbstractMacroable
     /**
      * Auto registration of macros.
      *
-     * @throws ReflectionException
+     * @return void
+     *
+     * @throws \ReflectionException
      */
     public function register()
     {
         $reflection = new ReflectionClass(static::class);
 
-        /** @var Macroable $class */
+        /** @var \Illuminate\Support\Traits\Macroable $class */
         $class = static::getClass();
         $static = $this;
 

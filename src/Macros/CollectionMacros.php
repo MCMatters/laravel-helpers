@@ -7,6 +7,8 @@ namespace McMatters\Helpers\Macros;
 use Closure;
 use Illuminate\Support\Collection;
 
+use const null;
+
 /**
  * Class CollectionMacros
  *
@@ -23,11 +25,11 @@ class CollectionMacros extends AbstractMacroable
     }
 
     /**
-     * @param Collection $collection
-     * @param Closure $condition
-     * @param Closure $map
+     * @param \Illuminate\Support\Collection $collection
+     * @param \Closure $condition
+     * @param \Closure $map
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     public function registerFilterMap(
         Collection $collection,
@@ -46,7 +48,7 @@ class CollectionMacros extends AbstractMacroable
     }
 
     /**
-     * @param Collection $collection
+     * @param \Illuminate\Support\Collection $collection
      *
      * @return int|string|null
      */

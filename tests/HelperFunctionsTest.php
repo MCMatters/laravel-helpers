@@ -15,6 +15,7 @@ class HelperFunctionsTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testFunctionsEnabled()

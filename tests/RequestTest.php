@@ -16,6 +16,7 @@ class RequestTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsUpdateMethod()

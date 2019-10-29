@@ -30,6 +30,7 @@ if (!function_exists('run_background_command')) {
      * @param array $parameters
      *
      * @return void
+     *
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */

@@ -5,8 +5,10 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Tests;
 
 use Illuminate\Support\Arr;
-use const true;
+
 use function array_keys, is_array;
+
+use const true;
 
 /**
  * Class ArrayTest
@@ -30,6 +32,7 @@ class ArrayTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testArrayContains()
@@ -53,6 +56,7 @@ class ArrayTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testArrayHasIntKeys()

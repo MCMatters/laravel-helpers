@@ -10,7 +10,8 @@ if (!function_exists('ddq')) {
      * @param bool $die
      *
      * @return string
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function ddq($query, bool $die = false): string
     {
@@ -22,6 +23,8 @@ if (!function_exists('dump')) {
     /**
      * @param mixed $value
      * @param bool $output
+     *
+     * @return void
      */
     function dump($value, bool $output = false)
     {

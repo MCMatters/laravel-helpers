@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Tests;
 
 use Illuminate\Support\Str;
+
 use const true;
 
 /**
@@ -27,6 +28,7 @@ class StringTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\Exception
      */
     public function testOccurrences()

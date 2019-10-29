@@ -6,10 +6,12 @@ namespace McMatters\Helpers\Macros;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use const false, null, true, CASE_LOWER;
+
 use function array_change_key_case, array_key_exists, array_keys, array_slice,
     count, data_get, explode, implode, is_array, is_numeric, is_string,
     mb_strpos, preg_grep, preg_quote, shuffle;
+
+use const false, null, true, CASE_LOWER;
 
 /**
  * Class ArrMacros
@@ -170,12 +172,10 @@ class ArrMacros extends AbstractMacroable
                 if (mb_strpos($key, $needle) !== false) {
                     return true;
                 }
-            } else {
-                if (is_string($value) &&
-                    mb_strpos($value, $needle) !== false
-                ) {
-                    return true;
-                }
+            } elseif (is_string($value) &&
+                mb_strpos($value, $needle) !== false
+            ) {
+                return true;
             }
         }
 

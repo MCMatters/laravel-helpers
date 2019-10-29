@@ -6,6 +6,7 @@ namespace McMatters\Helpers\Tests;
 
 use McMatters\Helpers\Helpers\ModelHelper;
 use McMatters\Helpers\Tests\Mocks\ModelTester;
+
 use function get_class;
 
 /**
@@ -17,6 +18,7 @@ class ModelTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \InvalidArgumentException
      */
     public function testGetModelFromQuery()

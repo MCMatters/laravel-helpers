@@ -10,7 +10,8 @@ if (!function_exists('compile_sql_query')) {
      * @param array|null $bindings
      *
      * @return string
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function compile_sql_query($sql, array $bindings = null): string
     {

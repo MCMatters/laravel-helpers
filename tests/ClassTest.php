@@ -7,8 +7,10 @@ namespace McMatters\Helpers\Tests;
 use InvalidArgumentException;
 use McMatters\Helpers\Helpers\ClassHelper;
 use McMatters\Helpers\Tests\Mocks\ClassTester;
-use const null;
+
 use function get_class;
+
+use const null, true;
 
 /**
  * Class ClassTest
@@ -19,6 +21,7 @@ class ClassTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws InvalidArgumentException
      * @throws \ReflectionException
      */
@@ -27,9 +30,9 @@ class ClassTest extends TestCase
         $class = new ClassTester();
         $expected = [
             'STATUS_DISABLED' => 0,
-            'STATUS_ENABLED'  => 1,
-            'TYPE_PERSONAL'   => 1,
-            'TYPE_COMPANY'    => 2,
+            'STATUS_ENABLED' => 1,
+            'TYPE_PERSONAL' => 1,
+            'TYPE_COMPANY' => 2,
         ];
 
         $this->assertEquals($expected, ClassHelper::getConstants($class));
@@ -50,7 +53,8 @@ class ClassTest extends TestCase
 
     /**
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
     public function testGetClassConstantsStartWith()
@@ -59,7 +63,15 @@ class ClassTest extends TestCase
         $constants = ClassHelper::getConstantsStartWith($class, 'TYPE_');
         $expected = [
             'TYPE_PERSONAL' => 1,
-            'TYPE_COMPANY'  => 2,
+            'TYPE_COMPANY' => 2,
+        ];
+
+        $this->assertEquals($expected, $constants);
+
+        $constants = ClassHelper::getConstantsStartWith($class, 'TYPE_', true);
+        $expected = [
+            'PERSONAL' => 1,
+            'COMPANY' => 2,
         ];
 
         $this->assertEquals($expected, $constants);

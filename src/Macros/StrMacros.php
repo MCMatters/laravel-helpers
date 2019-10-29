@@ -5,8 +5,10 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Macros;
 
 use Illuminate\Support\Str;
-use const false;
+
 use function str_replace, ucwords;
+
+use const false;
 
 /**
  * Class StrMacros

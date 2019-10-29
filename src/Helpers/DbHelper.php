@@ -8,9 +8,11 @@ use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Throwable;
-use const false, null, true;
+
 use function array_shift, gettype, implode, is_callable, is_object, is_string,
     property_exists, strlen, str_replace, trim;
+
+use const false, null, true;
 
 /**
  * Class DbHelper
@@ -24,6 +26,7 @@ class DbHelper
      * @param array|null $bindings
      *
      * @return string
+     *
      * @throws \InvalidArgumentException
      */
     public static function compileSqlQuery($sql, array $bindings = null): string

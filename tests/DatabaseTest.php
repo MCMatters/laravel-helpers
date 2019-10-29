@@ -16,6 +16,7 @@ class DatabaseTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \InvalidArgumentException
      */
     public function testCompileSqlQuery()

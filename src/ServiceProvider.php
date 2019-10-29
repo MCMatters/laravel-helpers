@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use McMatters\Helpers\Macros\{
     ArrMacros, CollectionMacros, RequestMacros, StrMacros
 };
-use ReflectionException;
+
 use function is_callable;
 
 /**
@@ -31,7 +31,8 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * @return void
-     * @throws ReflectionException
+     *
+     * @throws \ReflectionException
      */
     public function boot()
     {
@@ -57,7 +58,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerMacros()
     {
         foreach ($this->macros as $macro) {
-            (new $macro)->register();
+            (new $macro())->register();
         }
     }
 

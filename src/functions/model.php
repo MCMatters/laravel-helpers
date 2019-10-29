@@ -9,8 +9,9 @@ if (!function_exists('get_model_from_query')) {
     /**
      * @param mixed $query
      *
-     * @return Model
-     * @throws InvalidArgumentException
+     * @return \Illuminate\Database\Eloquent\Model
+     *
+     * @throws \InvalidArgumentException
      */
     function get_model_from_query($query): Model
     {
@@ -23,8 +24,9 @@ if (!function_exists('destroy_models_from_query')) {
      * @param mixed $query
      *
      * @return int
-     * @throws Exception
-     * @throws InvalidArgumentException
+     *
+     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     function destroy_models_from_query($query): int
     {
@@ -53,8 +55,8 @@ if (!function_exists('does_model_belong_to')) {
 
 if (!function_exists('does_morphed_model_belong_to_parent')) {
     /**
-     * @param Model $morphed
-     * @param Model $parent
+     * @param \Illuminate\Database\Eloquent\Model $morphed
+     * @param \Illuminate\Database\Eloquent\Model $parent
      * @param string $name
      * @param string|null $type
      * @param string|null $id

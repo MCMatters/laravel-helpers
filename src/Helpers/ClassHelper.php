@@ -7,8 +7,10 @@ namespace McMatters\Helpers\Helpers;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use ReflectionClass;
-use const null;
+
 use function get_class, is_object, is_string;
+
+use const false, null;
 
 /**
  * Class ClassHelper
@@ -21,6 +23,7 @@ class ClassHelper
      * @param mixed $class
      *
      * @return array
+     *
      * @throws \ReflectionException
      * @throws \InvalidArgumentException
      */
@@ -40,18 +43,24 @@ class ClassHelper
     /**
      * @param mixed $class
      * @param string $keyword
+     * @param bool $substrKeyword
      *
      * @return array
      * @throws \ReflectionException
      * @throws \InvalidArgumentException
      */
-    public static function getConstantsStartWith($class, string $keyword): array
-    {
+    public static function getConstantsStartWith(
+        $class,
+        string $keyword,
+        bool $substrKeyword = false
+    ): array {
         $constants = [];
 
         foreach (self::getConstants($class) as $key => $constant) {
             if (Str::startsWith($key, $keyword)) {
-                $constants[$key] = $constant;
+                $constants[$key] = $substrKeyword
+                    ? Str::substr($constant)
+                    : $constant;
             }
         }
 
@@ -65,14 +74,14 @@ class ClassHelper
      */
     public static function getClassName($class)
     {
-        $name = null;
-
         if (is_string($class)) {
-            $name = $class;
-        } elseif (is_object($class)) {
-            $name = get_class($class);
+            return $class;
         }
 
-        return $name;
+        if (is_object($class)) {
+            return get_class($class);
+        }
+
+        return null;
     }
 }

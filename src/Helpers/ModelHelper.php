@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
-use const null;
+
 use function get_class, is_array, is_string;
+
+use const null;
 
 /**
  * Class ModelHelper
@@ -22,6 +24,7 @@ class ModelHelper
      * @param mixed $query
      *
      * @return \Illuminate\Database\Eloquent\Model
+     *
      * @throws \InvalidArgumentException
      */
     public static function getModelFromQuery($query): Model
@@ -44,6 +47,7 @@ class ModelHelper
      * @param int $limit
      *
      * @return int
+     *
      * @throws \Exception
      * @throws \InvalidArgumentException
      */

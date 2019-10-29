@@ -6,8 +6,10 @@ namespace McMatters\Helpers\Tests;
 
 use Illuminate\Support\Str;
 use McMatters\Helpers\Helpers\TypeHelper;
-use const false, null, true;
+
 use function is_bool, json_encode;
+
+use const false, null, true;
 
 /**
  * Class StringTest
@@ -18,7 +20,9 @@ class TypeTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Exception
      */
     public function testRandomBool()
     {
@@ -30,6 +34,7 @@ class TypeTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testCastingBool()
@@ -51,6 +56,7 @@ class TypeTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsJson()
@@ -67,6 +73,7 @@ class TypeTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsUuid()

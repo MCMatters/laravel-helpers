@@ -9,8 +9,10 @@ use Illuminate\Container\Container;
 use Illuminate\Support\ProcessUtils;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
-use const false, true;
+
 use function implode, is_array, is_numeric, preg_match;
+
+use const false, true;
 
 /**
  * Class ArtisanHelper
@@ -54,16 +56,21 @@ class ArtisanHelper
      * @param array $parameters
      *
      * @return void
+     *
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public static function runCommandInBackground(string $command, array $parameters = [])
-    {
+    public static function runCommandInBackground(
+        string $command,
+        array $parameters = []
+    ) {
         (new Process(self::getCompiledCommand($command, $parameters, true)))->start();
     }
 
     /**
      * @param string $command
+     *
+     * @return void
      *
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException

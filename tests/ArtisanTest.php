@@ -15,6 +15,7 @@ class ArtisanTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \RuntimeException
      */
@@ -25,6 +26,7 @@ class ArtisanTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\Exception
      */
     public function testGetArtisan()

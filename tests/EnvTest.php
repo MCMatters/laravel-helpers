@@ -15,6 +15,7 @@ class EnvTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsProduction()
@@ -24,6 +25,7 @@ class EnvTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsLocal()
@@ -33,6 +35,7 @@ class EnvTest extends TestCase
 
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testIsTesting()

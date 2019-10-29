@@ -51,8 +51,9 @@ if (!function_exists('is_max_post_size_exceeded')) {
 if (!function_exists('get_max_response_code')) {
     /**
      * @return int
-     * @throws InvalidArgumentException
-     * @throws ReflectionException
+     *
+     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
      */
     function get_max_response_code(): int
     {

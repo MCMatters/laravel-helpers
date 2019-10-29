@@ -7,8 +7,10 @@ namespace McMatters\Helpers\Macros;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use Illuminate\Support\Str;
-use const true;
+
 use function in_array;
+
+use const true;
 
 /**
  * Class RequestMacros
@@ -26,13 +28,13 @@ class RequestMacros extends AbstractMacroable
     }
 
     /**
-     * @param Request|null $request
+     * @param \Illuminate\Http\Request|null $request
      *
      * @return bool
      */
     public function registerIsUpdateMethod(Request $request = null): bool
     {
-        /** @var Request $request */
+        /** @var \Illuminate\Http\Request $request */
         $request = $request ?: RequestFacade::instance();
 
         return in_array(Str::lower($request->method()), ['put', 'patch'], true);

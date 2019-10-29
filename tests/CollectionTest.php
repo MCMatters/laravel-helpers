@@ -16,6 +16,7 @@ class CollectionTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \PHPUnit\Framework\Exception
      */
     public function testFilterMap()
@@ -23,10 +24,10 @@ class CollectionTest extends TestCase
         $data = require __DIR__.'/mocks/arrays/filterMap.php';
 
         $collection = (new Collection($data))->filterMap(
-            function (array $item) {
+            static function (array $item) {
                 return MathHelper::isNumberOdd($item['id']);
             },
-            function (array $item) {
+            static function (array $item) {
                 return $item['title'];
             }
         );

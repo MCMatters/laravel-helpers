@@ -5,8 +5,10 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Symfony\Component\HttpFoundation\Response;
-use const PHP_OS;
+
 use function array_filter, ini_get, ini_set, max, set_time_limit, stripos;
+
+use const PHP_OS;
 
 /**
  * Class ServerHelper
@@ -54,6 +56,7 @@ class ServerHelper
 
     /**
      * @return int
+     *
      * @throws \ReflectionException
      * @throws \InvalidArgumentException
      */

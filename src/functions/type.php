@@ -7,6 +7,8 @@ use McMatters\Helpers\Helpers\TypeHelper;
 if (!function_exists('random_bool')) {
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     function random_bool(): bool
     {

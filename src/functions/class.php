@@ -9,8 +9,9 @@ if (!function_exists('get_class_constants')) {
      * @param mixed $class
      *
      * @return array
-     * @throws InvalidArgumentException
-     * @throws ReflectionException
+     *
+     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
      */
     function get_class_constants($class): array
     {
@@ -22,13 +23,18 @@ if (!function_exists('get_class_constants_start_with')) {
     /**
      * @param mixed $class
      * @param string $keyword
+     * @param bool $substrKeyword
      *
      * @return array
-     * @throws InvalidArgumentException
-     * @throws ReflectionException
+     *
+     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
      */
-    function get_class_constants_start_with($class, string $keyword): array
-    {
-        return ClassHelper::getConstantsStartWith($class, $keyword);
+    function get_class_constants_start_with(
+        $class,
+        string $keyword,
+        bool $substrKeyword = false
+    ): array {
+        return ClassHelper::getConstantsStartWith($class, $keyword, $substrKeyword);
     }
 }

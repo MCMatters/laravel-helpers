@@ -11,7 +11,8 @@ if (!function_exists('calculate_percentage')) {
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function calculate_percentage($count, $total, int $decimals = 1): float
     {
@@ -26,7 +27,8 @@ if (!function_exists('calculate_discount')) {
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function calculate_discount($discount, $total, int $decimals = 1): float
     {
@@ -41,7 +43,8 @@ if (!function_exists('calculate_with_discount')) {
      * @param int $decimals
      *
      * @return float
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function calculate_with_discount($discount, $total, int $decimals = 1): float
     {
@@ -89,7 +92,8 @@ if (!function_exists('is_number_even')) {
      * @param mixed $number
      *
      * @return bool
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function is_number_even($number): bool
     {
@@ -102,7 +106,8 @@ if (!function_exists('is_number_odd')) {
      * @param mixed $number
      *
      * @return bool
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function is_number_odd($number): bool
     {
@@ -117,7 +122,8 @@ if (!function_exists('is_number_in_range')) {
      * @param int|float $to
      *
      * @return bool
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
     function is_number_in_range($number, $from, $to): bool
     {

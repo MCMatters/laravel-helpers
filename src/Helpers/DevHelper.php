@@ -7,8 +7,10 @@ namespace McMatters\Helpers\Helpers;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Illuminate\Support\Debug\HtmlDumper;
-use const false, null, PHP_SAPI;
+
 use function class_exists, var_dump;
+
+use const false, null, PHP_SAPI;
 
 /**
  * Class DevHelper
@@ -22,6 +24,7 @@ class DevHelper
      * @param bool $die
      *
      * @return string
+     *
      * @throws \InvalidArgumentException
      */
     public static function ddq($query, bool $die = false): string
@@ -54,7 +57,7 @@ class DevHelper
         }
 
         if (null !== $dumper) {
-            $varCloner = new VarCloner;
+            $varCloner = new VarCloner();
 
             $dumper->dump($varCloner->cloneVar($value), $output);
         } else {

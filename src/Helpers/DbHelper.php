@@ -5,12 +5,13 @@ declare(strict_types = 1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Throwable;
 
 use function array_shift, gettype, implode, is_callable, is_object, is_string,
-    property_exists, strlen, str_replace, trim;
+    method_exists, property_exists, strlen, str_replace, trim;
 
 use const false, null, true;
 
@@ -38,12 +39,19 @@ class DbHelper
 
             if (null === $bindings) {
                 $bindings = $sql->getBindings();
+                $query = $sql->getQuery();
+
+                if ($bindings === $sql && method_exists($query, 'toBase')) {
+                    $bindings = $query->toBase()->getBindings();
+                } elseif (isset($sql->bindings)) {
+                    $bindings = Arr::flatten($sql->bindings);
+                }
             }
 
             $sql = $sql->toSql();
         }
 
-       return self::replaceBindings($sql, $bindings);
+       return self::replaceBindings($sql, $bindings ?: []);
     }
 
     /**
@@ -130,8 +138,10 @@ class DbHelper
             return false;
         }
 
-        if (is_callable([$query, 'getBaseQuery'])) {
+        if (method_exists($query, 'getBaseQuery')) {
             $baseQuery = $query->getBaseQuery();
+        } elseif (method_exists($query, 'getQuery')) {
+            $baseQuery = $query->getQuery();
         } else {
             $baseQuery = clone $query;
         }

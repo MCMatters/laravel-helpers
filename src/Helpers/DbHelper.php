@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Throwable;
 
-use function array_shift, gettype, implode, is_callable, is_object, is_string,
-    method_exists, property_exists, strlen, str_replace, trim;
+use function array_shift, gettype, implode, is_object, is_string, method_exists,
+    property_exists, strlen, str_replace, trim;
 
 use const false, null, true;
 
@@ -33,19 +33,12 @@ class DbHelper
     public static function compileSqlQuery($sql, array $bindings = null): string
     {
         if (!is_string($sql)) {
-            if (!is_callable([$sql, 'toSql'])) {
+            if (!method_exists($sql, 'toSql')) {
                 throw new InvalidArgumentException('"$sql" must be string or Query object.');
             }
 
             if (null === $bindings) {
-                $bindings = $sql->getBindings();
-                $query = $sql->getQuery();
-
-                if ($bindings === $sql && method_exists($query, 'toBase')) {
-                    $bindings = $query->toBase()->getBindings();
-                } elseif (isset($sql->bindings)) {
-                    $bindings = Arr::flatten($sql->bindings);
-                }
+                $bindings = self::getBindings($sql);
             }
 
             $sql = $sql->toSql();
@@ -124,6 +117,54 @@ class DbHelper
         }
 
         return $results;
+    }
+
+    /**
+     * @param mixed $query
+     *
+     * @return mixed
+     */
+    public static function getBaseQuery($query)
+    {
+        if (method_exists($query, 'getBaseQuery')) {
+            return $query->getBaseQuery();
+        }
+
+        if (method_exists($query, 'getQuery')) {
+            $query = $query->getQuery();
+        } else {
+            $query = clone $query;
+        }
+
+        if (method_exists($query, 'toBase')) {
+            return $query->toBase();
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param mixed $query
+     *
+     * @return array
+     */
+    public static function getBindings($query): array
+    {
+        $bindings = [];
+
+        if (method_exists($query, 'getBindings')) {
+            $bindings = $query->getBindings();
+        }
+
+        $baseQuery = self::getBaseQuery($query);
+
+        if ($bindings === $query) {
+            $bindings = $baseQuery->getBindings();
+        } elseif (isset($baseQuery->bindings)) {
+            $bindings = Arr::flatten($baseQuery->bindings);
+        }
+
+        return $bindings;
     }
 
     /**

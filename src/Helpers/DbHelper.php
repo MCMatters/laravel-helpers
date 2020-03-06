@@ -191,7 +191,7 @@ class DbHelper
             return false;
         }
 
-        foreach ($baseQuery->joins as $join) {
+        foreach ($baseQuery->joins ?? [] as $join) {
             if ($join->table === $with) {
                 return true;
             }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
@@ -46,6 +46,7 @@ class ClassHelper
      * @param bool $substrKeyword
      *
      * @return array
+     *
      * @throws \ReflectionException
      * @throws \InvalidArgumentException
      */

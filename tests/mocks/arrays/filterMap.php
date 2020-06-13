@@ -1,22 +1,22 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 return [
     [
-        'id'    => 1,
+        'id' => 1,
         'title' => 'Foo',
     ],
     [
-        'id'    => 2,
+        'id' => 2,
         'title' => 'Bar',
     ],
     [
-        'id'    => 3,
+        'id' => 3,
         'title' => 'Baz',
     ],
     [
-        'id'    => 4,
+        'id' => 4,
         'title' => 'Some',
     ],
 ];

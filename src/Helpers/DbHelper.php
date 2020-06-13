@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
@@ -63,7 +63,7 @@ class DbHelper
         $schema = self::getSchema($connection);
 
         try {
-            $schemas = (array) $db->select('SHOW TABLES');
+            $schemas = (array) $db->getDoctrineSchemaManager()->listTableNames();
         } catch (Throwable $e) {
             return [];
         }

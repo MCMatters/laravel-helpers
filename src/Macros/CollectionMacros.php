@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Macros;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-
-use const null;
 
 /**
  * Class CollectionMacros
@@ -54,10 +53,6 @@ class CollectionMacros extends AbstractMacroable
      */
     public function registerFirstKey(Collection $collection)
     {
-        foreach ($collection->all() as $key => $value) {
-            return $key;
-        }
-
-        return null;
+        return Arr::firstKey($collection->all());
     }
 }

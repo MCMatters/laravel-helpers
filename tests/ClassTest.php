@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests;
 
@@ -36,7 +36,10 @@ class ClassTest extends TestCase
         ];
 
         $this->assertEquals($expected, ClassHelper::getConstants($class));
-        $this->assertEquals($expected, ClassHelper::getConstants(get_class($class)));
+        $this->assertEquals(
+            $expected,
+            ClassHelper::getConstants(get_class($class))
+        );
     }
 
     /**

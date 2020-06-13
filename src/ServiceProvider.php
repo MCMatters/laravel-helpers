@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers;
 
@@ -31,8 +31,6 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * @return void
-     *
-     * @throws \ReflectionException
      */
     public function boot()
     {
@@ -67,7 +65,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerHelperFunctions()
     {
-        $files = Config::get('laravel-helpers.enabled_helper_functions');
+        $files = Config::get('laravel-helpers.enabled_helper_functions', []);
 
         foreach ((array) $files as $file) {
             require __DIR__."/functions/{$file}.php";

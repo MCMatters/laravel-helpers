@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
@@ -65,7 +65,8 @@ class TypeHelper
      */
     public static function castingNullableBool($value, bool $default = false)
     {
-        if (is_string($value) &&
+        if (
+            is_string($value) &&
             in_array(Str::lower($value), ['null', "'null'", '"null"'])
         ) {
             return null;

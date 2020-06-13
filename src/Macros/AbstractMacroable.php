@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Macros;
 
 use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Macroable;
 use ReflectionClass;
 
 use function array_unshift;
@@ -21,8 +20,6 @@ abstract class AbstractMacroable
      * Auto registration of macros.
      *
      * @return void
-     *
-     * @throws \ReflectionException
      */
     public function register()
     {
@@ -37,6 +34,7 @@ abstract class AbstractMacroable
 
             if ($method !== 'register' && Str::startsWith($method, 'register')) {
                 $macro = Str::camel(Str::substr($method, 8));
+
                 if (!$class::hasMacro($macro)) {
                     $class::macro($macro, function (...$args) use ($static, $method) {
                         if (isset($this)) {

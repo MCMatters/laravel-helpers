@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Macros;
 
@@ -35,6 +35,10 @@ class ArrMacros extends AbstractMacroable
      */
     public function registerFirstKey(array $array)
     {
+        if (function_exists('array_key_first')) {
+            return array_key_first($array);
+        }
+
         foreach ($array as $key => $value) {
             return $key;
         }
@@ -77,7 +81,8 @@ class ArrMacros extends AbstractMacroable
 
             $flag = false;
 
-            if ($searchWithSegment &&
+            if (
+                $searchWithSegment &&
                 $i !== ($countSegments - 1) &&
                 $segments[$i + 1] === '*'
             ) {
@@ -172,7 +177,8 @@ class ArrMacros extends AbstractMacroable
                 if (mb_strpos($key, $needle) !== false) {
                     return true;
                 }
-            } elseif (is_string($value) &&
+            } elseif (
+                is_string($value) &&
                 mb_strpos($value, $needle) !== false
             ) {
                 return true;

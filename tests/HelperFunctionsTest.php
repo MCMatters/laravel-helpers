@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests;
 
@@ -37,7 +37,10 @@ class HelperFunctionsTest extends TestCase
         ];
 
         foreach ($functions as $function) {
-            $this->assertTrue(function_exists($function), "Function {$function} is not enabled");
+            $this->assertTrue(
+                function_exists($function),
+                "Function {$function} is not enabled"
+            );
         }
     }
 }

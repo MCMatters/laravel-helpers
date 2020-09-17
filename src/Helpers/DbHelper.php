@@ -33,18 +33,20 @@ class DbHelper
     public static function compileSqlQuery($sql, array $bindings = null): string
     {
         if (!is_string($sql)) {
-            if (!method_exists($sql, 'toSql')) {
+            try {
+                $sqlQuery = $sql->toSql();
+            } catch (Throwable $e) {
                 throw new InvalidArgumentException('"$sql" must be string or Query object.');
             }
 
             if (null === $bindings) {
                 $bindings = self::getBindings($sql);
             }
-
-            $sql = $sql->toSql();
+        } else {
+            $sqlQuery = $sql;
         }
 
-       return self::replaceBindings($sql, $bindings ?: []);
+        return self::replaceBindings($sqlQuery, $bindings ?: []);
     }
 
     /**
@@ -150,10 +152,10 @@ class DbHelper
      */
     public static function getBindings($query): array
     {
-        $bindings = [];
-
-        if (method_exists($query, 'getBindings')) {
-            $bindings = $query->getBindings();
+        try {
+            return $query->getBindings();
+        } catch (Throwable $e) {
+            $bindings = [];
         }
 
         $baseQuery = self::getBaseQuery($query);

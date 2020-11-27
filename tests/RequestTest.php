@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 
 /**
@@ -23,15 +22,26 @@ class RequestTest extends TestCase
     {
         $request = RequestFacade::instance();
 
-        $this->assertFalse(Request::isUpdateMethod());
+        $this->assertFalse($request->isUpdateMethod());
 
         $request->setMethod('patch');
-        $this->assertTrue(Request::isUpdateMethod());
+        $this->assertTrue($request->isUpdateMethod());
 
         $request->setMethod('put');
-        $this->assertTrue(Request::isUpdateMethod());
+        $this->assertTrue($request->isUpdateMethod());
 
         $request->setMethod('get');
-        $this->assertFalse(Request::isUpdateMethod());
+        $this->assertFalse($request->isUpdateMethod());
+
+        $this->assertFalse(RequestFacade::isUpdateMethod());
+
+        RequestFacade::setMethod('patch');
+        $this->assertTrue(RequestFacade::isUpdateMethod());
+
+        RequestFacade::setMethod('put');
+        $this->assertTrue(RequestFacade::isUpdateMethod());
+
+        RequestFacade::setMethod('get');
+        $this->assertFalse(RequestFacade::isUpdateMethod());
     }
 }

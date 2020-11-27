@@ -16,43 +16,30 @@ use Illuminate\Support\Collection;
 class CollectionMacros extends AbstractMacroable
 {
     /**
-     * @return string
+     * @return void
      */
-    public static function getClass(): string
+    protected function registerFilterMap()
     {
-        return Collection::class;
-    }
+        Collection::macro('filterMap', function (Closure $condition, Closure $map) {
+            $data = [];
 
-    /**
-     * @param \Illuminate\Support\Collection $collection
-     * @param \Closure $condition
-     * @param \Closure $map
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function registerFilterMap(
-        Collection $collection,
-        Closure $condition,
-        Closure $map
-    ): Collection {
-        $data = [];
-
-        foreach ($collection->all() as $item) {
-            if ($condition($item)) {
-                $data[] = $map($item);
+            foreach ($this->all() as $item) {
+                if ($condition($item)) {
+                    $data[] = $map($item);
+                }
             }
-        }
 
-        return new Collection($data);
+            return new Collection($data);
+        });
     }
 
     /**
-     * @param \Illuminate\Support\Collection $collection
-     *
-     * @return int|string|null
+     * @return void
      */
-    public function registerFirstKey(Collection $collection)
+    protected function registerFirstKey()
     {
-        return Arr::firstKey($collection->all());
+        Collection::macro('firstKey', function () {
+            return Arr::firstKey($this->all());
+        });
     }
 }

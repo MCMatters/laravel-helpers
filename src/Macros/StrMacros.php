@@ -18,45 +18,36 @@ use const false;
 class StrMacros extends AbstractMacroable
 {
     /**
-     * @return string
+     * @return void
      */
-    public static function getClass(): string
+    protected function registerUcwords()
     {
-        return Str::class;
+        Str::macro('ucwords', function (string $string) {
+            return ucwords(str_replace(['-', '_'], ' ', $string));
+        });
     }
 
     /**
-     * @param string $string
-     *
-     * @return string
+     * @return void
      */
-    public function registerUcwords(string $string): string
+    protected function registerOccurrences()
     {
-        return ucwords(str_replace(['-', '_'], ' ', $string));
-    }
+        Str::macro('occurrences', function (
+            string $haystack,
+            string $needle,
+            bool $caseInsensitive = false
+        ) {
+            $occurrences = [];
+            $offset = 0;
 
-    /**
-     * @param string $haystack
-     * @param string $needle
-     * @param bool $caseInsensitive
-     *
-     * @return array
-     */
-    public function registerOccurrences(
-        string $haystack,
-        string $needle,
-        bool $caseInsensitive = false
-    ): array {
-        $occurrences = [];
-        $offset = 0;
+            $function = $caseInsensitive ? 'strpos' : 'stripos';
 
-        $function = $caseInsensitive ? 'strpos' : 'stripos';
+            while (($position = $function($haystack, $needle, $offset)) !== false) {
+                $occurrences[] = $position;
+                $offset = ++$position;
+            }
 
-        while (($position = $function($haystack, $needle, $offset)) !== false) {
-            $occurrences[] = $position;
-            $offset = ++$position;
-        }
-
-        return $occurrences;
+            return $occurrences;
+        });
     }
 }

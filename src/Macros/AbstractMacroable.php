@@ -7,8 +7,6 @@ namespace McMatters\Helpers\Macros;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
-use function array_unshift;
-
 /**
  * Class AbstractMacroable
  *
@@ -25,31 +23,12 @@ abstract class AbstractMacroable
     {
         $reflection = new ReflectionClass(static::class);
 
-        /** @var \Illuminate\Support\Traits\Macroable $class */
-        $class = static::getClass();
-        $static = $this;
-
         foreach ($reflection->getMethods() as $method) {
             $method = $method->getName();
 
             if ($method !== 'register' && Str::startsWith($method, 'register')) {
-                $macro = Str::camel(Str::substr($method, 8));
-
-                if (!$class::hasMacro($macro)) {
-                    $class::macro($macro, function (...$args) use ($static, $method) {
-                        if (isset($this)) {
-                            array_unshift($args, $this);
-                        }
-
-                        return $static->{$method}(...$args);
-                    });
-                }
+                $this->{$method}();
             }
         }
     }
-
-    /**
-     * @return string
-     */
-    abstract public static function getClass(): string;
 }

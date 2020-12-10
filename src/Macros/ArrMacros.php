@@ -7,9 +7,10 @@ namespace McMatters\Helpers\Macros;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-use function array_change_key_case, array_key_exists, array_keys, array_slice,
-    count, data_get, explode, implode, is_array, is_numeric, is_string,
-    mb_strpos, preg_grep, preg_quote, shuffle;
+use function array_change_key_case, array_key_exists, array_keys, array_map,
+    array_slice, count, data_get, explode, implode, in_array, is_array,
+    is_numeric, is_string, mb_strpos, mb_strtolower, preg_grep, preg_quote,
+    shuffle;
 
 use const false, null, true, CASE_LOWER;
 
@@ -228,6 +229,33 @@ class ArrMacros extends AbstractMacroable
             }
 
             return array_change_key_case($array, $case);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerHasValue()
+    {
+        Arr::macro('hasValue', function (
+            $needle,
+            array $array,
+            bool $strict = false,
+            bool $insensitive = false
+        ) {
+            if (!$insensitive || !is_string($needle)) {
+                return in_array($needle, $array, $strict);
+            }
+
+            return in_array(
+                mb_strtolower($needle, 'UTF-8'),
+                array_map(static function ($value) {
+                    return is_string($value)
+                        ? mb_strtolower($value, 'UTF-8')
+                        : $value;
+                }, $array),
+                $strict
+            );
         });
     }
 }

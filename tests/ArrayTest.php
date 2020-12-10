@@ -85,6 +85,24 @@ class ArrayTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testArrayHasValue()
+    {
+        $array = require __DIR__.'/mocks/arrays/hasValue.php';
+
+        $this->assertTrue(Arr::hasValue('foo', $array));
+        $this->assertTrue(Arr::hasValue('bar', $array));
+        $this->assertTrue(Arr::hasValue('Foo', $array));
+        $this->assertTrue(Arr::hasValue('FOO', $array));
+        $this->assertTrue(Arr::hasValue('BAZ', $array));
+        $this->assertFalse(Arr::hasValue('BaZ', $array));
+        $this->assertTrue(Arr::hasValue('baz', $array, true, true));
+        $this->assertTrue(Arr::hasValue('bAz', $array, true, true));
+        $this->assertTrue(Arr::hasValue('qWe', $array, true, true));
+    }
+
+    /**
      * @param array $array
      * @param string $method
      *

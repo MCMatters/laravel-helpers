@@ -5,15 +5,12 @@ php:
   - '7.1'
   - '7.2'
   - '7.3'
+  - '7.4'
 
 env:
   matrix:
     - PREFER_LOWEST="--prefer-lowest --prefer-stable"
     - PREFER_LOWEST=""
-
-addons:
-  code_climate:
-    repo_token: 6f59d6e824df45a69d962c9dd3f0e68f946ffb8830f9d8040af5f91723fa97fb
 
 install: composer install --no-interaction --no-suggest --no-progress --ignore-platform-reqs --optimize-autoloader
 

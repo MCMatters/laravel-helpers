@@ -10,9 +10,13 @@ use Illuminate\Support\ProcessUtils;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
-use function implode, is_array, is_numeric, preg_match;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function preg_match;
 
-use const false, true;
+use const false;
+use const true;
 
 /**
  * Class ArtisanHelper
@@ -40,7 +44,7 @@ class ArtisanHelper
             $fullPath = (new ExecutableFinder())->find(
                 'artisan',
                 'artisan',
-                [Container::getInstance()->basePath()]
+                [Container::getInstance()->basePath()],
             );
 
             $artisan = $fullPath
@@ -62,8 +66,8 @@ class ArtisanHelper
      */
     public static function runCommandInBackground(
         string $command,
-        array $parameters = []
-    ) {
+        array $parameters = [],
+    ): void {
         (new Process(self::getCompiledCommand($command, $parameters, true)))->start();
     }
 
@@ -75,7 +79,7 @@ class ArtisanHelper
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    public static function runRawCommand(string $command)
+    public static function runRawCommand(string $command): void
     {
         (new Process($command))->start();
     }
@@ -90,7 +94,7 @@ class ArtisanHelper
     public static function getCompiledCommand(
         string $command,
         array $parameters = [],
-        bool $background = false
+        bool $background = false,
     ): string {
         $php = self::getPhpPath();
         $artisan = self::getArtisan();
@@ -109,7 +113,7 @@ class ArtisanHelper
      */
     public static function getCompiledCommands(
         array $commands,
-        bool $background = false
+        bool $background = false,
     ): string {
         $compiled = [];
 
@@ -117,7 +121,7 @@ class ArtisanHelper
             $compiled[] = self::getCompiledCommand(
                 $commandData['command'],
                 $commandData['parameters'] ?? [],
-                false
+                false,
             );
         }
 

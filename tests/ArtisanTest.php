@@ -15,21 +15,16 @@ class ArtisanTest extends TestCase
 {
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \RuntimeException
      */
-    public function testGetPhpPath()
+    public function testGetPhpPath(): void
     {
         $this->assertNotEmpty(ArtisanHelper::getPhpPath());
     }
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\Exception
      */
-    public function testGetArtisan()
+    public function testGetArtisan(): void
     {
         $this->assertStringEndsWith("artisan'", ArtisanHelper::getArtisan());
     }

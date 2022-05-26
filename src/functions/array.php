@@ -3,20 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Arr;
+use McMatters\Helpers\Helpers\ArrayHelper;
 
-if (!function_exists('array_key_first') && Arr::hasMacro('firstKey')) {
-    /**
-     * @param array $array
-     *
-     * @return int|string|null
-     */
-    function array_key_first(array $array)
-    {
-        return Arr::firstKey($array);
-    }
-}
-
-if (!function_exists('array_has_with_wildcard') && Arr::hasMacro('hasWithWildcard')) {
+if (!function_exists('array_has_with_wildcard')) {
     /**
      * @param array $array
      * @param string $keys
@@ -27,13 +16,13 @@ if (!function_exists('array_has_with_wildcard') && Arr::hasMacro('hasWithWildcar
     function array_has_with_wildcard(
         array $array,
         string $keys,
-        bool $searchWithSegment = false
+        bool $searchWithSegment = false,
     ): bool {
-        return Arr::hasWithWildcard($array, $keys, $searchWithSegment);
+        return ArrayHelper::hasWithWildcard($array, $keys, $searchWithSegment);
     }
 }
 
-if (!function_exists('array_key_by') && Arr::hasMacro('keyBy')) {
+if (!function_exists('array_key_by')) {
     /**
      * @param array $array
      * @param string $key
@@ -42,11 +31,11 @@ if (!function_exists('array_key_by') && Arr::hasMacro('keyBy')) {
      */
     function array_key_by(array $array, string $key): array
     {
-        return Arr::keyBy($array, $key);
+        return ArrayHelper::keyBy($array, $key);
     }
 }
 
-if (!function_exists('array_contains') && Arr::hasMacro('contains')) {
+if (!function_exists('array_contains')) {
     /**
      * @param array $array
      * @param string $needle
@@ -57,13 +46,13 @@ if (!function_exists('array_contains') && Arr::hasMacro('contains')) {
     function array_contains(
         array $array,
         string $needle,
-        bool $byKey = false
+        bool $byKey = false,
     ): bool {
-        return Arr::contains($array, $needle, $byKey);
+        return ArrayHelper::contains($array, $needle, $byKey);
     }
 }
 
-if (!function_exists('array_has_only_int_keys') && Arr::hasMacro('hasOnlyIntKeys')) {
+if (!function_exists('array_has_only_int_keys')) {
     /**
      * @param array $array
      *
@@ -71,11 +60,11 @@ if (!function_exists('array_has_only_int_keys') && Arr::hasMacro('hasOnlyIntKeys
      */
     function array_has_only_int_keys(array $array): bool
     {
-        return Arr::hasOnlyIntKeys($array);
+        return ArrayHelper::hasOnlyIntKeys($array);
     }
 }
 
-if (!function_exists('shuffle_assoc') && Arr::hasMacro('shuffleAssoc')) {
+if (!function_exists('shuffle_assoc')) {
     /**
      * @param array $array
      *
@@ -83,11 +72,11 @@ if (!function_exists('shuffle_assoc') && Arr::hasMacro('shuffleAssoc')) {
      */
     function shuffle_assoc(array $array): array
     {
-        return Arr::shuffleAssoc($array);
+        return ArrayHelper::shuffleAssoc($array);
     }
 }
 
-if (!function_exists('array_change_key_case_recursive') && Arr::hasMacro('changeKeyCaseRecursive')) {
+if (!function_exists('array_change_key_case_recursive')) {
     /**
      * @param array $array
      * @param int $case
@@ -96,8 +85,8 @@ if (!function_exists('array_change_key_case_recursive') && Arr::hasMacro('change
      */
     function array_change_key_case_recursive(
         array $array,
-        int $case = CASE_LOWER
+        int $case = CASE_LOWER,
     ): array {
-        return Arr::changeKeyCaseRecursive($array, $case);
+        return ArrayHelper::changeKeyCaseRecursive($array, $case);
     }
 }

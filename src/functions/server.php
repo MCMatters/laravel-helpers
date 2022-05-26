@@ -6,11 +6,13 @@ use McMatters\Helpers\Helpers\ServerHelper;
 
 if (!function_exists('long_processes')) {
     /**
+     * @param int $memory
+     *
      * @return void
      */
-    function long_processes()
+    function long_processes(int $memory = 4096): void
     {
-        ServerHelper::longProcesses();
+        ServerHelper::longProcesses($memory);
     }
 }
 
@@ -20,7 +22,7 @@ if (!function_exists('get_upload_max_filesize')) {
      *
      * @return float|int
      */
-    function get_upload_max_filesize(string $type = 'mb')
+    function get_upload_max_filesize(string $type = 'mb'): float|int
     {
         return ServerHelper::getUploadMaxFilesize($type);
     }
@@ -32,7 +34,7 @@ if (!function_exists('get_post_max_size')) {
      *
      * @return float|int
      */
-    function get_post_max_size(string $type = 'b')
+    function get_post_max_size(string $type = 'b'): float|int
     {
         return ServerHelper::getPostMaxSize($type);
     }
@@ -52,7 +54,6 @@ if (!function_exists('get_max_response_code')) {
     /**
      * @return int
      *
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
     function get_max_response_code(): int

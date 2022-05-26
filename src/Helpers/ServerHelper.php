@@ -6,9 +6,14 @@ namespace McMatters\Helpers\Helpers;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use function array_filter, ini_get, ini_set, max, set_time_limit, stripos;
+use function array_filter;
+use function ini_get;
+use function ini_set;
+use function max;
+use function set_time_limit;
+use function stripos;
 
-use const PHP_OS;
+use const PHP_OS_FAMILY;
 
 /**
  * Class ServerHelper
@@ -18,12 +23,14 @@ use const PHP_OS;
 class ServerHelper
 {
     /**
+     * @param int $memory
+     *
      * @return void
      */
-    public static function longProcesses()
+    public static function longProcesses(int $memory = 4096): void
     {
         set_time_limit(0);
-        ini_set('memory_limit', '4096M');
+        ini_set('memory_limit', "{$memory}M");
     }
 
     /**
@@ -31,7 +38,7 @@ class ServerHelper
      *
      * @return float|int
      */
-    public static function getUploadMaxFilesize(string $type = 'mb')
+    public static function getUploadMaxFilesize(string $type = 'mb'): float|int
     {
         return MathHelper::convertBytes(ini_get('upload_max_filesize'), $type);
     }
@@ -41,7 +48,7 @@ class ServerHelper
      *
      * @return float|int
      */
-    public static function getPostMaxSize(string $type = 'b')
+    public static function getPostMaxSize(string $type = 'b'): float|int
     {
         return MathHelper::convertBytes(ini_get('post_max_size'), $type);
     }
@@ -58,13 +65,12 @@ class ServerHelper
      * @return int
      *
      * @throws \ReflectionException
-     * @throws \InvalidArgumentException
      */
     public static function getMaxResponseCode(): int
     {
         $constants = ClassHelper::getConstantsStartWith(
             Response::class,
-            'HTTP_'
+            'HTTP_',
         );
 
         return (int) max(array_filter($constants, 'is_numeric'));
@@ -75,6 +81,6 @@ class ServerHelper
      */
     public static function isWindowsOs(): bool
     {
-        return 0 === stripos(PHP_OS, 'win');
+        return 0 === stripos(PHP_OS_FAMILY, 'win');
     }
 }

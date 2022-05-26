@@ -18,16 +18,14 @@ class ModelTest extends TestCase
 {
     /**
      * @return void
-     *
-     * @throws \InvalidArgumentException
      */
-    public function testGetModelFromQuery()
+    public function testGetModelFromQuery(): void
     {
         $this->assertSame(
             ModelTester::class,
             get_class(
-                ModelHelper::getModelFromQuery(ModelTester::query())
-            )
+                ModelHelper::getModelFromQuery(ModelTester::query()),
+            ),
         );
     }
 }

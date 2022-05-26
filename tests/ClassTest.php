@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests;
 
-use InvalidArgumentException;
 use McMatters\Helpers\Helpers\ClassHelper;
 use McMatters\Helpers\Tests\Mocks\ClassTester;
 
-use function get_class;
-
-use const null, true;
+use const true;
 
 /**
  * Class ClassTest
@@ -22,10 +19,9 @@ class ClassTest extends TestCase
     /**
      * @return void
      *
-     * @throws InvalidArgumentException
      * @throws \ReflectionException
      */
-    public function testGetClassConstants()
+    public function testGetClassConstants(): void
     {
         $class = new ClassTester();
         $expected = [
@@ -38,29 +34,16 @@ class ClassTest extends TestCase
         $this->assertEquals($expected, ClassHelper::getConstants($class));
         $this->assertEquals(
             $expected,
-            ClassHelper::getConstants(get_class($class))
+            ClassHelper::getConstants($class::class),
         );
     }
 
     /**
      * @return void
-     * @throws InvalidArgumentException
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \ReflectionException
-     */
-    public function testGetClassConstantsWithException()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        ClassHelper::getConstants(null);
-    }
-
-    /**
-     * @return void
      *
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
-    public function testGetClassConstantsStartWith()
+    public function testGetClassConstantsStartWith(): void
     {
         $class = new ClassTester();
         $constants = ClassHelper::getConstantsStartWith($class, 'TYPE_');

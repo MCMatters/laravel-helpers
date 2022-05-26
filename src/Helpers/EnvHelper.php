@@ -24,6 +24,14 @@ class EnvHelper
     /**
      * @return bool
      */
+    public static function isStaging(): bool
+    {
+        return Container::getInstance()->environment('staging');
+    }
+
+    /**
+     * @return bool
+     */
     public static function isLocal(): bool
     {
         return Container::getInstance()->environment('local');

@@ -6,9 +6,14 @@ namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
 
-use function parse_url, preg_replace, trim;
+use function parse_url;
+use function preg_replace;
+use function trim;
 
-use const false, true, DIRECTORY_SEPARATOR, PHP_URL_HOST;
+use const DIRECTORY_SEPARATOR;
+use const false;
+use const PHP_URL_HOST;
+use const true;
 
 /**
  * Class UrlHelper

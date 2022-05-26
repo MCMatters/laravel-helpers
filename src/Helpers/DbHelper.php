@@ -6,14 +6,21 @@ namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Throwable;
 
-use function array_shift, gettype, implode, is_object, is_string, method_exists,
-    property_exists, strlen, str_replace, trim;
+use function array_shift;
+use function gettype;
+use function implode;
+use function is_string;
+use function method_exists;
+use function property_exists;
+use function strlen;
+use function str_replace;
+use function trim;
 
-use const false, null, true;
+use const false;
+use const null;
+use const true;
 
 /**
  * Class DbHelper
@@ -23,23 +30,19 @@ use const false, null, true;
 class DbHelper
 {
     /**
-     * @param mixed $sql
+     * @param object|string $sql
      * @param array|null $bindings
      *
      * @return string
-     *
-     * @throws \InvalidArgumentException
      */
-    public static function compileSqlQuery($sql, array $bindings = null): string
-    {
+    public static function compileSqlQuery(
+        object|string $sql,
+        ?array $bindings = [],
+    ): string {
         if (!is_string($sql)) {
-            try {
-                $sqlQuery = $sql->toSql();
-            } catch (Throwable $e) {
-                throw new InvalidArgumentException('"$sql" must be string or Query object.');
-            }
+            $sqlQuery = $sql->toSql();
 
-            if (null === $bindings) {
+            if (empty($bindings)) {
                 $bindings = self::getBindings($sql);
             }
         } else {
@@ -57,7 +60,7 @@ class DbHelper
      */
     public static function getAllTables(
         bool $withColumns = true,
-        string $connection = null
+        ?string $connection = null,
     ): array {
         $tables = [];
 
@@ -66,7 +69,7 @@ class DbHelper
 
         try {
             $schemas = (array) $db->getDoctrineSchemaManager()->listTableNames();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return [];
         }
 
@@ -93,7 +96,7 @@ class DbHelper
      */
     public static function searchEntireDatabase(
         string $keyword,
-        string $connection = null
+        ?string $connection = null,
     ): array {
         $results = [];
         $keyword = trim($keyword);
@@ -109,7 +112,7 @@ class DbHelper
 
             foreach ($columns as $column) {
                 $query->orWhereRaw(
-                    "CONVERT(`{$column}` USING utf8) LIKE '%{$keyword}%'"
+                    "CONVERT(`{$column}` USING utf8) LIKE '%{$keyword}%'",
                 );
             }
 
@@ -122,11 +125,11 @@ class DbHelper
     }
 
     /**
-     * @param mixed $query
+     * @param object $query
      *
-     * @return mixed
+     * @return object
      */
-    public static function getBaseQuery($query)
+    public static function getBaseQuery(object $query): object
     {
         if (method_exists($query, 'getBaseQuery')) {
             return $query->getBaseQuery();
@@ -146,21 +149,21 @@ class DbHelper
     }
 
     /**
-     * @param mixed $query
+     * @param object $query
      *
      * @return array
      */
-    public static function getBindings($query): array
+    public static function getBindings(object $query): array
     {
         try {
             return $query->getBindings();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             $bindings = [];
         }
 
         $baseQuery = self::getBaseQuery($query);
 
-        if ($bindings === $query) {
+        if (method_exists($baseQuery, 'getBindings')) {
             $bindings = $baseQuery->getBindings();
         } elseif (isset($baseQuery->bindings)) {
             $bindings = Arr::flatten($baseQuery->bindings);
@@ -170,17 +173,13 @@ class DbHelper
     }
 
     /**
-     * @param mixed $query
+     * @param object $query
      * @param string $with
      *
      * @return bool
      */
-    public static function hasQueryJoinWith($query, string $with): bool
+    public static function hasQueryJoinWith(object $query, string $with): bool
     {
-        if (!is_object($query)) {
-            return false;
-        }
-
         if (method_exists($query, 'getBaseQuery')) {
             $baseQuery = $query->getBaseQuery();
         } elseif (method_exists($query, 'getQuery')) {
@@ -207,7 +206,7 @@ class DbHelper
      *
      * @return float|int|string
      */
-    protected static function transformSqlBinding($binding)
+    protected static function transformSqlBinding(mixed $binding): float|int|string
     {
         switch (gettype($binding)) {
             case 'boolean':
@@ -229,7 +228,6 @@ class DbHelper
             case 'unknown type':
             case 'resource':
                 return '';
-                break;
 
             case 'object':
             case 'string':
@@ -246,11 +244,11 @@ class DbHelper
      */
     protected static function replaceBindings(
         string $sql,
-        array $bindings = []
+        array $bindings = [],
     ): string {
         $previousPosition = 0;
         $offset = 0;
-        $bindingPositions = Str::occurrences($sql, '?');
+        $bindingPositions = StringHelper::occurrences($sql, '?');
 
         foreach ($bindings as $binding) {
             $binding = self::transformSqlBinding($binding);
@@ -260,18 +258,18 @@ class DbHelper
             $offset += ($position - $previousPosition) + strlen((string) $binding) - 1;
             $previousPosition = $position;
 
-            $sql = substr_replace($sql, $binding, $start, 1);
+            $sql = substr_replace($sql, (string) $binding, $start, 1);
         }
 
         return $sql;
     }
 
     /**
-     * @param string|int|float $string
+     * @param float|int|string $string
      *
      * @return string
      */
-    protected static function escapeString($string): string
+    protected static function escapeString(float|int|string $string): string
     {
         return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
     }
@@ -281,7 +279,7 @@ class DbHelper
      *
      * @return mixed
      */
-    protected static function getDb(string $connection = null)
+    protected static function getDb(?string $connection = null): mixed
     {
         static $db;
 
@@ -297,7 +295,7 @@ class DbHelper
      *
      * @return mixed
      */
-    protected static function getSchema(string $connection = null)
+    protected static function getSchema(?string $connection = null): mixed
     {
         return self::getDb($connection)->getSchemaBuilder();
     }

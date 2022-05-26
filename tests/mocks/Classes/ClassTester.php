@@ -11,9 +11,9 @@ namespace McMatters\Helpers\Tests\Mocks;
  */
 class ClassTester
 {
-    const STATUS_DISABLED = 0;
-    const STATUS_ENABLED = 1;
+    public const STATUS_DISABLED = 0;
+    public const STATUS_ENABLED = 1;
 
-    const TYPE_PERSONAL = 1;
-    const TYPE_COMPANY = 2;
+    public const TYPE_PERSONAL = 1;
+    public const TYPE_COMPANY = 2;
 }

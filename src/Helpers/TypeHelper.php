@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use JsonException;
 use stdClass;
 
-use function in_array, is_bool, is_string, json_decode, json_last_error, preg_match;
+use function in_array;
+use function is_bool;
+use function is_string;
+use function json_decode;
+use function preg_match;
 
-use const false, true, JSON_ERROR_NONE;
+use const false;
+use const true;
 
 /**
  * Class TypeHelper
@@ -20,12 +27,10 @@ class TypeHelper
 {
     /**
      * @return bool
-     *
-     * @throws \Exception
      */
     public static function randomBool(): bool
     {
-        return (bool) random_int(0, 1);
+        return Arr::random([true, false]);
     }
 
     /**
@@ -34,27 +39,17 @@ class TypeHelper
      *
      * @return bool
      */
-    public static function castingBool($value, bool $default = false): bool
+    public static function castingBool(mixed $value, bool $default = false): bool
     {
         if (is_bool($value)) {
             return $value;
         }
 
-        switch (Str::lower((string) $value)) {
-            case '1':
-            case 'true':
-            case 't':
-                return true;
-
-            case '0':
-            case 'false':
-            case 'f':
-            case '':
-                return false;
-
-            default:
-                return $default;
-        }
+        return match (Str::lower((string) $value)) {
+            '1', 'true', 't' => true,
+            '0', 'false', 'f', '' => false,
+            default => $default,
+        };
     }
 
     /**
@@ -63,8 +58,10 @@ class TypeHelper
      *
      * @return bool|null
      */
-    public static function castingNullableBool($value, bool $default = false)
-    {
+    public static function castingNullableBool(
+        mixed $value,
+        bool $default = false,
+    ): ?bool {
         if (
             is_string($value) &&
             in_array(Str::lower($value), ['null', "'null'", '"null"'])
@@ -85,39 +82,40 @@ class TypeHelper
      * @return bool|array|stdClass
      */
     public static function isJson(
-        $json,
+        mixed $json,
         bool $return = false,
         bool $assoc = false,
         int $depth = 512,
-        int $options = 0
-    ) {
+        int $options = 0,
+    ): bool|array|stdClass {
         if (!is_string($json)) {
             return false;
         }
 
-        $decoded = json_decode($json, $assoc, $depth, $options);
+        try {
+            $decoded = json_decode(
+                $json,
+                $assoc,
+                $depth,
+                JSON_THROW_ON_ERROR | $options,
+            );
 
-        if (json_last_error() === JSON_ERROR_NONE) {
             return $return ? $decoded : true;
+        } catch (JsonException) {
+            return false;
         }
-
-        return false;
     }
 
     /**
-     * @param mixed $string
+     * @param string $string
      *
      * @return bool
      */
-    public static function isUuid($string): bool
+    public static function isUuid(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         return (bool) preg_match(
             '/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/',
-            $string
+            $string,
         );
     }
 }

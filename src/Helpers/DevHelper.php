@@ -8,9 +8,12 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Illuminate\Support\Debug\HtmlDumper;
 
-use function class_exists, var_dump;
+use function class_exists;
+use function var_dump;
 
-use const false, null, PHP_SAPI;
+use const false;
+use const null;
+use const PHP_SAPI;
 
 /**
  * Class DevHelper
@@ -20,14 +23,15 @@ use const false, null, PHP_SAPI;
 class DevHelper
 {
     /**
-     * @param mixed $query
+     * @param object $query
      * @param bool $die
      *
      * @return string
      *
      * @throws \InvalidArgumentException
+     * @throws \ErrorException
      */
-    public static function ddq($query, bool $die = false): string
+    public static function ddq(object $query, bool $die = false): string
     {
         $sql = DbHelper::compileSqlQuery($query);
 
@@ -45,8 +49,10 @@ class DevHelper
      * @param bool $output
      *
      * @return void
+     *
+     * @throws \ErrorException
      */
-    public static function dump($value, bool $output = false)
+    public static function dump(mixed $value, bool $output = false): void
     {
         $dumper = null;
 

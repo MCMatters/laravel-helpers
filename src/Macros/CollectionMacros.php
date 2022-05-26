@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace McMatters\Helpers\Macros;
 
 use Closure;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use McMatters\Helpers\Helpers\ArrayHelper;
 
 /**
  * Class CollectionMacros
@@ -18,9 +18,9 @@ class CollectionMacros extends AbstractMacroable
     /**
      * @return void
      */
-    protected function registerFilterMap()
+    protected function registerFilterMap(): void
     {
-        Collection::macro('filterMap', function (Closure $condition, Closure $map) {
+        Collection::macro('filterMap', function (Closure $condition, Closure $map): Collection {
             $data = [];
 
             foreach ($this->all() as $item) {
@@ -36,10 +36,10 @@ class CollectionMacros extends AbstractMacroable
     /**
      * @return void
      */
-    protected function registerFirstKey()
+    protected function registerFirstKey(): void
     {
-        Collection::macro('firstKey', function () {
-            return Arr::firstKey($this->all());
+        Collection::macro('firstKey', function (): int|string|null {
+            return ArrayHelper::firstKey($this->all());
         });
     }
 }

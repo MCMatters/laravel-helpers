@@ -14,6 +14,16 @@ if (!function_exists('is_production_environment')) {
     }
 }
 
+if (!function_exists('is_staging_environment')) {
+    /**
+     * @return bool
+     */
+    function is_staging_environment(): bool
+    {
+        return EnvHelper::isStaging();
+    }
+}
+
 if (!function_exists('is_local_environment')) {
     /**
      * @return bool

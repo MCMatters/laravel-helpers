@@ -7,8 +7,6 @@ use McMatters\Helpers\Helpers\TypeHelper;
 if (!function_exists('random_bool')) {
     /**
      * @return bool
-     *
-     * @throws \Exception
      */
     function random_bool(): bool
     {
@@ -23,7 +21,7 @@ if (!function_exists('casting_bool')) {
      *
      * @return bool
      */
-    function casting_bool($value, bool $default = false): bool
+    function casting_bool(mixed $value, bool $default = false): bool
     {
         return TypeHelper::castingBool($value, $default);
     }
@@ -36,7 +34,7 @@ if (!function_exists('casting_nullable_bool')) {
      *
      * @return bool|null
      */
-    function casting_nullable_bool($value, bool $default = false): bool
+    function casting_nullable_bool(mixed $value, bool $default = false): ?bool
     {
         return TypeHelper::castingNullableBool($value, $default);
     }
@@ -50,26 +48,26 @@ if (!function_exists('is_json')) {
      * @param int $depth
      * @param int $options
      *
-     * @return array|bool|stdClass
+     * @return bool|array|stdClass
      */
     function is_json(
-        $json,
+        mixed $json,
         bool $return = false,
         bool $assoc = false,
         int $depth = 512,
-        int $options = 0
-    ) {
+        int $options = 0,
+    ): bool|array|stdClass {
         return TypeHelper::isJson($json, $return, $assoc, $depth, $options);
     }
 }
 
 if (!function_exists('is_uuid')) {
     /**
-     * @param mixed $string
+     * @param string $string
      *
      * @return bool
      */
-    function is_uuid($string): bool
+    function is_uuid(string $string): bool
     {
         return TypeHelper::isUuid($string);
     }

@@ -6,14 +6,15 @@ use McMatters\Helpers\Helpers\DevHelper;
 
 if (!function_exists('ddq')) {
     /**
-     * @param mixed $query
+     * @param object $query
      * @param bool $die
      *
      * @return string
      *
      * @throws \InvalidArgumentException
+     * @throws \ErrorException
      */
-    function ddq($query, bool $die = false): string
+    function ddq(object $query, bool $die = false): string
     {
         return DevHelper::ddq($query, $die);
     }
@@ -25,8 +26,10 @@ if (!function_exists('dump')) {
      * @param bool $output
      *
      * @return void
+     *
+     * @throws \ErrorException
      */
-    function dump($value, bool $output = false)
+    function dump(mixed $value, bool $output = false): void
     {
         DevHelper::dump($value, $output);
     }

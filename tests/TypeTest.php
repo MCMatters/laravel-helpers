@@ -7,9 +7,11 @@ namespace McMatters\Helpers\Tests;
 use Illuminate\Support\Str;
 use McMatters\Helpers\Helpers\TypeHelper;
 
-use function is_bool, json_encode;
+use function json_encode;
 
-use const false, null, true;
+use const false;
+use const null;
+use const true;
 
 /**
  * Class StringTest
@@ -20,24 +22,19 @@ class TypeTest extends TestCase
 {
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Exception
      */
-    public function testRandomBool()
+    public function testRandomBool(): void
     {
         for ($i = 0; $i < 100; $i++) {
             $bool = TypeHelper::randomBool();
-            $this->assertTrue(is_bool($bool));
+            $this->assertIsBool($bool);
         }
     }
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testCastingBool()
+    public function testCastingBool(): void
     {
         $this->assertFalse(TypeHelper::castingBool('f'));
         $this->assertFalse(TypeHelper::castingBool('false'));
@@ -56,10 +53,8 @@ class TypeTest extends TestCase
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testIsJson()
+    public function testIsJson(): void
     {
         $array = ['test'];
         $encoded = json_encode($array);
@@ -73,17 +68,14 @@ class TypeTest extends TestCase
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testIsUuid()
+    public function testIsUuid(): void
     {
         $valid = '5b6de545-3d60-48f1-ad30-0e6fa786ffb0';
         $notValid = '5g6de545-3d60-48f1-ad30-0e6fa786ffb0';
 
         $this->assertTrue(TypeHelper::isUuid($valid));
         $this->assertFalse(TypeHelper::isUuid($notValid));
-        $this->assertFalse(TypeHelper::isUuid(null));
         $this->assertFalse(TypeHelper::isUuid('null'));
         $this->assertFalse(TypeHelper::isUuid(''));
         $this->assertFalse(TypeHelper::isUuid(Str::random(16)));

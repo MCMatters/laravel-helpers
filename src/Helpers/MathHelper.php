@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 
-use function array_search, in_array, is_numeric, number_format, trim;
+use function array_search;
+use function in_array;
+use function number_format;
+use function trim;
 
 use const true;
 
@@ -19,22 +21,17 @@ use const true;
 class MathHelper
 {
     /**
-     * @param int|float $count
-     * @param int|float $total
+     * @param float|int $count
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
     public static function getPercentage(
-        $count,
-        $total,
-        int $decimals = 1
+        float|int $count,
+        float|int $total,
+        int $decimals = 1,
     ): float {
-        self::checkIsNumeric($count, '$count');
-        self::checkIsNumeric($total, '$total');
-
         $count *= 100;
 
         return $count > 0
@@ -43,40 +40,33 @@ class MathHelper
     }
 
     /**
-     * @param int|float $discount
-     * @param int|float $total
+     * @param float|int $discount
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
     public static function getDiscount(
-        $discount,
-        $total,
-        int $decimals = 1
+        float|int $discount,
+        float|int $total,
+        int $decimals = 1,
     ): float {
-        self::checkIsNumeric($discount, '$discount');
-        self::checkIsNumeric($total, '$total');
-
         $number = ($total / 100) * $discount;
 
         return (float) number_format($number, $decimals, '.', '');
     }
 
     /**
-     * @param int|float $discount
-     * @param int|float $total
+     * @param float|int $discount
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
     public static function getWithDiscount(
-        $discount,
-        $total,
-        int $decimals = 1
+        float|int $discount,
+        float|int $total,
+        int $decimals = 1,
     ): float {
         $number = $total - self::getDiscount($discount, $total, $decimals);
 
@@ -102,18 +92,20 @@ class MathHelper
     }
 
     /**
-     * @param int|float|string $value
+     * @param float|int|string $value
      * @param string $getType
      *
      * @return float|int
      */
-    public static function convertBytes($value, string $getType = 'b')
-    {
+    public static function convertBytes(
+        float|int|string $value,
+        string $getType = 'b',
+    ): float|int {
         $sizeTypes = self::getSizeTypes();
         $stringValue = (string) $value;
         $value = (int) $value;
         $type = trim(
-            Str::lower(Str::substr($stringValue, Str::length($value)))
+            Str::lower(Str::substr($stringValue, Str::length($value))),
         );
 
         if (!$type) {
@@ -141,59 +133,37 @@ class MathHelper
     }
 
     /**
-     * @param int|float $number
+     * @param float|int $number
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    public static function isNumberEven($number): bool
+    public static function isNumberEven(float|int $number): bool
     {
-        self::checkIsNumeric($number, '$number');
-
         return $number % 2 === 0;
     }
 
     /**
-     * @param int|float $number
+     * @param float|int $number
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    public static function isNumberOdd($number): bool
+    public static function isNumberOdd(float|int $number): bool
     {
         return !self::isNumberEven($number);
     }
 
     /**
-     * @param int|float $number
-     * @param int|float $from
-     * @param int|float $to
+     * @param float|int $number
+     * @param float|int $from
+     * @param float|int $to
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    public static function inRange($number, $from, $to): bool
-    {
-        if (!is_numeric($number) || !is_numeric($from) || !is_numeric($to)) {
-            throw new InvalidArgumentException('Arguments must be numeric');
-        }
-
+    public static function inRange(
+        float|int $number,
+        float|int $from,
+        float|int $to,
+    ): bool {
         return $from <= $number && $to >= $number;
-    }
-
-    /**
-     * @param int|float $number
-     * @param string $name
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected static function checkIsNumeric($number, string $name)
-    {
-        if (!is_numeric($number)) {
-            throw new InvalidArgumentException("{$name} must be numeric");
-        }
     }
 }

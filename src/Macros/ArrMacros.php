@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace McMatters\Helpers\Macros;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
+use McMatters\Helpers\Helpers\ArrayHelper;
 
-use function array_change_key_case, array_key_exists, array_keys, array_map,
-    array_slice, count, data_get, explode, implode, in_array, is_array,
-    is_numeric, is_string, mb_strpos, mb_strtolower, preg_grep, preg_quote,
-    shuffle;
-
-use const false, null, true, CASE_LOWER;
+use const CASE_LOWER;
+use const false;
 
 /**
  * Class ArrMacros
@@ -24,237 +20,100 @@ class ArrMacros extends AbstractMacroable
     /**
      * @return void
      */
-    protected function registerFirstKey()
+    protected function registerFirstKey(): void
     {
-        Arr::macro('firstKey', function (array $array) {
-            if (function_exists('array_key_first')) {
-                return array_key_first($array);
-            }
-
-            foreach ($array as $key => $value) {
-                return $key;
-            }
-
-            return null;
+        Arr::macro('firstKey', static function (array $array) {
+            return ArrayHelper::firstKey($array);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerHasWithWildcard()
+    protected function registerHasWithWildcard(): void
     {
-        Arr::macro('hasWithWildcard', function (
+        Arr::macro('hasWithWildcard', static function (
             array $array,
             string $keys,
-            bool $searchWithSegment = false
-        ) {
-            if (null === $keys || !$array) {
-                return false;
-            }
-
-            if (!Str::contains($keys, '*')) {
-                return Arr::has($array, $keys);
-            }
-
-            $segments = explode('.', $keys);
-
-            if ($segments === []) {
-                return false;
-            }
-
-            $countSegments = count($segments);
-
-            foreach ($segments as $i => $segment) {
-                if (!is_array($array)) {
-                    return false;
-                }
-
-                $flag = false;
-
-                if (
-                    $searchWithSegment &&
-                    $i !== ($countSegments - 1) &&
-                    $segments[$i + 1] === '*'
-                ) {
-                    $grepKeys = preg_grep(
-                        '/'.preg_quote($segment, '/').'\..*/',
-                        array_keys($array)
-                    );
-
-                    if ($grepKeys) {
-                        foreach ($grepKeys as $grepKey) {
-                            $flag = Arr::hasWithWildcard(
-                                $array[$grepKey],
-                                implode('.', array_slice($segments, $i + 2)),
-                                $searchWithSegment
-                            );
-
-                            if ($flag) {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    }
-                }
-
-                if (!$flag) {
-                    if ($segment === '*') {
-                        if ($i + 1 === $countSegments) {
-                            return !empty($array);
-                        }
-
-                        foreach ($array as $item) {
-                            $flag = Arr::hasWithWildcard(
-                                $item,
-                                implode('.', array_slice($segments, $i + 1)),
-                                $searchWithSegment
-                            );
-
-                            if ($flag) {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    }
-
-                    if (array_key_exists($segment, $array)) {
-                        $flag = true;
-                        $array = $array[$segment];
-                    }
-                }
-
-                if (!$flag) {
-                    return false;
-                }
-            }
-
-            return true;
+            bool $searchWithSegment = false,
+        ): bool {
+            return ArrayHelper::hasWithWildcard($array, $keys, $searchWithSegment);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerKeyBy()
+    protected function registerKeyBy(): void
     {
-        Arr::macro('keyBy', function (array $array, string $key) {
-            $items = [];
-
-            foreach ($array as $item) {
-                $items[data_get($item, $key)] = $item;
-            }
-
-            return $items;
+        Arr::macro('keyBy', static function (array $array, string $key): array {
+            return ArrayHelper::keyBy($array, $key);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerContains()
+    protected function registerContains(): void
     {
-        Arr::macro('contains', function (
+        Arr::macro('contains', static function (
             array $array,
             string $needle,
-            bool $byKey = false
-        ) {
-            foreach ($array as $key => $value) {
-                if ($byKey) {
-                    if (mb_strpos($key, $needle) !== false) {
-                        return true;
-                    }
-                } elseif (
-                    is_string($value) &&
-                    mb_strpos($value, $needle) !== false
-                ) {
-                    return true;
-                }
-            }
-
-            return false;
+            bool $byKey = false,
+        ): bool {
+            return ArrayHelper::contains($array, $needle, $byKey);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerHasOnlyIntKeys()
+    protected function registerHasOnlyIntKeys(): void
     {
-        Arr::macro('hasOnlyIntKeys', function (array $array) {
-            foreach ($array as $key => $value) {
-                if (!is_numeric($key) || (int) $key != $key) {
-                    return false;
-                }
-            }
-
-            return true;
+        Arr::macro('hasOnlyIntKeys', static function (array $array): bool {
+            return ArrayHelper::hasOnlyIntKeys($array);
         });
     }
 
     /**
      * @return void
      */
-    public function registerShuffleAssoc()
+    public function registerShuffleAssoc(): void
     {
-        Arr::macro('shuffleAssoc', function (array $array) {
-            $shuffled = [];
-
-            $keys = array_keys($array);
-            shuffle($keys);
-
-            foreach ($keys as $key) {
-                $shuffled[$key] = $array[$key];
-            }
-
-            return $shuffled;
+        Arr::macro('shuffleAssoc', static function (array $array): array {
+            return ArrayHelper::shuffleAssoc($array);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerChangeKeyCaseRecursive()
+    protected function registerChangeKeyCaseRecursive(): void
     {
-        Arr::macro('changeKeyCaseRecursive', function (
+        Arr::macro('changeKeyCaseRecursive', static function (
             array $array,
-            int $case = CASE_LOWER
-        ) {
-            foreach ($array as &$item) {
-                if (is_array($item)) {
-                    $item = Arr::changeKeyCaseRecursive($item, $case);
-                }
-            }
-
-            return array_change_key_case($array, $case);
+            int $case = CASE_LOWER,
+        ): array {
+            return ArrayHelper::changeKeyCaseRecursive($array, $case);
         });
     }
 
     /**
      * @return void
      */
-    protected function registerHasValue()
+    protected function registerHasValue(): void
     {
-        Arr::macro('hasValue', function (
-            $needle,
+        Arr::macro('hasValue', static function (
+            mixed $needle,
             array $array,
             bool $strict = false,
             bool $insensitive = false
-        ) {
-            if (!$insensitive || !is_string($needle)) {
-                return in_array($needle, $array, $strict);
-            }
-
-            return in_array(
-                mb_strtolower($needle, 'UTF-8'),
-                array_map(static function ($value) {
-                    return is_string($value)
-                        ? mb_strtolower($value, 'UTF-8')
-                        : $value;
-                }, $array),
-                $strict
+        ): bool {
+            return ArrayHelper::hasValue(
+                $needle,
+                $array,
+                $strict,
+                $insensitive,
             );
         });
     }

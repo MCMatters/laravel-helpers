@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests;
 
-use Illuminate\Support\Arr;
+use McMatters\Helpers\Helpers\ArrayHelper;
 
-use function array_keys, is_array;
+use function array_keys;
+use function is_array;
 
 use const true;
 
@@ -20,11 +21,11 @@ class ArrayTest extends TestCase
     /**
      * @return void
      */
-    public function testArrayKeyBy()
+    public function testArrayKeyBy(): void
     {
         $array = require __DIR__.'/mocks/arrays/keyBy.php';
 
-        $newArray = Arr::keyBy($array, 'id');
+        $newArray = ArrayHelper::keyBy($array, 'id');
 
         $this->assertEquals([3, 5, 7], array_keys($newArray));
         $this->assertNotEquals([3, 7, 5], array_keys($newArray));
@@ -32,53 +33,49 @@ class ArrayTest extends TestCase
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testArrayContains()
+    public function testArrayContains(): void
     {
         $array = require __DIR__.'/mocks/arrays/contains.php';
 
-        $this->assertTrue(Arr::contains($array, 'foo'));
-        $this->assertTrue(Arr::contains($array, 'bar'));
-        $this->assertTrue(Arr::contains($array, 'some'));
-        $this->assertTrue(Arr::contains($array, 'magic'));
-        $this->assertTrue(Arr::contains($array, 'Some magic'));
-        $this->assertTrue(Arr::contains($array, ' magic '));
-        $this->assertTrue(Arr::contains($array, 'test', true));
-        $this->assertTrue(Arr::contains($array, 'baz', true));
+        $this->assertTrue(ArrayHelper::contains($array, 'foo'));
+        $this->assertTrue(ArrayHelper::contains($array, 'bar'));
+        $this->assertTrue(ArrayHelper::contains($array, 'some'));
+        $this->assertTrue(ArrayHelper::contains($array, 'magic'));
+        $this->assertTrue(ArrayHelper::contains($array, 'Some magic'));
+        $this->assertTrue(ArrayHelper::contains($array, ' magic '));
+        $this->assertTrue(ArrayHelper::contains($array, 'test', true));
+        $this->assertTrue(ArrayHelper::contains($array, 'baz', true));
 
-        $this->assertFalse(Arr::contains($array, 'test'));
-        $this->assertFalse(Arr::contains($array, 'nested'));
-        $this->assertFalse(Arr::contains($array, 'array'));
-        $this->assertFalse(Arr::contains($array, 'magic,'));
+        $this->assertFalse(ArrayHelper::contains($array, 'test'));
+        $this->assertFalse(ArrayHelper::contains($array, 'nested'));
+        $this->assertFalse(ArrayHelper::contains($array, 'array'));
+        $this->assertFalse(ArrayHelper::contains($array, 'magic,'));
     }
 
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testArrayHasIntKeys()
+    public function testArrayHasIntKeys(): void
     {
         $array = require __DIR__.'/mocks/arrays/hasIntKeys.php';
 
-        $this->assertTrue(Arr::hasOnlyIntKeys($array['int']));
-        $this->assertTrue(Arr::hasOnlyIntKeys($array['int2']));
+        $this->assertTrue(ArrayHelper::hasOnlyIntKeys($array['int']));
+        $this->assertTrue(ArrayHelper::hasOnlyIntKeys($array['int2']));
 
-        $this->assertFalse(Arr::hasOnlyIntKeys($array['float']));
-        $this->assertFalse(Arr::hasOnlyIntKeys($array['string']));
+        $this->assertFalse(ArrayHelper::hasOnlyIntKeys($array['float']));
+        $this->assertFalse(ArrayHelper::hasOnlyIntKeys($array['string']));
     }
 
     /**
      * @return void
      */
-    public function testArrayChangeKeyCaseRecursive()
+    public function testArrayChangeKeyCaseRecursive(): void
     {
         $array = require __DIR__.'/mocks/arrays/changeKeyCase.php';
 
-        $lowerCased = Arr::changeKeyCaseRecursive($array, CASE_LOWER);
-        $upperCased = Arr::changeKeyCaseRecursive($array, CASE_UPPER);
+        $lowerCased = ArrayHelper::changeKeyCaseRecursive($array, CASE_LOWER);
+        $upperCased = ArrayHelper::changeKeyCaseRecursive($array, CASE_UPPER);
 
         $this->checkArrayKeysCase($lowerCased, 'strtolower');
         $this->checkArrayKeysCase($upperCased, 'strtoupper');
@@ -87,19 +84,19 @@ class ArrayTest extends TestCase
     /**
      * @return void
      */
-    public function testArrayHasValue()
+    public function testArrayHasValue(): void
     {
         $array = require __DIR__.'/mocks/arrays/hasValue.php';
 
-        $this->assertTrue(Arr::hasValue('foo', $array));
-        $this->assertTrue(Arr::hasValue('bar', $array));
-        $this->assertTrue(Arr::hasValue('Foo', $array));
-        $this->assertTrue(Arr::hasValue('FOO', $array));
-        $this->assertTrue(Arr::hasValue('BAZ', $array));
-        $this->assertFalse(Arr::hasValue('BaZ', $array));
-        $this->assertTrue(Arr::hasValue('baz', $array, true, true));
-        $this->assertTrue(Arr::hasValue('bAz', $array, true, true));
-        $this->assertTrue(Arr::hasValue('qWe', $array, true, true));
+        $this->assertTrue(ArrayHelper::hasValue('foo', $array));
+        $this->assertTrue(ArrayHelper::hasValue('bar', $array));
+        $this->assertTrue(ArrayHelper::hasValue('Foo', $array));
+        $this->assertTrue(ArrayHelper::hasValue('FOO', $array));
+        $this->assertTrue(ArrayHelper::hasValue('BAZ', $array));
+        $this->assertFalse(ArrayHelper::hasValue('BaZ', $array));
+        $this->assertTrue(ArrayHelper::hasValue('baz', $array, true, true));
+        $this->assertTrue(ArrayHelper::hasValue('bAz', $array, true, true));
+        $this->assertTrue(ArrayHelper::hasValue('qWe', $array, true, true));
     }
 
     /**
@@ -108,7 +105,7 @@ class ArrayTest extends TestCase
      *
      * @return void
      */
-    protected function checkArrayKeysCase(array $array, string $method)
+    protected function checkArrayKeysCase(array $array, string $method): void
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {

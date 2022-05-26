@@ -6,9 +6,10 @@ namespace McMatters\Helpers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use McMatters\Helpers\Macros\{
-    ArrMacros, CollectionMacros, RequestMacros, StrMacros
-};
+use McMatters\Helpers\Macros\ArrMacros;
+use McMatters\Helpers\Macros\CollectionMacros;
+use McMatters\Helpers\Macros\RequestMacros;
+use McMatters\Helpers\Macros\StrMacros;
 
 use function is_callable;
 
@@ -22,7 +23,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @var array
      */
-    protected $macros = [
+    protected array $macros = [
         ArrMacros::class,
         CollectionMacros::class,
         RequestMacros::class,
@@ -32,7 +33,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__.'/../config/laravel-helpers.php' => $this->getConfigPath(),
@@ -45,7 +46,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-helpers.php', 'laravel-helpers');
     }
@@ -53,7 +54,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
-    protected function registerMacros()
+    protected function registerMacros(): void
     {
         foreach ($this->macros as $macro) {
             (new $macro())->register();
@@ -63,7 +64,7 @@ class ServiceProvider extends BaseServiceProvider
     /**
      * @return void
      */
-    protected function registerHelperFunctions()
+    protected function registerHelperFunctions(): void
     {
         $files = Config::get('laravel-helpers.enabled_helper_functions', []);
 

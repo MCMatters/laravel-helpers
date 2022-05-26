@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
 
-use function get_class, is_array, is_string;
+use function is_array;
+use function is_string;
 
 use const null;
 
@@ -21,13 +22,13 @@ use const null;
 class ModelHelper
 {
     /**
-     * @param mixed $query
+     * @param object $query
      *
      * @return \Illuminate\Database\Eloquent\Model
      *
      * @throws \InvalidArgumentException
      */
-    public static function getModelFromQuery($query): Model
+    public static function getModelFromQuery(object $query): Model
     {
         if ($query instanceof Relation) {
             return $query->getRelated();
@@ -41,7 +42,7 @@ class ModelHelper
     }
 
     /**
-     * @param mixed $query
+     * @param object $query
      * @param array|string|null $columns
      * @param bool $force
      * @param int $limit
@@ -52,10 +53,10 @@ class ModelHelper
      * @throws \InvalidArgumentException
      */
     public static function destroyFromQuery(
-        $query,
-        $columns = null,
+        object $query,
+        array|string|null $columns = null,
         bool $force = false,
-        int $limit = 1000
+        int $limit = 1000,
     ): int {
         $count = 0;
 
@@ -94,8 +95,8 @@ class ModelHelper
     public static function doesBelongTo(
         Model $child,
         Model $parent,
-        string $foreignKey = null,
-        string $ownerKey = null
+        ?string $foreignKey = null,
+        ?string $ownerKey = null,
     ): bool {
         $foreignKey = $foreignKey ?? $parent->getForeignKey();
         $ownerKey = $ownerKey ?? $parent->getKeyName();
@@ -116,13 +117,13 @@ class ModelHelper
         Model $morphed,
         Model $parent,
         string $name,
-        string $type = null,
-        string $id = null
+        ?string $type = null,
+        ?string $id = null,
     ): bool {
         $type = $type ?: "{$name}_type";
         $id = $id ?: "{$name}_id";
 
-        return $morphed->getAttribute($type) === get_class($parent) &&
+        return $morphed->getAttribute($type) === $parent::class &&
             $morphed->getAttribute($id) === $parent->getKey();
     }
 }

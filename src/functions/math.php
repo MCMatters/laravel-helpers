@@ -6,48 +6,51 @@ use McMatters\Helpers\Helpers\MathHelper;
 
 if (!function_exists('calculate_percentage')) {
     /**
-     * @param mixed $count
-     * @param mixed $total
+     * @param float|int $count
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
-    function calculate_percentage($count, $total, int $decimals = 1): float
-    {
+    function calculate_percentage(
+        float|int $count,
+        float|int $total,
+        int $decimals = 1,
+    ): float {
         return MathHelper::getPercentage($count, $total, $decimals);
     }
 }
 
 if (!function_exists('calculate_discount')) {
     /**
-     * @param mixed $discount
-     * @param mixed $total
+     * @param float|int $discount
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
-    function calculate_discount($discount, $total, int $decimals = 1): float
-    {
+    function calculate_discount(
+        float|int $discount,
+        float|int $total,
+        int $decimals = 1,
+    ): float {
         return MathHelper::getDiscount($discount, $total, $decimals);
     }
 }
 
 if (!function_exists('calculate_with_discount')) {
     /**
-     * @param mixed $discount
-     * @param mixed $total
+     * @param float|int $discount
+     * @param float|int $total
      * @param int $decimals
      *
      * @return float
-     *
-     * @throws \InvalidArgumentException
      */
-    function calculate_with_discount($discount, $total, int $decimals = 1): float
-    {
+    function calculate_with_discount(
+        float|int $discount,
+        float|int $total,
+        int $decimals = 1,
+    ): float {
         return MathHelper::getWithDiscount($discount, $total, $decimals);
     }
 }
@@ -76,26 +79,26 @@ if (!function_exists('get_size_types')) {
 
 if (!function_exists('convert_bytes')) {
     /**
-     * @param int|float|string $value
+     * @param float|int|string $value
      * @param string $getType
      *
      * @return float|int
      */
-    function convert_bytes($value, string $getType = 'b')
-    {
+    function convert_bytes(
+        float|int|string $value,
+        string $getType = 'b',
+    ): float|int {
         return MathHelper::convertBytes($value, $getType);
     }
 }
 
 if (!function_exists('is_number_even')) {
     /**
-     * @param mixed $number
+     * @param float|int $number
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    function is_number_even($number): bool
+    function is_number_even(float|int $number): bool
     {
         return MathHelper::isNumberEven($number);
     }
@@ -103,13 +106,11 @@ if (!function_exists('is_number_even')) {
 
 if (!function_exists('is_number_odd')) {
     /**
-     * @param mixed $number
+     * @param float|int $number
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    function is_number_odd($number): bool
+    function is_number_odd(float|int $number): bool
     {
         return MathHelper::isNumberOdd($number);
     }
@@ -117,16 +118,17 @@ if (!function_exists('is_number_odd')) {
 
 if (!function_exists('is_number_in_range')) {
     /**
-     * @param int|float $number
-     * @param int|float $from
-     * @param int|float $to
+     * @param float|int $number
+     * @param float|int $from
+     * @param float|int $to
      *
      * @return bool
-     *
-     * @throws \InvalidArgumentException
      */
-    function is_number_in_range($number, $from, $to): bool
-    {
+    function is_number_in_range(
+        float|int $number,
+        float|int $from,
+        float|int $to,
+    ): bool {
         return MathHelper::inRange($number, $from, $to);
     }
 }

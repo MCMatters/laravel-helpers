@@ -14,12 +14,12 @@ class DatabaseTester
     /**
      * @var string
      */
-    protected $sql;
+    protected string $sql;
 
     /**
      * @var array
      */
-    protected $bindings;
+    protected array $bindings;
 
     /**
      * DatabaseTester constructor.

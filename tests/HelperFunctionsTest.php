@@ -18,7 +18,7 @@ class HelperFunctionsTest extends TestCase
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testFunctionsEnabled()
+    public function testFunctionsEnabled(): void
     {
         $functions = [
             'array_key_first',
@@ -39,7 +39,7 @@ class HelperFunctionsTest extends TestCase
         foreach ($functions as $function) {
             $this->assertTrue(
                 function_exists($function),
-                "Function {$function} is not enabled"
+                "Function {$function} is not enabled",
             );
         }
     }

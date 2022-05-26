@@ -34,7 +34,7 @@ if (!function_exists('run_background_command')) {
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    function run_background_command(string $command, array $parameters = [])
+    function run_background_command(string $command, array $parameters = []): void
     {
         ArtisanHelper::runCommandInBackground($command, $parameters);
     }

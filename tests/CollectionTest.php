@@ -16,10 +16,8 @@ class CollectionTest extends TestCase
 {
     /**
      * @return void
-     *
-     * @throws \PHPUnit\Framework\Exception
      */
-    public function testFilterMap()
+    public function testFilterMap(): void
     {
         $data = require __DIR__.'/mocks/arrays/filterMap.php';
 

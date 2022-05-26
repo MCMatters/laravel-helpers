@@ -21,9 +21,9 @@ class RequestMacros extends AbstractMacroable
     /**
      * @return void
      */
-    protected function registerIsUpdateMethod()
+    protected function registerIsUpdateMethod(): void
     {
-        Request::macro('isUpdateMethod', function () {
+        Request::macro('isUpdateMethod', function (): bool {
             return in_array(Str::lower($this->method()), ['put', 'patch'], true);
         });
     }

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 use ReflectionClass;
 
-use function get_class, is_object, is_string;
+use function is_string;
 
-use const false, null;
+use const false;
 
 /**
  * Class ClassHelper
@@ -20,40 +19,32 @@ use const false, null;
 class ClassHelper
 {
     /**
-     * @param mixed $class
+     * @param object|string $class
      *
      * @return array
      *
      * @throws \ReflectionException
-     * @throws \InvalidArgumentException
      */
-    public static function getConstants($class): array
+    public static function getConstants(object|string $class): array
     {
         $className = self::getClassName($class);
 
-        if (null === $className) {
-            throw new InvalidArgumentException('Passed wrong class object or class name');
-        }
-
-        $reflection = new ReflectionClass($className);
-
-        return $reflection->getConstants();
+        return (new ReflectionClass($className))->getConstants();
     }
 
     /**
-     * @param mixed $class
+     * @param object|string $class
      * @param string $keyword
      * @param bool $substrKeyword
      *
      * @return array
      *
      * @throws \ReflectionException
-     * @throws \InvalidArgumentException
      */
     public static function getConstantsStartWith(
-        $class,
+        object|string $class,
         string $keyword,
-        bool $substrKeyword = false
+        bool $substrKeyword = false,
     ): array {
         $constants = [];
 
@@ -71,20 +62,16 @@ class ClassHelper
     }
 
     /**
-     * @param mixed $class
+     * @param object|string $class
      *
-     * @return string|null
+     * @return string
      */
-    public static function getClassName($class)
+    public static function getClassName(object|string $class): string
     {
         if (is_string($class)) {
             return $class;
         }
 
-        if (is_object($class)) {
-            return get_class($class);
-        }
-
-        return null;
+        return $class::class;
     }
 }

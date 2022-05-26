@@ -19,7 +19,7 @@ abstract class AbstractMacroable
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $reflection = new ReflectionClass(static::class);
 

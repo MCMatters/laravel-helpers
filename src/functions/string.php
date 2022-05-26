@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use McMatters\Helpers\Helpers\StringHelper;
 
-if (!function_exists('str_ucwords') && Str::hasMacro('ucwords')) {
+if (!function_exists('str_ucwords')) {
     /**
      * @param string $string
      *
@@ -12,7 +13,7 @@ if (!function_exists('str_ucwords') && Str::hasMacro('ucwords')) {
      */
     function str_ucwords(string $string): string
     {
-        return Str::ucwords($string);
+        return StringHelper::ucwords($string);
     }
 }
 
@@ -51,8 +52,8 @@ if (!function_exists('strpos_all')) {
     function strpos_all(
         string $haystack,
         string $needle,
-        bool $caseInsensitive = false
+        bool $caseInsensitive = false,
     ): array {
-        return Str::occurrences($haystack, $needle, $caseInsensitive);
+        return StringHelper::occurrences($haystack, $needle, $caseInsensitive);
     }
 }

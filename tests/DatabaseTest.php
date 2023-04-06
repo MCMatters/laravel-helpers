@@ -7,16 +7,9 @@ namespace McMatters\Helpers\Tests;
 use McMatters\Helpers\Helpers\DbHelper;
 use McMatters\Helpers\Tests\Mocks\DatabaseTester;
 
-/**
- * Class DatabaseTest
- *
- * @package McMatters\Helpers\Tests
- */
 class DatabaseTest extends TestCase
 {
     /**
-     * @return void
-     *
      * @throws \InvalidArgumentException
      */
     public function testCompileSqlQuery(): void

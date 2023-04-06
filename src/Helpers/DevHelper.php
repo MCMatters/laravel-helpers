@@ -15,22 +15,8 @@ use const false;
 use const null;
 use const PHP_SAPI;
 
-/**
- * Class DevHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class DevHelper
 {
-    /**
-     * @param object $query
-     * @param bool $die
-     *
-     * @return string
-     *
-     * @throws \InvalidArgumentException
-     * @throws \ErrorException
-     */
     public static function ddq(object $query, bool $die = false): string
     {
         $sql = DbHelper::compileSqlQuery($query);
@@ -44,14 +30,6 @@ class DevHelper
         return $sql;
     }
 
-    /**
-     * @param mixed $value
-     * @param bool $output
-     *
-     * @return void
-     *
-     * @throws \ErrorException
-     */
     public static function dump(mixed $value, bool $output = false): void
     {
         $dumper = null;

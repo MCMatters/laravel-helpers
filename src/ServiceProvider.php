@@ -13,16 +13,8 @@ use McMatters\Helpers\Macros\StrMacros;
 
 use function is_callable;
 
-/**
- * Class ServiceProvider
- *
- * @package McMatters\Helpers
- */
 class ServiceProvider extends BaseServiceProvider
 {
-    /**
-     * @var array
-     */
     protected array $macros = [
         ArrMacros::class,
         CollectionMacros::class,
@@ -30,9 +22,6 @@ class ServiceProvider extends BaseServiceProvider
         StrMacros::class,
     ];
 
-    /**
-     * @return void
-     */
     public function boot(): void
     {
         $this->publishes([
@@ -43,17 +32,11 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerHelperFunctions();
     }
 
-    /**
-     * @return void
-     */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/laravel-helpers.php', 'laravel-helpers');
     }
 
-    /**
-     * @return void
-     */
     protected function registerMacros(): void
     {
         foreach ($this->macros as $macro) {
@@ -61,9 +44,6 @@ class ServiceProvider extends BaseServiceProvider
         }
     }
 
-    /**
-     * @return void
-     */
     protected function registerHelperFunctions(): void
     {
         $files = Config::get('laravel-helpers.enabled_helper_functions', []);
@@ -73,9 +53,6 @@ class ServiceProvider extends BaseServiceProvider
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getConfigPath(): string
     {
         if (is_callable([$this->app, 'configPath'])) {

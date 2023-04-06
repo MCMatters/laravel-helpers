@@ -6,13 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use McMatters\Helpers\Helpers\ModelHelper;
 
 if (!function_exists('get_model_from_query')) {
-    /**
-     * @param object $query
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     *
-     * @throws \InvalidArgumentException
-     */
     function get_model_from_query(object $query): Model
     {
         return ModelHelper::getModelFromQuery($query);
@@ -21,11 +14,6 @@ if (!function_exists('get_model_from_query')) {
 
 if (!function_exists('destroy_models_from_query')) {
     /**
-     * @param object $query
-     *
-     * @return int
-     *
-     * @throws \Exception
      * @throws \InvalidArgumentException
      */
     function destroy_models_from_query(object $query): int
@@ -35,14 +23,6 @@ if (!function_exists('destroy_models_from_query')) {
 }
 
 if (!function_exists('does_model_belong_to')) {
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $child
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param string|null $foreignKey
-     * @param string|null $ownerKey
-     *
-     * @return bool
-     */
     function does_model_belong_to(
         Model $child,
         Model $parent,
@@ -54,15 +34,6 @@ if (!function_exists('does_model_belong_to')) {
 }
 
 if (!function_exists('does_morphed_model_belong_to_parent')) {
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $morphed
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param string $name
-     * @param string|null $type
-     * @param string|null $id
-     *
-     * @return bool
-     */
     function does_morphed_model_belong_to_parent(
         Model $morphed,
         Model $parent,

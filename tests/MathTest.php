@@ -6,34 +6,20 @@ namespace McMatters\Helpers\Tests;
 
 use McMatters\Helpers\Helpers\MathHelper;
 
-/**
- * Class MathTest
- *
- * @package McMatters\Helpers\Tests
- */
 class MathTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testCalculatePercentage(): void
     {
         $this->assertEquals(50.0, MathHelper::getPercentage(50, 100));
         $this->assertEquals(23.8095, MathHelper::getPercentage(5, 21, 4));
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscount(): void
     {
         $this->assertEquals(25, MathHelper::getDiscount(25, 100));
         $this->assertEquals(33, MathHelper::getDiscount(33, 100));
     }
 
-    /**
-     * @return void
-     */
     public function testFloatHasRemainder(): void
     {
         $this->assertTrue(MathHelper::hasFloatRemainder(23.6));
@@ -41,9 +27,6 @@ class MathTest extends TestCase
         $this->assertFalse(MathHelper::hasFloatRemainder(12));
     }
 
-    /**
-     * @return void
-     */
     public function testConvertBytes(): void
     {
         $this->assertEquals(1024, MathHelper::convertBytes('1T', 'gb'));
@@ -70,9 +53,6 @@ class MathTest extends TestCase
         $this->assertEquals(1024, MathHelper::convertBytes('1K', 'b'));
     }
 
-    /**
-     * @return void
-     */
     public function testIsNumberEven(): void
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
@@ -86,9 +66,6 @@ class MathTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
     public function testIsNumberOdd(): void
     {
         $numbers = require __DIR__.'/mocks/arrays/evenOdd.php';
@@ -102,9 +79,6 @@ class MathTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
     public function testInRange(): void
     {
         $this->assertTrue(MathHelper::inRange(5, 4, 6));

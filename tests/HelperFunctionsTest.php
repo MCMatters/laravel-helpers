@@ -6,18 +6,8 @@ namespace McMatters\Helpers\Tests;
 
 use function function_exists;
 
-/**
- * Class HelperFunctionsTest
- *
- * @package McMatters\Helpers\Tests
- */
 class HelperFunctionsTest extends TestCase
 {
-    /**
-     * @return void
-     *
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     */
     public function testFunctionsEnabled(): void
     {
         $functions = [

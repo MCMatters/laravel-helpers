@@ -14,18 +14,9 @@ use function is_string;
 
 use const null;
 
-/**
- * Class ModelHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class ModelHelper
 {
     /**
-     * @param object $query
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     *
      * @throws \InvalidArgumentException
      */
     public static function getModelFromQuery(object $query): Model
@@ -42,14 +33,6 @@ class ModelHelper
     }
 
     /**
-     * @param object $query
-     * @param array|string|null $columns
-     * @param bool $force
-     * @param int $limit
-     *
-     * @return int
-     *
-     * @throws \Exception
      * @throws \InvalidArgumentException
      */
     public static function destroyFromQuery(
@@ -84,14 +67,6 @@ class ModelHelper
         return $count;
     }
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $child
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param string|null $foreignKey
-     * @param string|null $ownerKey
-     *
-     * @return bool
-     */
     public static function doesBelongTo(
         Model $child,
         Model $parent,
@@ -104,15 +79,6 @@ class ModelHelper
         return $child->getAttribute($foreignKey) === $parent->getAttribute($ownerKey);
     }
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $morphed
-     * @param \Illuminate\Database\Eloquent\Model $parent
-     * @param string $name
-     * @param string|null $type
-     * @param string|null $id
-     *
-     * @return bool
-     */
     public static function doesMorphedBelongToParent(
         Model $morphed,
         Model $parent,

@@ -15,18 +15,8 @@ use const false;
 use const PHP_URL_HOST;
 use const true;
 
-/**
- * Class UrlHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class UrlHelper
 {
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     public static function getBaseUrl(string $url): string
     {
         $parsedUrl = parse_url($url);
@@ -40,12 +30,6 @@ class UrlHelper
         return "{$scheme}://{$parsedUrl['host']}";
     }
 
-    /**
-     * @param string $url
-     * @param bool $stripWww
-     *
-     * @return string
-     */
     public static function getHost(string $url, bool $stripWww = true): string
     {
         if (($url = parse_url(trim($url), PHP_URL_HOST)) === false) {
@@ -59,11 +43,6 @@ class UrlHelper
         return $url;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     public static function routesPath(string $path = ''): string
     {
         $basePath = Container::getInstance()->basePath();

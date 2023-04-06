@@ -4,30 +4,18 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
-/**
- * Class StringHelper
- *
- * @package McMatters\Helpers\Helpers
- */
+use function str_replace;
+use function ucwords;
+
+use const false;
+
 class StringHelper
 {
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     public static function ucwords(string $string): string
     {
         return ucwords(str_replace(['-', '_'], ' ', $string));
     }
 
-    /**
-     * @param string $haystack
-     * @param string $needle
-     * @param bool $caseInsensitive
-     *
-     * @return array
-     */
     public static function occurrences(
         string $haystack,
         string $needle,

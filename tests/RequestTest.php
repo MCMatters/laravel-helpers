@@ -6,11 +6,6 @@ namespace McMatters\Helpers\Tests;
 
 use Illuminate\Support\Facades\Request as RequestFacade;
 
-/**
- * Class RequestTest
- *
- * @package McMatters\Helpers\Tests
- */
 class RequestTest extends TestCase
 {
     /**

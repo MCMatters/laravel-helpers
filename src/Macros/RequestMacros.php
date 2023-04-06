@@ -11,16 +11,8 @@ use function in_array;
 
 use const true;
 
-/**
- * Class RequestMacros
- *
- * @package McMatters\Helpers\Macros
- */
 class RequestMacros extends AbstractMacroable
 {
-    /**
-     * @return void
-     */
     protected function registerIsUpdateMethod(): void
     {
         Request::macro('isUpdateMethod', function (): bool {

@@ -18,29 +18,18 @@ use function preg_match;
 use const false;
 use const true;
 
-/**
- * Class ArtisanHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class ArtisanHelper
 {
-    /**
-     * @return string
-     */
     public static function getPhpPath(): string
     {
         return Application::phpBinary();
     }
 
-    /**
-     * @return string
-     */
     public static function getArtisan(): string
     {
         $artisan = Application::artisanBinary();
 
-        if ($artisan === 'artisan') {
+        if ('artisan' === $artisan) {
             $fullPath = (new ExecutableFinder())->find(
                 'artisan',
                 'artisan',
@@ -55,42 +44,20 @@ class ArtisanHelper
         return $artisan;
     }
 
-    /**
-     * @param string $command
-     * @param array $parameters
-     *
-     * @return void
-     *
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     */
     public static function runCommandInBackground(
         string $command,
         array $parameters = [],
     ): void {
-        (new Process(self::getCompiledCommand($command, $parameters, true)))->start();
+        $command = self::getCompiledCommand($command, $parameters, true);
+
+        Process::fromShellCommandline($command)->start();
     }
 
-    /**
-     * @param string $command
-     *
-     * @return void
-     *
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     */
     public static function runRawCommand(string $command): void
     {
-        (new Process($command))->start();
+        Process::fromShellCommandline($command)->start();
     }
 
-    /**
-     * @param string $command
-     * @param array $parameters
-     * @param bool $background
-     *
-     * @return string
-     */
     public static function getCompiledCommand(
         string $command,
         array $parameters = [],
@@ -100,17 +67,13 @@ class ArtisanHelper
         $artisan = self::getArtisan();
         $args = self::compileParameters($parameters);
 
+        $command = "{$php} {$artisan} {$command} {$args}";
+
         return $background
-            ? self::getBackgroundCommand("{$php} {$artisan} {$command} {$args}")
-            : self::getForegroundCommand("{$php} {$artisan} {$command} {$args}");
+            ? self::getBackgroundCommand($command)
+            : self::getForegroundCommand($command);
     }
 
-    /**
-     * @param array $commands
-     * @param bool $background
-     *
-     * @return string
-     */
     public static function getCompiledCommands(
         array $commands,
         bool $background = false,
@@ -121,7 +84,6 @@ class ArtisanHelper
             $compiled[] = self::getCompiledCommand(
                 $commandData['command'],
                 $commandData['parameters'] ?? [],
-                false,
             );
         }
 
@@ -130,11 +92,6 @@ class ArtisanHelper
             : implode(' && ', $compiled);
     }
 
-    /**
-     * @param string $command
-     *
-     * @return string
-     */
     protected static function getBackgroundCommand(string $command): string
     {
         if (ServerHelper::isWindowsOs()) {
@@ -144,11 +101,6 @@ class ArtisanHelper
         return "{$command} > /dev/null 2>&1 &";
     }
 
-    /**
-     * @param string $command
-     *
-     * @return string
-     */
     protected static function getForegroundCommand(string $command): string
     {
         if (ServerHelper::isWindowsOs()) {
@@ -158,11 +110,6 @@ class ArtisanHelper
         return "{$command} > /dev/null 2>&1";
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return string
-     */
     protected static function compileParameters(array $parameters): string
     {
         $compiled = [];

@@ -11,18 +11,9 @@ use function is_string;
 
 use const false;
 
-/**
- * Class ClassHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class ClassHelper
 {
     /**
-     * @param object|string $class
-     *
-     * @return array
-     *
      * @throws \ReflectionException
      */
     public static function getConstants(object|string $class): array
@@ -33,12 +24,6 @@ class ClassHelper
     }
 
     /**
-     * @param object|string $class
-     * @param string $keyword
-     * @param bool $substrKeyword
-     *
-     * @return array
-     *
      * @throws \ReflectionException
      */
     public static function getConstantsStartWith(
@@ -61,11 +46,6 @@ class ClassHelper
         return $constants;
     }
 
-    /**
-     * @param object|string $class
-     *
-     * @return string
-     */
     public static function getClassName(object|string $class): string
     {
         if (is_string($class)) {

@@ -6,16 +6,8 @@ namespace McMatters\Helpers\Tests;
 
 use McMatters\Helpers\Helpers\UrlHelper;
 
-/**
- * Class UrlTest
- *
- * @package McMatters\Helpers\Tests
- */
 class UrlTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testGetBaseUrl(): void
     {
         $this->assertEquals('', UrlHelper::getBaseUrl('http:/'));
@@ -41,9 +33,6 @@ class UrlTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetHost(): void
     {
         $this->assertEquals('example.com', UrlHelper::getHost('http://www.example.com'));

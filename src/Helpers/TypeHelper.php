@@ -13,21 +13,12 @@ use function in_array;
 use function is_bool;
 use function is_string;
 use function json_decode;
-use function preg_match;
 
 use const false;
 use const true;
 
-/**
- * Class TypeHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class TypeHelper
 {
-    /**
-     * @return bool
-     */
     public static function randomBool(): bool
     {
         return Arr::random([true, false]);
@@ -46,18 +37,12 @@ class TypeHelper
         }
 
         return match (Str::lower((string) $value)) {
-            '1', 'true', 't' => true,
-            '0', 'false', 'f', '' => false,
+            '1', 'true', 't', 'yes', 'y', 'on' => true,
+            '0', 'false', 'f', 'no', 'n', 'off', '' => false,
             default => $default,
         };
     }
 
-    /**
-     * @param mixed $value
-     * @param bool $default
-     *
-     * @return bool|null
-     */
     public static function castingNullableBool(
         mixed $value,
         bool $default = false,
@@ -72,15 +57,6 @@ class TypeHelper
         return static::castingBool($value, $default);
     }
 
-    /**
-     * @param mixed $json
-     * @param bool $return
-     * @param bool $assoc
-     * @param int $depth
-     * @param int $options
-     *
-     * @return bool|array|stdClass
-     */
     public static function isJson(
         mixed $json,
         bool $return = false,
@@ -104,18 +80,5 @@ class TypeHelper
         } catch (JsonException) {
             return false;
         }
-    }
-
-    /**
-     * @param string $string
-     *
-     * @return bool
-     */
-    public static function isUuid(string $string): bool
-    {
-        return (bool) preg_match(
-            '/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/',
-            $string,
-        );
     }
 }

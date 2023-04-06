@@ -8,16 +8,8 @@ use McMatters\Helpers\Helpers\StringHelper;
 
 use const true;
 
-/**
- * Class StringTest
- *
- * @package McMatters\Helpers\Tests
- */
 class StringTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testStrUcwords(): void
     {
         $this->assertEquals('Foo Bar', StringHelper::ucwords('foo-bar'));
@@ -26,9 +18,6 @@ class StringTest extends TestCase
         $this->assertEquals('FoO BaR', StringHelper::ucwords('foO_baR'));
     }
 
-    /**
-     * @return void
-     */
     public function testOccurrences(): void
     {
         $this->assertCount(2, StringHelper::occurrences('foo', 'o'));

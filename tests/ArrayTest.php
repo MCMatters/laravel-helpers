@@ -11,16 +11,8 @@ use function is_array;
 
 use const true;
 
-/**
- * Class ArrayTest
- *
- * @package McMatters\Helpers\Tests
- */
 class ArrayTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testArrayKeyBy(): void
     {
         $array = require __DIR__.'/mocks/arrays/keyBy.php';
@@ -31,9 +23,6 @@ class ArrayTest extends TestCase
         $this->assertNotEquals([3, 7, 5], array_keys($newArray));
     }
 
-    /**
-     * @return void
-     */
     public function testArrayContains(): void
     {
         $array = require __DIR__.'/mocks/arrays/contains.php';
@@ -53,9 +42,6 @@ class ArrayTest extends TestCase
         $this->assertFalse(ArrayHelper::contains($array, 'magic,'));
     }
 
-    /**
-     * @return void
-     */
     public function testArrayHasIntKeys(): void
     {
         $array = require __DIR__.'/mocks/arrays/hasIntKeys.php';
@@ -67,9 +53,6 @@ class ArrayTest extends TestCase
         $this->assertFalse(ArrayHelper::hasOnlyIntKeys($array['string']));
     }
 
-    /**
-     * @return void
-     */
     public function testArrayChangeKeyCaseRecursive(): void
     {
         $array = require __DIR__.'/mocks/arrays/changeKeyCase.php';
@@ -81,9 +64,6 @@ class ArrayTest extends TestCase
         $this->checkArrayKeysCase($upperCased, 'strtoupper');
     }
 
-    /**
-     * @return void
-     */
     public function testArrayHasValue(): void
     {
         $array = require __DIR__.'/mocks/arrays/hasValue.php';
@@ -99,12 +79,6 @@ class ArrayTest extends TestCase
         $this->assertTrue(ArrayHelper::hasValue('qWe', $array, true, true));
     }
 
-    /**
-     * @param array $array
-     * @param string $method
-     *
-     * @return void
-     */
     protected function checkArrayKeysCase(array $array, string $method): void
     {
         foreach ($array as $key => $value) {

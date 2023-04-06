@@ -10,16 +10,8 @@ use McMatters\Helpers\Helpers\ArrayHelper;
 use const CASE_LOWER;
 use const false;
 
-/**
- * Class ArrMacros
- *
- * @package McMatters\Helpers\Macros
- */
 class ArrMacros extends AbstractMacroable
 {
-    /**
-     * @return void
-     */
     protected function registerFirstKey(): void
     {
         Arr::macro('firstKey', static function (array $array) {
@@ -27,9 +19,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerHasWithWildcard(): void
     {
         Arr::macro('hasWithWildcard', static function (
@@ -41,9 +30,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerKeyBy(): void
     {
         Arr::macro('keyBy', static function (array $array, string $key): array {
@@ -51,9 +37,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerContains(): void
     {
         Arr::macro('contains', static function (
@@ -65,9 +48,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerHasOnlyIntKeys(): void
     {
         Arr::macro('hasOnlyIntKeys', static function (array $array): bool {
@@ -75,9 +55,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     public function registerShuffleAssoc(): void
     {
         Arr::macro('shuffleAssoc', static function (array $array): array {
@@ -85,9 +62,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerChangeKeyCaseRecursive(): void
     {
         Arr::macro('changeKeyCaseRecursive', static function (
@@ -98,9 +72,6 @@ class ArrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerHasValue(): void
     {
         Arr::macro('hasValue', static function (

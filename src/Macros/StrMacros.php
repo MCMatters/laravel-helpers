@@ -9,16 +9,8 @@ use McMatters\Helpers\Helpers\StringHelper;
 
 use const false;
 
-/**
- * Class StrMacros
- *
- * @package McMatters\Helpers\Macros
- */
 class StrMacros extends AbstractMacroable
 {
-    /**
-     * @return void
-     */
     protected function registerUcwords(): void
     {
         Str::macro('ucwords', static function (string $string): string {
@@ -26,9 +18,6 @@ class StrMacros extends AbstractMacroable
         });
     }
 
-    /**
-     * @return void
-     */
     protected function registerOccurrences(): void
     {
         Str::macro('occurrences', static function (

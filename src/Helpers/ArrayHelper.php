@@ -30,30 +30,13 @@ use const CASE_LOWER;
 use const false;
 use const true;
 
-/**
- * Class ArrayHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class ArrayHelper
 {
-    /**
-     * @param array $array
-     *
-     * @return int|string|null
-     */
     public static function firstKey(array $array): int|string|null
     {
         return array_key_first($array);
     }
 
-    /**
-     * @param array $array
-     * @param string $keys
-     * @param bool $searchWithSegment
-     *
-     * @return bool
-     */
     public static function hasWithWildcard(
         array $array,
         string $keys,
@@ -109,31 +92,29 @@ class ArrayHelper
                 }
             }
 
-            if (!$flag) {
-                if ($segment === '*') {
-                    if ($i + 1 === $countSegments) {
-                        return !empty($array);
-                    }
-
-                    foreach ($array as $item) {
-                        $flag = self::hasWithWildcard(
-                            $item,
-                            implode('.', array_slice($segments, $i + 1)),
-                            $searchWithSegment,
-                        );
-
-                        if ($flag) {
-                            return true;
-                        }
-                    }
-
-                    return false;
+            if ($segment === '*') {
+                if ($i + 1 === $countSegments) {
+                    return !empty($array);
                 }
 
-                if (array_key_exists($segment, $array)) {
-                    $flag = true;
-                    $array = $array[$segment];
+                foreach ($array as $item) {
+                    $flag = self::hasWithWildcard(
+                        $item,
+                        implode('.', array_slice($segments, $i + 1)),
+                        $searchWithSegment,
+                    );
+
+                    if ($flag) {
+                        return true;
+                    }
                 }
+
+                return false;
+            }
+
+            if (array_key_exists($segment, $array)) {
+                $flag = true;
+                $array = $array[$segment];
             }
 
             if (!$flag) {
@@ -144,12 +125,6 @@ class ArrayHelper
         return true;
     }
 
-    /**
-     * @param array $array
-     * @param string $key
-     *
-     * @return array
-     */
     public static function keyBy(array $array, string $key): array
     {
         $items = [];
@@ -161,13 +136,6 @@ class ArrayHelper
         return $items;
     }
 
-    /**
-     * @param array $array
-     * @param string $needle
-     * @param bool $byKey
-     *
-     * @return bool
-     */
     public static function contains(
         array $array,
         string $needle,
@@ -189,11 +157,6 @@ class ArrayHelper
         return false;
     }
 
-    /**
-     * @param array $array
-     *
-     * @return bool
-     */
     public static function hasOnlyIntKeys(array $array): bool
     {
         foreach ($array as $key => $value) {
@@ -205,11 +168,6 @@ class ArrayHelper
         return true;
     }
 
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
     public static function shuffleAssoc(array $array): array
     {
         $shuffled = [];
@@ -224,12 +182,6 @@ class ArrayHelper
         return $shuffled;
     }
 
-    /**
-     * @param array $array
-     * @param int $case
-     *
-     * @return array
-     */
     public static function changeKeyCaseRecursive(
         array $array,
         int $case = CASE_LOWER,
@@ -243,14 +195,6 @@ class ArrayHelper
         return array_change_key_case($array, $case);
     }
 
-    /**
-     * @param mixed $needle
-     * @param array $array
-     * @param bool $strict
-     * @param bool $insensitive
-     *
-     * @return bool
-     */
     public static function hasValue(
         mixed $needle,
         array $array,

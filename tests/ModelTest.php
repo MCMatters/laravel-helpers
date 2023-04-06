@@ -9,16 +9,8 @@ use McMatters\Helpers\Tests\Mocks\ModelTester;
 
 use function get_class;
 
-/**
- * Class ModelTest
- *
- * @package McMatters\Helpers\Tests
- */
 class ModelTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testGetModelFromQuery(): void
     {
         $this->assertSame(

@@ -7,16 +7,8 @@ namespace McMatters\Helpers\Tests;
 use Illuminate\Support\Collection;
 use McMatters\Helpers\Helpers\MathHelper;
 
-/**
- * Class CollectionTest
- *
- * @package McMatters\Helpers\Tests
- */
 class CollectionTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testFilterMap(): void
     {
         $data = require __DIR__.'/mocks/arrays/filterMap.php';

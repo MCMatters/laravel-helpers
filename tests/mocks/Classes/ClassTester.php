@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Tests\Mocks;
 
-/**
- * Class ClassTester
- *
- * @package McMatters\Helpers\Tests
- */
 class ClassTester
 {
     public const STATUS_DISABLED = 0;

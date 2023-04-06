@@ -5,9 +5,6 @@ declare(strict_types=1);
 use McMatters\Helpers\Helpers\TypeHelper;
 
 if (!function_exists('random_bool')) {
-    /**
-     * @return bool
-     */
     function random_bool(): bool
     {
         return TypeHelper::randomBool();
@@ -15,12 +12,6 @@ if (!function_exists('random_bool')) {
 }
 
 if (!function_exists('casting_bool')) {
-    /**
-     * @param mixed $value
-     * @param bool $default
-     *
-     * @return bool
-     */
     function casting_bool(mixed $value, bool $default = false): bool
     {
         return TypeHelper::castingBool($value, $default);
@@ -28,12 +19,6 @@ if (!function_exists('casting_bool')) {
 }
 
 if (!function_exists('casting_nullable_bool')) {
-    /**
-     * @param mixed $value
-     * @param bool $default
-     *
-     * @return bool|null
-     */
     function casting_nullable_bool(mixed $value, bool $default = false): ?bool
     {
         return TypeHelper::castingNullableBool($value, $default);
@@ -41,15 +26,6 @@ if (!function_exists('casting_nullable_bool')) {
 }
 
 if (!function_exists('is_json')) {
-    /**
-     * @param mixed $json
-     * @param bool $return
-     * @param bool $assoc
-     * @param int $depth
-     * @param int $options
-     *
-     * @return bool|array|stdClass
-     */
     function is_json(
         mixed $json,
         bool $return = false,
@@ -58,17 +34,5 @@ if (!function_exists('is_json')) {
         int $options = 0,
     ): bool|array|stdClass {
         return TypeHelper::isJson($json, $return, $assoc, $depth, $options);
-    }
-}
-
-if (!function_exists('is_uuid')) {
-    /**
-     * @param string $string
-     *
-     * @return bool
-     */
-    function is_uuid(string $string): bool
-    {
-        return TypeHelper::isUuid($string);
     }
 }

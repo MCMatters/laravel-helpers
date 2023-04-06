@@ -15,55 +15,30 @@ use function stripos;
 
 use const PHP_OS_FAMILY;
 
-/**
- * Class ServerHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class ServerHelper
 {
-    /**
-     * @param int $memory
-     *
-     * @return void
-     */
     public static function longProcesses(int $memory = 4096): void
     {
         set_time_limit(0);
         ini_set('memory_limit', "{$memory}M");
     }
 
-    /**
-     * @param string $type
-     *
-     * @return float|int
-     */
     public static function getUploadMaxFilesize(string $type = 'mb'): float|int
     {
         return MathHelper::convertBytes(ini_get('upload_max_filesize'), $type);
     }
 
-    /**
-     * @param string $type
-     *
-     * @return float|int
-     */
     public static function getPostMaxSize(string $type = 'b'): float|int
     {
         return MathHelper::convertBytes(ini_get('post_max_size'), $type);
     }
 
-    /**
-     * @return bool
-     */
     public static function isMaxPostSizeExceeded(): bool
     {
         return $_SERVER['CONTENT_LENGTH'] > self::getPostMaxSize();
     }
 
     /**
-     * @return int
-     *
      * @throws \ReflectionException
      */
     public static function getMaxResponseCode(): int
@@ -76,9 +51,6 @@ class ServerHelper
         return (int) max(array_filter($constants, 'is_numeric'));
     }
 
-    /**
-     * @return bool
-     */
     public static function isWindowsOs(): bool
     {
         return 0 === stripos(PHP_OS_FAMILY, 'win');

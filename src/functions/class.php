@@ -6,11 +6,6 @@ use McMatters\Helpers\Helpers\ClassHelper;
 
 if (!function_exists('get_class_constants')) {
     /**
-     * @param object|string $class
-     *
-     * @return array
-     *
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
     function get_class_constants(object|string $class): array
@@ -21,13 +16,6 @@ if (!function_exists('get_class_constants')) {
 
 if (!function_exists('get_class_constants_start_with')) {
     /**
-     * @param object|string $class
-     * @param string $keyword
-     * @param bool $substrKeyword
-     *
-     * @return array
-     *
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
      */
     function get_class_constants_start_with(

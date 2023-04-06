@@ -13,16 +13,8 @@ use const false;
 use const null;
 use const true;
 
-/**
- * Class StringTest
- *
- * @package McMatters\Helpers\Tests
- */
 class TypeTest extends TestCase
 {
-    /**
-     * @return void
-     */
     public function testRandomBool(): void
     {
         for ($i = 0; $i < 100; $i++) {
@@ -31,9 +23,6 @@ class TypeTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
     public function testCastingBool(): void
     {
         $this->assertFalse(TypeHelper::castingBool('f'));
@@ -51,9 +40,6 @@ class TypeTest extends TestCase
         $this->assertTrue(TypeHelper::castingBool(true));
     }
 
-    /**
-     * @return void
-     */
     public function testIsJson(): void
     {
         $array = ['test'];
@@ -64,20 +50,5 @@ class TypeTest extends TestCase
         $this->assertFalse(TypeHelper::isJson(''));
         $this->assertFalse(TypeHelper::isJson([]));
         $this->assertEquals($array, TypeHelper::isJson($encoded, true));
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsUuid(): void
-    {
-        $valid = '5b6de545-3d60-48f1-ad30-0e6fa786ffb0';
-        $notValid = '5g6de545-3d60-48f1-ad30-0e6fa786ffb0';
-
-        $this->assertTrue(TypeHelper::isUuid($valid));
-        $this->assertFalse(TypeHelper::isUuid($notValid));
-        $this->assertFalse(TypeHelper::isUuid('null'));
-        $this->assertFalse(TypeHelper::isUuid(''));
-        $this->assertFalse(TypeHelper::isUuid(Str::random(16)));
     }
 }

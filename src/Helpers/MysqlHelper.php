@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
-/**
- * Class MysqlHelper
- *
- * @package McMatters\Helpers
- */
 class MysqlHelper
 {
     /**

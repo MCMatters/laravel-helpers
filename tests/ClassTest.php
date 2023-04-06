@@ -9,16 +9,9 @@ use McMatters\Helpers\Tests\Mocks\ClassTester;
 
 use const true;
 
-/**
- * Class ClassTest
- *
- * @package McMatters\Helpers\Tests
- */
 class ClassTest extends TestCase
 {
     /**
-     * @return void
-     *
      * @throws \ReflectionException
      */
     public function testGetClassConstants(): void
@@ -39,8 +32,6 @@ class ClassTest extends TestCase
     }
 
     /**
-     * @return void
-     *
      * @throws \ReflectionException
      */
     public function testGetClassConstantsStartWith(): void

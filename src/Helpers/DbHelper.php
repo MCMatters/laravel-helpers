@@ -6,6 +6,7 @@ namespace McMatters\Helpers\Helpers;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
+use Stringable;
 use Throwable;
 
 use function array_shift;
@@ -22,19 +23,8 @@ use const false;
 use const null;
 use const true;
 
-/**
- * Class DbHelper
- *
- * @package McMatters\Helpers\Helpers
- */
 class DbHelper
 {
-    /**
-     * @param object|string $sql
-     * @param array|null $bindings
-     *
-     * @return string
-     */
     public static function compileSqlQuery(
         object|string $sql,
         ?array $bindings = [],
@@ -52,12 +42,6 @@ class DbHelper
         return self::replaceBindings($sqlQuery, $bindings ?: []);
     }
 
-    /**
-     * @param bool $withColumns
-     * @param string|null $connection
-     *
-     * @return array
-     */
     public static function getAllTables(
         bool $withColumns = true,
         ?string $connection = null,
@@ -88,12 +72,6 @@ class DbHelper
         return $tables;
     }
 
-    /**
-     * @param string $keyword
-     * @param string|null $connection
-     *
-     * @return array
-     */
     public static function searchEntireDatabase(
         string $keyword,
         ?string $connection = null,
@@ -124,11 +102,6 @@ class DbHelper
         return $results;
     }
 
-    /**
-     * @param object $query
-     *
-     * @return object
-     */
     public static function getBaseQuery(object $query): object
     {
         if (method_exists($query, 'getBaseQuery')) {
@@ -148,11 +121,6 @@ class DbHelper
         return $query;
     }
 
-    /**
-     * @param object $query
-     *
-     * @return array
-     */
     public static function getBindings(object $query): array
     {
         try {
@@ -172,12 +140,6 @@ class DbHelper
         return $bindings;
     }
 
-    /**
-     * @param object $query
-     * @param string $with
-     *
-     * @return bool
-     */
     public static function hasQueryJoinWith(object $query, string $with): bool
     {
         if (method_exists($query, 'getBaseQuery')) {
@@ -201,11 +163,6 @@ class DbHelper
         return false;
     }
 
-    /**
-     * @param mixed $binding
-     *
-     * @return float|int|string
-     */
     protected static function transformSqlBinding(mixed $binding): float|int|string
     {
         switch (gettype($binding)) {
@@ -213,7 +170,6 @@ class DbHelper
             case 'integer':
                 return (int) $binding;
 
-            case 'float':
             case 'double':
                 return (float) $binding;
 
@@ -232,16 +188,10 @@ class DbHelper
             case 'object':
             case 'string':
             default:
-                return self::escapeString($binding);
+                return self::escapeString((string) $binding);
         }
     }
 
-    /**
-     * @param string $sql
-     * @param array $bindings
-     *
-     * @return string
-     */
     protected static function replaceBindings(
         string $sql,
         array $bindings = [],
@@ -264,21 +214,11 @@ class DbHelper
         return $sql;
     }
 
-    /**
-     * @param float|int|string $string
-     *
-     * @return string
-     */
-    protected static function escapeString(float|int|string $string): string
+    protected static function escapeString(float|int|string|Stringable $string): string
     {
         return '"'.str_replace('\\', '\\\\\\', (string) $string).'"';
     }
 
-    /**
-     * @param string|null $connection
-     *
-     * @return mixed
-     */
     protected static function getDb(?string $connection = null): mixed
     {
         static $db;
@@ -290,11 +230,6 @@ class DbHelper
         return $db->connection($connection);
     }
 
-    /**
-     * @param string|null $connection
-     *
-     * @return mixed
-     */
     protected static function getSchema(?string $connection = null): mixed
     {
         return self::getDb($connection)->getSchemaBuilder();

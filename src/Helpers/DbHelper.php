@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace McMatters\Helpers\Helpers;
 
+use DateTime;
 use Illuminate\Container\Container;
 use Illuminate\Support\Arr;
 use Stringable;
@@ -186,6 +187,16 @@ class DbHelper
                 return '';
 
             case 'object':
+                if (method_exists($binding, '__toString')) {
+                    return self::escapeString((string) $binding);
+                }
+
+                if ($binding instanceof DateTime) {
+                    return $binding->format('Y-m-d H:i:s');
+                }
+
+                return '';
+
             case 'string':
             default:
                 return self::escapeString((string) $binding);

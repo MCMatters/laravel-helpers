@@ -1,7 +1,6 @@
 # Laravel Helpers
 
 [![Latest Stable Version](https://poser.pugx.org/mcmatters/laravel-helpers/v/stable)](https://packagist.org/packages/mcmatters/laravel-helpers)
-[![Build Status](https://travis-ci.org/MCMatters/laravel-helpers.svg?branch=master)](https://travis-ci.org/MCMatters/laravel-helpers)
 [![Total Downloads](https://poser.pugx.org/mcmatters/laravel-helpers/downloads)](https://packagist.org/packages/mcmatters/laravel-helpers)
 
 ## Installation

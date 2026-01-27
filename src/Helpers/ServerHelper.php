@@ -10,6 +10,7 @@ use function array_filter;
 use function ini_get;
 use function ini_set;
 use function max;
+use function min;
 use function set_time_limit;
 use function stripos;
 
@@ -25,12 +26,20 @@ class ServerHelper
 
     public static function getUploadMaxFilesize(string $type = 'mb'): float|int
     {
-        return MathHelper::convertBytes(ini_get('upload_max_filesize'), $type);
+        return min(
+            self::getPostMaxSize($type),
+            MathHelper::convertBytes(ini_get('upload_max_filesize'), $type),
+        );
     }
 
     public static function getPostMaxSize(string $type = 'b'): float|int
     {
         return MathHelper::convertBytes(ini_get('post_max_size'), $type);
+    }
+
+    public static function getEffectiveUploadLimit(int $required): float|int
+    {
+        return min(self::getUploadMaxFilesize('kb'), $required);
     }
 
     public static function isMaxPostSizeExceeded(): bool
